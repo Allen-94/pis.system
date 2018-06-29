@@ -1,0 +1,14 @@
+#!/usr/bin/expect
+set timeout 3600
+set passwd [lindex $argv 0]
+spawn ssh gpadmin@[lindex $argv 1] "export LD_LIBRARY_PATH=/opt/greenplum/greenplum-db-yuyi/lib;/opt/greenplum/greenplum-db/bin/psql -U gpadmin -h localhost -d pis100 << EOF 
+insert into t_runtimelogs values(nextval('t_runtimelogs_seq'),now(),?,?,?);
+EOF"
+expect {
+    "yes/no" {send "yes\r"}
+    "*assword:" {send "$passwd\r"}
+}
+expect {
+    "*assword:" {send "$passwd\r"}
+}
+exit 0
