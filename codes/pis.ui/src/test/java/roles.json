@@ -1,0 +1,52 @@
+[
+	{
+		"roleId": 0,
+		"roleName": "超级管理员",
+		"role_description": "超级管理员...",
+		"userGroups": null,
+		"cmds" : null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},	{
+		"roleId": 0,
+		"roleName": "设备管理员",
+		"role_description": "设备管理员...",
+		"userGroups": null,
+		"cmds": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	}
+	,	{
+		"roleId": 0,
+		"roleName": "性能管理人员",
+		"role_description": "性能管理人员...",
+		"userGroups": null,
+		"cmds": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},	{
+		"roleId": 0,
+		"roleName": "业务管理人员",
+		"role_description": "业务管理人员...",
+		"userGroups": null,
+		"cmds": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},	{
+		"roleId": 0,
+		"roleName": "告警管理人员",
+		"role_description": "告警管理人员...",
+		"userGroups": null,
+		"cmds": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},	{
+		"roleId": 0,
+		"roleName": "安全管理人员",
+		"role_description": "安全管理人员...",
+		"userGroups": null,
+		"cmds": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	}
+]

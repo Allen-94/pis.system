@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>历史告警</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+ 		<style type="text/css">
+
+			.demo-container {
+				box-sizing: border-box;
+				width: 850px;
+				height: 450px;
+				padding: 20px 15px 15px 15px;
+				margin: 15px auto 30px auto;
+				border: 1px solid #ddd;
+				background: #fff;
+				background: linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+				box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+				-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			}
+			
+			.demo-placeholder {
+				width: 800px;
+				height: 400px;
+				font-size: 14px;
+				line-height: 1.2em;
+			}
+
+		</style>
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">控制台</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+											<div id="dropdown14" class="tab-pane">
+											<div class="row center" >
+												<h3>性能数据实时跟踪</h3>
+											</div>
+													<div class="row">
+														<div class="col-md-2 col-md-offset-2" >
+												    		<select   class="width-80" id="target">
+																	<option value="">指标选择</option>
+																	<option value="1">CPU使用率</option>
+																	<option value="2">内存使用率</option>
+																	<option value="3">硬盘使用率</option>
+															</select>
+											    		</div>
+														<div class="col-md-2" >
+												    		<select  class="width-80"  id="updateInterval">
+																		<option value="30">采样周期</option>
+																		<option value="10000">10秒</option>
+																		<option value="30000">30秒</option>
+																		<option value="60000">1分钟</option>
+																		<option value="300000">5分钟</option>
+															</select>
+											    		</div>
+													</div>
+													<div class="demo-container">
+														<div id="real-time-update" class="demo-placeholder"></div>
+													</div>
+												</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-2.0.3.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+		<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+		<!--[if lte IE 8]><script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/excanvas.min.js}"></script><![endif]-->
+		<script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+		<script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.time.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/flot/jshashtable-2.1.js}"></script>    
+		<script type="text/javascript" th:src="@{/assets/js/flot/jquery.numberformatter-1.2.3.min.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.symbol.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.axislabels.js}"></script>
+		<!-- ace scripts -->
+		<script th:src='@{/sockjs.min.js}'></script>
+		<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			
+	$(function() {
+		
+		var dataset;
+		var totalPoints = 100;
+		var updateInterval = $("#updateInterval").val();
+		var now = new Date().getTime();
+		var cpuRatios = [], memRatios = [], diskRatios = [];
+		GetData = function() {
+		    while (data.length < totalPoints) {     
+		        var y = 0;
+		        var temp = [now += updateInterval, y];
+		        cpuRatios.push(temp);
+		        memRatios.push(temp);
+		        diskRatios.push(temp);
+		    }
+		}
+		
+		// We use an inline data source in the example, usually data would
+		// be fetched from a server
+		//选择指标
+		$("#target").on('change',function(){
+			var target = $(this).val();
+			switch(target){
+				case '0':
+					dataset = [{data:cpuRatios,label:"CPU使用率"},
+	            		{data:memRatios,label:"内存使用率"},
+	            		{data:diskRatios,label:"硬盘使用率"}]
+					break;
+				case "1":
+					dataset = [{data:cpuRatios,label:"CPU使用率"}];
+					break;
+				case "2":
+					dataset = [{data:memRatios,label:"内存使用率"}];
+					break;
+				case "3":
+					dataset = [{data:diskRatios,label:"硬盘使用率"}];
+					break;
+				default:
+					dataset = [{data:cpuRatios,label:"CPU使用率"},
+	            		{data:memRatios,label:"内存使用率"},
+	            		{data:diskRatios,label:"硬盘使用率"}];
+						
+			}
+			$.plot($("#real-time-update"), dataset, options);
+		});
+		
+		$("#updateInterval").on("change",function(){
+			socket.close();
+			connectRealTimeWebSocket();
+		})
+		
+		var socket;  
+        //后台链接实时告警的WebSocket服务端
+		connectRealTimeWebSocket = function(){
+			var url = "ws://localhost:8080/realtime_performance"
+			if(typeof(WebSocket) == "undefined") {  
+	            console.log("您的浏览器不支持WebSocket");  
+	        }else{  
+	            console.log("您的浏览器支持WebSocket");  
+	            //实现化WebSocket对象，指定要连接的服务器地址与端口  
+	            socket = new WebSocket(url);  
+	            //打开事件  
+	            socket.onopen = function() {  
+	                console.log("Socket 已打开"); 
+	                var devId = [[${devId}]]
+	                var delay = $("#updateInterval").val();
+	                socket.send(devId+"|"+delay); 
+	                GetData();
+	            };  
+	            //获得消息事件  
+	            socket.onmessage = function(msg) { 
+	            	console.log("服务端返回消息："+msg.data); 
+	            	//#real-time-update
+	            	if(cpuRatios.length>=totalPoints){
+	            		cpuRatios.shift();
+		            	memRatios.shift();
+		            	diskRatios.shift();
+	            	}
+	            	
+	            	var item = JSON.parse(msg.data);
+	            	var cpuRatio = [new Date(item.createTime).getTime(),item.cpuRatio];
+					cpuRatios.push(cpuRatio);
+					var memRatio = [new Date(item.createTime).getTime(),item.memRatio];
+					memRatios.push(memRatio);
+					var diskRatio = [new Date(item.createTime).getTime(),item.diskRatio];
+					diskRatios.push(diskRatio);
+					dataset = [{data:cpuRatios,label:"CPU使用率", color: "#00FF00"},
+	            		{data:memRatios,label:"内存使用率", color: "#00FF00"},
+	            		{data:diskRatios,label:"硬盘使用率", color: "#00FF00"}] 
+					
+					//dataset = { label: "CPU", data: cpuRatios, color: "#00FF00" }
+					$.plot($("#real-time-update"), dataset, options);
+	            };  
+	            //关闭事件  
+	            socket.onclose = function() {  
+	                console.log("Socket已关闭");  
+	            };  
+	            //发生了错误事件  
+	            socket.onerror = function(e) {  
+	                alert("Socket发生了错误"+e.data);  
+	            }  
+	        }
+		}
+		connectRealTimeWebSocket();
+		
+		var options = {
+			    series: {
+			        lines: {
+			            show: true,
+			            lineWidth: 1.2,
+			            fill: true
+			        }
+			    },
+			    xaxis: {
+			        mode: "time",
+			        tickSize: [2, "second"],
+			        tickFormatter: function (v, axis) {
+			            var date = new Date(v);
+			            /* var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+		                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+		                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+		                return hours + ":" + minutes + ":" + seconds; */
+			            if (date.getSeconds() % 20 == 0) {
+			                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+			                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+			                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+			                return hours + ":" + minutes + ":" + seconds;
+			            } else {
+			                return "";
+			            } 
+			        },
+			        axisLabel: "Time",
+			        axisLabelUseCanvas: true,
+			        axisLabelFontSizePixels: 12,
+			        axisLabelFontFamily: 'Verdana, Arial',
+			        axisLabelPadding: 10
+			    },
+			    yaxis: {
+			        min: 0,
+			        max: 100,        
+			        tickSize: 5,
+			        tickFormatter: function (v, axis) {
+			            if (v % 10 == 0) {
+			                return v + "%";
+			            } else {
+			                return "";
+			            } 
+			        	//return v + "%";
+			        },
+			        axisLabel: "CPU loading",
+			        axisLabelUseCanvas: true,
+			        axisLabelFontSizePixels: 12,
+			        axisLabelFontFamily: 'Verdana, Arial',
+			        axisLabelPadding: 6
+			    },
+			    legend: {        
+			        labelBoxBorderColor: "#fff"
+			    },
+			    grid: {                
+			        backgroundColor: "#000000",
+			        tickColor: "#008040"
+			    }
+			};
+		
+	});
+			"]]>"
+		</script>
+</body>
+</html>

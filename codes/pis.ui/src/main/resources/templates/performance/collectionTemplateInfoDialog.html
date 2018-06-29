@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>性能采集模板详情</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="reserveInfo">性能采集模板详情</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<lable>模板名称:</lable><span th:text="${template.templateName}"></span>
+				</div>
+				<div class="row">
+					<lable>模板描述:</lable><span th:text="${template.description}"></span>
+				</div>
+				<div class="row">
+					<lable>采集设备类型:</lable>
+					<span  th:if="${template.deviceType}==4">车站服务器</span>
+					<span  th:if="${template.deviceType}==5">车站工作站</span>
+					<span  th:if="${template.deviceType}==6">播放控制器</span>
+					<span  th:if="${template.deviceType}==7">显示屏</span>
+				</div>
+				<div class="row">
+					<lable>采集性能项:</lable>
+						<ul th:each="item:${template.items}">
+							<li th:text="${item.itemName}"></li>
+						</ul>
+				</div>
+			</div>	
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				/* $.ajax({
+				"url":"/performance/findAllIndex",
+				"success":function(data){
+					$("#performanceIndex").empty();
+					$.each(data,function(i){
+						$("#performanceIndex").append('<input value="'+data[i].id+'" type="checkbox" /><span class="lbl"> '+data[i].itemName+'</span>&#8195;')
+					})
+				}}) */
+				
+				submitContent = function(){
+					var param = {};
+					param.id=$("#templateId").val()
+					param.templateName=$("#templateName").val()
+					param.description=$("#description").val()
+					param.deviceType=$("#deviceType").val()
+					param.indexIds = "";
+					var indexs = $("#performanceIndex").find('input:checkbox:checked')
+					$.each(indexs,function(i){
+						param.indexIds+=$(indexs[i]).val()+','
+					})
+					alert(param.indexIds.substring(0,param.indexIds.length-1))
+					$.ajax({
+						url : '/performance/addCollectionInfo',
+						type:"post",
+						contentType:"application/json; charset=utf-8",
+						data : JSON.stringify(param),
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交性能采集模板成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交性能采集模板失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(".modal-body #div_alert").empty().append(success);
+								oTable1.ajax.reload();
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+						}
+					})
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

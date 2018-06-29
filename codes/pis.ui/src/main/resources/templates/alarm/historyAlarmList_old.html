@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>实时告警</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet"
+	th:href="@{/assets/css/jquery-ui-1.10.3.full.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/datepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ui.jqgrid.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+
+<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+<style>
+.ui-jqgrid tr.jqgrow td {
+	white-space: normal !important;
+	height: auto;
+	vertical-align: text-top;
+	padding-top: 2px;
+	word-break: break-all;
+}
+</style>
+</head>
+
+<body>
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">历史告警</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+				<div class="page-content">
+					<div class="widget-box collapsed">
+								<div class="widget-header">
+									<h4>过滤条件</h4>
+									<div class="widget-toolbar">
+										<a href="#" data-action="collapse"> <i
+											class="icon-chevron-up"></i>
+										</a> <a href="#" data-action="settings"> <i class="icon-cog"></i>
+										</a> <a href="#" data-action="reload"> <i class="icon-refresh"></i>
+										</a> <a href="#" data-action="close"> <i class="icon-remove"></i>
+										</a>
+									</div>
+								</div>
+
+								<div class="widget-body">
+									<div class="widget-main no-padding">
+										<form role="form" class="form-inline">
+										<fieldset>
+											<div class="form-group">
+												<label for="form-field-select-1">级别</label> <select
+													class="form-control" id="gradeform">
+													<option value="-1">全部</option>
+													<option value="0">紧急</option>
+													<option value="1">重要</option>
+													<option value="2">一般</option>
+													<option value="3">提示</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="form-field-select-4">告警时间</label> <select
+													class="form-control" id="receiptTime">
+													<option value="0">全部</option>
+													<option value="1">最近一天</option>
+													<option value="2">最近三天</option>
+													<option value="3">最近一周</option>
+													<option value="4">最近一月</option>
+												</select>
+											</div>
+										</fieldset>
+										<fieldset>
+											<div class="form-group">
+												<label for="form-field-select-5">告警源类型</label> 
+												<select multiple="multiple" class="width-40 chosen-select tag-input-style  form-control" id="form-field-select-5" data-placeholder="选择告警源类型">
+													<option value="AL">Alabama</option>
+													<option value="AK">Alaska</option>
+													<option value="AZ">Arizona</option>
+													<option value="AR">Arkansas</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="form-field-select-6">告警源</label> <select
+													multiple="multiple" class="chosen-select tag-input-style form-control"
+													id="form-field-select-6"
+													data-placeholder="选择告警源">
+													<option value="AL">Alabama</option>
+													<option value="AK">Alaska</option>
+													<option value="AZ">Arizona</option>
+													<option value="AR">Arkansas</option>
+												</select>
+											</div>
+											</fieldset>
+											<div class="clearfix form-actions">
+												<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="button" id="conditionbtn">
+												<i class="icon-ok bigger-110"></i>
+												Submit
+											</button>
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i>
+												Reset
+											</button>
+										</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+					<div class="row">
+						<div class="col-sm-12 widget-container-span">
+						  <div class="widget-box">
+						    <!-- <div class="widget-header">
+						      <h4>Default</h4>
+						    </div> -->
+						    <div class="widget-body">
+						    <div class="widget-toolbox">
+								<div class="btn-toolbar">
+									<div class="btn-group">
+										<button class="btn btn-success" id="cleans">取消清除</button>
+										<button class="btn btn-success" id="dump">导出</button>
+									</div>
+								</div>
+							</div>
+						      <div class="widget-main padding-16">
+						      		<div>
+								      	<!-- PAGE CONTENT BEGINS -->
+										<table id="grid-table"></table>
+										<div id="grid-pager"></div>
+										<!-- PAGE CONTENT ENDS -->
+									</div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<!-- /.col -->
+					  <div id="dialog-form" title="备注编辑">
+					  <form id="remarkform" th:action="@{/alarm/remarkAlarm}" method="post">
+					  <div class="form-group">
+						  <fieldset>
+						    <label for="form-field-9">备注:</label>
+						    <input type="text" id="alarmId" value="1" hidden="" />
+							<textarea class="form-control limited" id="remarkfiled" maxlength="50"></textarea>
+						  </fieldset>
+					  </div>
+					  </form>
+					</div>
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<script th:src='@{/assets/js/jquery-ui-1.10.3.full.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+	<script th:src="@{/assets/js/jqGrid/jquery.jqGrid.min.js}"></script>
+	<script th:src="@{/assets/js/jqGrid/i18n/grid.locale-en.js}"></script>
+	<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+	<script th:src="@{/assets/js/bootstrap-tag.min.js}"></script>
+	<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+	<script th:src="@{/main/historyAlarmList.js}"></script>
+	<!-- inline scripts related to this page -->
+</body>
+</html>

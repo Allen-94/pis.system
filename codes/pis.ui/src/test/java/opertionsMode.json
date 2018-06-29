@@ -1,0 +1,23 @@
+[
+      {
+			"id" : 0,
+			"itemName" : "素材是否审批",
+			"itemValue" : "是"
+		}, {
+			"id" : 0,
+			"itemName" : "播表是否审批",
+			"itemValue" : "是"
+		}, {
+			"id" : 0,
+			"itemName" : "预案是否审批",
+			"itemValue" : "是"
+		}, {
+			"id" : 0,
+			"itemName" : "预定义信息是否审批",
+			"itemValue" : "是"
+		}, {
+			"id" : 0,
+			"itemName" : "播控服务器是否定时开关",
+			"itemValue" : "是"
+		}
+]

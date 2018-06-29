@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>预案信息</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+<body>
+	<div class="modal-dialog" style="width:100%;z-index:1030">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="reserveInfo">新增预定义信息</h4>
+			</div>
+				<div class="modal-body">
+					<div class='row'>
+						<div class="col-md-3 no-padding">
+							<div class="panel panel-default" >
+								<div class="panel-heading">
+								       基本属性
+								 </div>
+								<div class="panel-body">
+								<form class="form-horizontal" role="form">
+								<input type="text" id="planId" hidden="hidden"/>
+								<div class="form-group">
+			                         <label for="planName">预案名称</label>
+			                         <input type="text" class="form-control" id="planName" name="planName" 
+			                                    placeholder="请输入预定义信息名称..." />
+			                     </div>
+			                     <div class="form-group">
+			                         <label for="planDesc">预案描述</label>
+			                         <input type="text" class="form-control" id="planDesc" name="planDesc"
+			                                    placeholder="请输入预定义信息显示内容..." />
+			                     </div>
+			                     <div class="form-group">
+			                         <label for="priority" >预案优先级</label>
+		                         	 <input type="text" class="form-control" id="priority" name="priority"
+			                                    placeholder="请输入预定义信息显示内容..." />
+			                     </div>
+			                     <div class="form-group">
+			                         <label for="level" >预案级别</label>
+		                         	 <select id="level" class="form-control">
+		                         	 	<option value="1">一级预案</option>
+		                         	 	<option value="2">二级预案</option>
+		                         	 	<option value="3">三级预案</option>
+		                         	 	<option value="4">四级预案</option>
+		                         	 	<option value="5">五级预案</option>
+		                         	 </select>
+			                     </div>
+							</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 no-padding">
+							<div class="panel panel-default" >
+								<div class="panel-heading">
+								       播放控制器选择
+								 </div>
+								<div class="panel-body">
+									<ul id="treeDemo" class="ztree"></ul>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 no-padding">
+							<div class="panel panel-default" >
+								<div class="panel-heading">
+								       指令步骤
+								 </div>
+								<div class="panel-body no-padding">
+									<table id="planstep_table" class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>步骤</th>
+												<th>指令</th>
+												<th>播放信息</th>
+												<th>选择</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitReservePlan()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+	<div class="modal fade" id="reserveinfo_modal"  tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" style="z-index:1430">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h4 class="modal-title" id="myModalLabel">选择预定义信息</h4>
+	            </div>
+	            <div class="modal-body">
+	            	<div class="panel panel-default" >
+						<div class="panel-body no-padding">
+							<table id="reserveInfo_table" class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th class="center">单选</th>
+										<th>信息名称</th>
+										<th>显示内容</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" onclick="closeReserveInfo()" >关闭</button>
+	                <button type="button" class="btn btn-primary" onclick="checkActionInfo()" >确定</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+    	</div><!-- /.modal-dialog -->
+	</div>
+	<!-- basic scripts -->
+	<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+			var dataSet = [
+				{"step":"1","actionId":1,"content":"","id":"-1"},
+				{"step":"2","actionId":1,"content":"","id":"-1"},
+				{"step":"3","actionId":1,"content":"","id":"-1"},
+				{"step":"4","actionId":1,"content":"","id":"-1"},
+				{"step":"5","actionId":1,"content":"","id":"-1"},
+				{"step":"6","actionId":1,"content":"","id":"-1"}
+				];
+			 init = function(){
+				$("#planId").val("")
+				$("#planName").val("")
+				$("#planDesc").val("")
+				$("#priority").val("")
+				$("#level").val("1")
+				
+				$("#planId").val([[${plan.id}]])
+				$("#planName").val([[${plan.planName}]])
+				$("#planDesc").val([[${plan.planDesc}]])
+				$("#priority").val([[${plan.priority}]])
+				$("#level").val([[${plan.level}]])
+				initPlayerTree([[${plan.players}]]);
+				var cmds = [[${plan.cmds}]]
+				if(cmds!=null){
+					$.each(cmds,function(i){
+						$.each(dataSet,function(j){
+							if(cmds[i].step==dataSet[j].step){
+								dataSet[j].actionId=cmds[i].action.id;
+								dataSet[j].content=cmds[i].content;
+								dataSet[j].id=cmds[i].id;
+							}
+						})
+					})
+				}
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>....")
+				console.log(dataSet)
+			} 
+			
+			var treeObj = null;
+			initPlayerTree = function(players){
+				//创建树形组建
+				var setting = {
+						check: {
+							enable: true
+						},
+						data: {
+							simpleData: {
+								enable: true
+							}
+						}
+					};
+
+					var zNodes =[];
+					$.get("/security/findAllPlayers",function(data){
+						$.each(data,function(index){
+							var node = {};
+							node.id=data[index].id;
+							node.pId=data[index].pid;
+							node.name=data[index].name;
+							node.value=data[index].value;
+							if(players!=null){
+								$.each(players,function(i){
+									if(players[i].id==node.id){
+										node.checked=true;
+									}
+								})
+							}
+							
+							node.open=data[index].open;
+							zNodes.push(node);
+						})
+						console.log(zNodes);
+						treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+					})
+			}
+			
+			init();
+			
+			//获取所有的动作
+			findAllActions = function(){
+				var actions = [];
+				$.ajax({
+					url:"/reserveplan/findAllAction",
+					async:false,
+					success:function(data){
+						actions = data;
+					}
+				})
+				return actions;
+			}
+			var actions = findAllActions();
+			createActionsSelect=function(){
+				
+			}
+			
+			var oTable2 = $('#planstep_table').DataTable( {
+				searching:false,
+				stateSave:true,
+				bLengthChange:false,
+				ordering:false,
+				colReorder: true,
+				info:false,
+				paging:false,
+				autoWidth: true,
+				data:dataSet,
+				columns:[
+					{
+						"data":"step",
+						"render":function(data, type, val, meta){
+							var div = $("<div></div>")
+							var sel = $("<select></select>");
+							for(var i=1 ;i<10;i++){
+								if(data == i){
+									$(sel).append("<option value='"+i+"' selected='selected'>"+i+"</select>")
+								}else{
+									$(sel).append("<option value='"+i+"'>"+i+"</select>")
+								}
+							}
+							$(div).append($(sel))
+							return $(div).html();
+						}
+					},
+					{
+						"data":"actionId",
+						"render":function(data, type, val, meta){
+							var div = $("<div></div>")
+							var sel = $("<select onchange='changeActionId(this,"+meta.row+")'></select>");
+							$.each(actions,function(i){
+								if(data==actions[i].id){
+									$(sel).append("<option value='"+actions[i].id+"' selected='selected'>"+actions[i].actionContent+"</select>")
+								}else{
+									$(sel).append("<option value='"+actions[i].id+"'>"+actions[i].actionContent+"</select>")
+								}
+							})
+							$(div).append($(sel))
+							return $(div).html();
+						}
+					},
+					{
+						"data":"content",
+						"render":function(data, type, val, meta){
+							return "<input type='text' width='40px'  value='"+data+"' onblur='textInput(this,"+meta.row+")' />"
+						}
+					},
+					{ 
+						"sClass":"center",
+						"data": null ,
+						"width":"20%",
+						"render":function(data, type, val, meta){
+							var html= '<button type="button" class="btn btn-xs btn-info" onclick="getReserveInfo('+meta.row+')"  data-toggle="button">选择预定义信息</button>'
+							return html;
+						}
+					} 
+				]
+			});
+			
+			
+			submitReservePlan = function(){
+				var param = {};
+				param.id=$("#planId").val()
+				param.planName=$("#planName").val()
+				param.planDesc=$("#planDesc").val()
+				param.priority=$("#priority").val()
+				param.level=$("#level").val()
+				var nodes = treeObj.getCheckedNodes(true);
+				var playerids = '';
+				$.each(nodes,function(i){
+					if(nodes[i].value.resourceType == 6){
+						playerids += nodes[i].value.id
+						playerids += ',';
+					}
+				})
+				param.playerIds = playerids.slice(0,-1)
+				console.log(dataSet)
+				param.cmds=dataSet;
+				$.ajax({
+					url : '/reserveplan/addReservePlan',
+					type:"post",
+					contentType:"application/json",
+					data : JSON.stringify(param),
+					success:function(data){
+						var success = '<div class="alert alert-success">'
+							+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+							+ '<strong>成功！</strong>提交预案成功。'
+							+ '</div>'
+						var warning = '<div class="alert alert-warning">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>失败！</strong>提交预案失败。'
+								+ '</div>'
+						if (data.flag) {
+							$(".modal-body #div_alert").empty().append(success);
+							//保存预案成功，生成预案步骤
+							/* $.ajax({
+								url:"/reserveplan/planTaskRun/"+param.id,
+								type:"POST",
+								success:function(data){
+									oTable1.ajax.reload()
+								}
+							}) */
+						} else {
+							$(".modal-body #div_alert")
+									.empty()
+									.append(warning);
+						}
+					}
+				})
+			}
+			//预定义信息获取
+			var currentRow = 0
+			getReserveInfo = function(num){
+				currentRow = num;
+				$("#reserveinfo_modal").modal("show")
+			}
+			
+			closeReserveInfo = function(){
+				$("#reserveinfo_modal").modal("hide")
+			}
+			var oTable3 = $('#reserveInfo_table').DataTable( {
+					searching:false,
+					stateSave:true,
+					aLengthMenu:[5,10],
+					bLengthChange:true,
+					ordering:false,
+					colReorder: true,
+					info:true,
+					paging:true,
+					autoWidth: false,
+					ajax: {
+						"url": "/reserveplan/findAllReserveInfo",
+						"dataSrc": ""
+					},
+					columns:[
+						{ 
+							"sClass":"center",
+							"data": "infoContent",
+							"render":function(data, type, full, meta){
+									return '<label><input type="radio" name="actioninfo" class="ace" value="'+data+'" /><span class="lbl"></span></label>'
+								}
+						},
+						{
+							"data":"infoName",
+							"width":"30%"
+						},
+						{
+							"data":"infoContent",
+							"width":"40%"
+						}
+					]
+				});
+				
+				checkActionInfo = function(){
+					var a = $("input[name='actioninfo']:checked").val();
+					oTable2.row(currentRow).data().content=a;
+					oTable2.cell(currentRow,2).data(a).draw();
+					$("#reserveinfo_modal").modal("hide")
+				}
+				
+				textInput=function(obj,row){
+					var text = $(obj).val();
+					oTable2.row(row).data().content=text;
+					oTable2.cell(row,2).data(text).draw();
+				}
+				
+				changeActionId = function(obj,row){
+					var actionId = $(obj).val();
+					oTable2.row(row).data().content=actionId;
+					oTable2.cell(row,1).data(actionId).draw();
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

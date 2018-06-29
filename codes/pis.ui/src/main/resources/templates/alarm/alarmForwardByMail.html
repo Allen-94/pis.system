@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>控制台</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">群组配置(邮件方式)</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<form id="forward-config"  role="form">
+									<div class="col-xs-12 col-sm-7 widget-container-span">
+									<div class="row">
+										<div class="form-group">
+											<label class="col-sm-2 control-label no-padding-right" for="group-name"> 群组名称 :</label>
+											<div class="col-sm-9">
+												<input type="text" hidden="hidden" id="configId" th:value="${config?.id}" />
+												<input type="text" id="group-name" placeholder="群组名称" th:value="${config?.configName}" class="col-xs-10 col-sm-8 form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="row widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header">
+												<h5 class="smaller">发送告警范围</h5>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row  form-group">
+														<label class="control-label col-xs-12 col-sm-2">级别：</label>
+														<div class="controls col-xs-12 col-sm-10" id="alarm-grade">
+															<label class="radio-inline">
+																<input type="radio" name="grade" th:checked="${config?.grade?.value}==0?checked:false"  value="0" /> 全部
+															</label>
+															<label class="radio-inline">
+																<input type="radio" name="grade"  th:checked="${config?.grade?.value}==1?checked:false" value="1" /> 紧急
+															</label>
+															<label class="radio-inline">
+																<input type="radio" name="grade"  th:checked="${config?.grade?.value}==2?checked:false" value="2" /> 重要
+															</label>
+															<label class="radio-inline">
+																<input type="radio" name="grade"   th:checked="${config?.grade?.value}==3?checked:false" value="3" /> 一般
+															</label>
+															<label class="radio-inline">
+																<input type="radio" name="grade"  th:checked="${config?.grade?.value}==4?checked:false"  value="4" /> 提示
+															</label>
+														</div>
+													</div>
+													<div class="row  form-group">
+														<label class="control-label col-xs-12 col-sm-2">告警源类型：</label>
+														<div class="controls col-xs-12 col-sm-10">
+														<div class="col-xs-10 inline">
+															<select class="form-control" id="alarm-source-type">
+																<option value="0" >&nbsp;</option>
+																<option value="2" >线路</option>
+																<option value="3" >车站</option>
+																<option value="4" >车站服务器</option>
+																<option value="5" >车站工作站</option>
+																<option value="6" >播放控制器</option>
+																<option value="7" >显示屏</option>
+															</select>
+															<!-- <input type="text" readonly="readonly" class="form-control" id="alarm-source-type"  placeholder="告警源" value="全部"/>
+															<button type="button" class="btn btn-link">更改</button> -->
+														</div>
+														</div>
+													</div>
+													<div class="row form-group">
+														<label class="control-label col-xs-12 col-sm-2">告警源：</label>
+														<div class="controls col-xs-12 col-sm-10">
+														<div class="col-xs-10">
+															<select class="form-control" id="alarm-source">
+															</select>
+														</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header">
+												<h5 class="smaller">发送邮箱设置</h5>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1">SMTP服务器域名／IP 地址</label>
+															<div class="col-sm-8">
+																<input type="text" id="smtp"  placeholder="smtp.263.net.cn" class="col-xs-10 col-sm-8 form-control" />
+															</div>
+														</div>
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 发送使用的邮箱地址  </label>
+															<div class="col-sm-8">
+																<input type="text" id="email" placeholder="example@163.com" class="col-xs-10 col-sm-8 form-control" />
+															</div>
+														</div>
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 
+																<input  id="use-safe-port"  name="use-safe-port" class="ace" type="checkbox" />
+																<span class="lbl">SMTP服务器要求安全连接端口</span>
+															</label>
+															<div class="col-sm-8">
+																<input type="text" id="safe-port" disabled="disabled" placeholder="port:25" value="25" class="col-xs-10 col-sm-8 form-control" />
+															</div>
+														</div>
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 
+																<input name="required-author" id="required-author" class="ace" type="checkbox" />
+																<span class="lbl"> SMTP服务器要求身份认证</span>
+															</label>
+															<div class="col-sm-8">
+															</div>
+														</div>
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="email-username"> 验证用户名：  </label>
+															<div class="col-sm-8">
+																<input type="text" id="email-username"  disabled="disabled"  placeholder="Username" class="col-xs-10 col-sm-8 form-control" />
+															</div>
+														</div>
+														<div class=" row form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="email-password"> 验证密码：  </label>
+															<div class="col-sm-8">
+																<input type="password" id="email-password"  disabled="disabled"   class="col-xs-10 col-sm-8 form-control" placeholder="Password" />
+															</div>
+														</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div class="col-xs-12 col-sm-5 widget-container-span">
+										<div class="space-16"></div>
+										<div class="widget-box light-border">
+											<div class="widget-header">
+												<h5 class="smaller">邮件接收人范围</h5>
+											</div>
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="slim-scroll" data-height="350">
+														<div class="content">
+															<!-- <div id="accept-users" class="tree"></div> -->
+															<ul id="treeDemo" class="ztree"></ul>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="space-6"></div>
+										<div class="form-actions center">
+											<button type="button" class="btn btn-success" id="test-button">测试</button>
+											<button type="button" class="btn btn-success" id="sub-button">确定</button>
+											<button type="reset" class="btn btn-success">取消</button>
+										</div>
+									</div>
+									</form>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/fuelux/data/fuelux.tree-sampledata.js}'></script>
+		<script th:src='@{/assets/js/fuelux/fuelux.tree.min.js}'></script>
+		<script th:src='@{/assets/js/jquery-ui-1.10.3.custom.min.js}'></script>
+		<script th:src='@{/assets/js/jquery.ui.touch-punch.min.js}'></script>
+		<script th:src='@{/assets/js/jquery.slimscroll.min.js}'></script>
+		<script th:src='@{/assets/js/zTree/jquery.ztree.all.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+		jQuery(function($){
+		
+			//init START
+			var config = JSON.parse([[${config?.configContent}]]);
+			if(config!=null){
+				$("#forward-config #smtp").val(config.smtp);
+				$("#forward-config #email").val(config.email);
+				$("#forward-config #safe-port").val(config.safeport);
+				$("#forward-config #email-username").val(config.emailusername);
+				$("#forward-config #email-password").val(config.emailpassword);
+			}
+			//初始化设备类型信息
+			var sel = $('#alarm-source-type').val();
+			$.get('/security/findResourceByType?type='+sel,function(data){
+				$("#alarm-source").empty();
+				$.each(data,function(index){
+					$("#alarm-source").append('<option value="'+data[index].id+'">'+data[index].resourceName+'</option>')
+				})
+				//设置初始选中
+			})
+			//init END
+			
+		$('#alarm-source-type').on('change',function(){
+			var selected = $(this).val()
+			$.get('/security/findResourceByType?type='+selected,function(data){
+				$("#alarm-source").empty();
+				$.each(data,function(index){
+					$("#alarm-source").append('<option value="'+data[index].id+'">'+data[index].resourceName+'</option>')
+				})
+			})
+		})
+			
+		// scrollables
+		$('.slim-scroll').each(function () {
+			var $this = $(this);
+			$this.slimScroll({
+				height: $this.data('height') || 100,
+				railVisible:true
+			});
+		});
+		
+		$("#use-safe-port").click(function(){
+			if( $(this).is(':checked')){
+				$("#safe-port").removeAttr("disabled"); 
+			}else{
+				$("#safe-port").attr("disabled","disabled"); 
+			}
+		})
+		
+		$("#required-author").click(function(){
+			if( $(this).is(':checked')){
+				$("#email-username").removeAttr("disabled"); 
+				$("#email-password").removeAttr("disabled"); 
+			}else{
+				$("#email-username").attr("disabled","disabled"); 
+				$("#email-password").attr("disabled","disabled"); 
+			}
+		})
+		
+		$("#sub-button").click(function(){
+			var param = makeMailParam();
+			console.log(param)
+			$.ajax({ 
+	            type:"POST", 
+	            url:"/alarm/ForwardConfig", 
+	            dataType:"json",      
+	            contentType:"application/json",               
+	            data:JSON.stringify(param), 
+	            success:function(data){ 
+	            	location="/alarm/alarmFoward"                
+	            } 
+	         });
+		})
+		
+		//测试邮件发送
+		$("#test-button").click(function(){
+			var param = makeMailParam();
+			$.ajax({ 
+	            type:"POST", 
+	            url:"/mail/sendemail", 
+	            dataType:"json",      
+	            contentType:"application/json",               
+	            data:JSON.stringify(param), 
+	            success:function(data){ 
+	            	var msg = "";
+	            	for(var key in data){
+	            		msg += "接收用户："+ key +",发送结果："+data.key+"\n\t";
+	            	}
+	            	alert(msg)                  
+	            } 
+	         });
+		})
+		
+		//整理邮件参数
+ 		function makeMailParam(){
+			var param = {};
+			param.id= $("#forward-config #configId").val();
+			param.configName = $("#forward-config #group-name").val();
+			param.type=1;
+			param.grade=$("#forward-config #alarm-grade input:radio:checked").val();
+			param.sourceIds= $("#forward-config #alarm-source").val();
+			var config={}
+			config.smtp=$("#forward-config #smtp").val();
+			config.email=$("#forward-config #email").val();
+			config.safeport=$("#forward-config #safe-port").val();
+			config.emailusername=$("#forward-config #email-username").val();
+			config.emailpassword=$("#forward-config #email-password").val();
+			param.configContent =JSON.stringify(config)
+			param.acceptors=getSelectedTree()
+			return param;
+		}
+//创建树形组建
+	var setting = {
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+	var zNodes =[];
+	var acceptorIds = [[${config.acceptorIds}]]
+	var acceptors = []
+	acceptors = acceptorIds.split(',')
+	$.get("/security/findUserTree",function(data){
+		$.each(data,function(index){
+			var node = {};
+			node.id=data[index].id;
+			node.pId=data[index].pid;
+			node.name=data[index].name;
+			node.type=data[index].type;
+			node.checked=false;
+			if(node.type==1){
+				for(var i in acceptors){
+					if(parseInt(acceptors[i]) == node.id){
+						node.checked=true;
+						break;
+					}
+				}
+			}
+			node.open=data[index].open;
+			zNodes.push(node);
+		})
+		treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+	})
+		
+		function getSelectedTree(){
+			var nodes = treeObj.getCheckedNodes(true);
+			var ids = "";
+			$.each(nodes,function(index){
+				if(nodes[index].type==1){
+					ids+=nodes[index].id+",";
+				}
+			})
+			ids = ids.substring(0, ids.lastIndexOf(","));
+			return ids;
+		}
+});
+		"]]>"
+		</script>
+	
+</body>
+</html>

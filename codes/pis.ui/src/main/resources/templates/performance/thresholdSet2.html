@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>性能采集模板管理</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a th:href="@{/}">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">性能采集模板管理</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+
+				<div class="page-content">
+					<div class="row center">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<div class="panel panel-default">
+							    <div class="panel-body">
+									   <form role="form" class="form-horizontal">
+									   	<div class="form-group">
+											<label class="col-sm-2 control-label no-padding-right">选择模板:</label>
+											<div class="col-xs-12 col-sm-5" >
+												<select class="width-70 chosen-select form-control" id="task-template" data-placeholder="Choose a Country...">
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label no-padding-right">CPU利用率:</label>
+											<div class="col-sm-2">
+												<div class="checkbox">
+													<label>
+														<input name="form-field-checkbox" id="cpu-lower-alarm" type="checkbox" class="ace" />
+														<span class="lbl"> 下限报警</span>
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">下限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="cpu-lower-threshold" />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+											<div class="col-sm-2">
+												<label>
+													<input name="form-field-checkbox" id="cpu-upper-alarm"  type="checkbox" class="ace" />
+													<span class="lbl"> 上限报警</span>
+												</label>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">上限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="cpu-upper-threshold"  />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label no-padding-right">内存利用率:</label>
+											<div class="col-sm-2">
+												<div class="checkbox">
+													<label>
+														<input name="form-field-checkbox" id="mem-lower-alarm"  type="checkbox" class="ace" />
+														<span class="lbl"> 下限报警</span>
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">下限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="mem-lower-threshold"  />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+											<div class="col-sm-2">
+												<label>
+													<input name="form-field-checkbox" id="mem-upper-alarm"  type="checkbox" class="ace" />
+													<span class="lbl"> 上限报警</span>
+												</label>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">上限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="mem-upper-threshold"  />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-2 control-label no-padding-right">硬盘利用率:</label>
+											<div class="col-sm-2">
+												<div class="checkbox">
+													<label>
+														<input name="form-field-checkbox"  id="disk-lower-alarm" type="checkbox" class="ace" />
+														<span class="lbl"> 下限报警</span>
+													</label>
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">下限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="disk-lower-threshold"  />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+											<div class="col-sm-2">
+												<label>
+													<input name="form-field-checkbox" id="disk-upper-alarm"  type="checkbox" class="ace" />
+													<span class="lbl"> 上限报警</span>
+												</label>
+											</div>
+											<div class="col-sm-3">
+												<div class="input-group">
+										            <span class="input-group-addon">上限阈值</span>
+										            <input type="text" class="form-control input-mask-date" id="disk-upper-threshold"  />
+										            <span class="input-group-addon">%</span>
+										        </div>
+											</div>
+										</div>
+										<div class="clearfix form-actions">
+											<div class="col-md-offset-3 col-md-9">
+												<button class="btn btn-info" type="button" id="sub">
+													<i class="icon-ok bigger-110"></i>
+													Submit
+												</button>
+	
+												&nbsp; &nbsp; &nbsp;
+												<button class="btn" type="reset">
+													<i class="icon-undo bigger-110"></i>
+													Reset
+												</button>
+											</div>
+										</div>
+									</form>
+							    </div>
+							</div>
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-2.0.3.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			
+			var monitortemplate={};
+			
+			jQuery(function($) {
+				var monitortemp;
+				//获取采样模板
+				/* $.get("/performance/findAllMonitorTemplates",function(data){
+					monitortemp = data;
+					$.each(data,function(index){
+						var value=data[index].id;
+						var text=data[index].tempName;
+						$("#task-template").append('<option value="'+value+'">'+text+'</option>')
+					})
+					$(".chosen-select").chosen();
+					var value = $("#task-template").val();
+					if(monitortemp != null ){
+						var cpuRatio,memRatio,diskRatio;
+						$.each(monitortemp,function(index){
+							if(monitortemp[index].id == value){
+								monitortemplate = monitortemp[index];
+								//找到对应ID的值
+								$("#cpu-lower-alarm").prop('checked',monitortemp[index].cpuLowerAlarm);
+								$("#cpu-upper-alarm").prop('checked',monitortemp[index].cpuUpperAlarm);
+								$("#mem-lower-alarm").prop('checked',monitortemp[index].memLowerAlarm);
+								$("#mem-upper-alarm").prop('checked',monitortemp[index].memUpperAlarm);
+								$("#disk-lower-alarm").prop('checked',monitortemp[index].diskLowerAlarm);
+								$("#disk-upper-alarm").prop('checked',monitortemp[index].diskUpperAlarm);
+								
+								$("#cpu-lower-threshold").val(monitortemp[index].cpuLowerThreshold);
+								$("#cpu-upper-threshold").val(monitortemp[index].cpuUpperThreshold);
+								$("#mem-lower-threshold").val(monitortemp[index].memLowerThreshold);
+								$("#mem-upper-threshold").val(monitortemp[index].memUpperThreshold);
+								$("#disk-lower-threshold").val(monitortemp[index].diskLowerThreshold);
+								$("#disk-upper-threshold").val(monitortemp[index].diskUpperThreshold);
+							}
+						})
+					}
+				}) */
+				
+				/* $("#task-template").on("change",function(){
+					var value = this.value;
+					if(monitortemp != null ){
+						var cpuRatio,memRatio,diskRatio;
+						$.each(monitortemp,function(index){
+							if(monitortemp[index].id == value){
+								//找到对应ID的值
+								$("#cpu-lower-alarm").prop('checked',monitortemp[index].cpuLowerAlarm);
+								$("#cpu-upper-alarm").prop('checked',monitortemp[index].cpuUpperAlarm);
+								$("#mem-lower-alarm").prop('checked',monitortemp[index].memLowerAlarm);
+								$("#mem-upper-alarm").prop('checked',monitortemp[index].memUpperAlarm);
+								$("#disk-lower-alarm").prop('checked',monitortemp[index].diskLowerAlarm);
+								$("#disk-upper-alarm").prop('checked',monitortemp[index].diskUpperAlarm);
+								
+								$("#cpu-lower-threshold").val(monitortemp[index].cpuLowerThreshold);
+								$("#cpu-upper-threshold").val(monitortemp[index].cpuUpperThreshold);
+								$("#mem-lower-threshold").val(monitortemp[index].memLowerThreshold);
+								$("#mem-upper-threshold").val(monitortemp[index].memUpperThreshold);
+								$("#disk-lower-threshold").val(monitortemp[index].diskLowerThreshold);
+								$("#disk-upper-threshold").val(monitortemp[index].diskUpperThreshold);
+							}
+						})
+					}
+				}); */
+				
+				$('.input-mask-date').mask('99');
+				$("#sub").click(function(){
+					monitortemplate['cpuLowerAlarm'] = $("#cpu-lower-alarm").prop('checked');
+					monitortemplate['cpuUpperAlarm'] = $("#cpu-upper-alarm").prop('checked');
+					monitortemplate['memLowerAlarm'] = $("#mem-lower-alarm").prop('checked');
+					monitortemplate['memUpperAlarm'] = $("#mem-upper-alarm").prop('checked');
+					monitortemplate['diskLowerAlarm'] = $("#disk-lower-alarm").prop('checked');
+					monitortemplate['diskUpperAlarm'] = $("#disk-upper-alarm").prop('checked');
+					
+					monitortemplate['cpuLowerThreshold'] = $("#cpu-lower-threshold").val();
+					monitortemplate['cpuUpperThreshold'] = $("#cpu-upper-threshold").val();
+					monitortemplate['memLowerThreshold'] = $("#mem-lower-threshold").val();
+					monitortemplate['memUpperThreshold'] = $("#mem-upper-threshold").val();
+					monitortemplate['diskLowerThreshold'] = $("#disk-lower-threshold").val();
+					monitortemplate['diskUpperThreshold'] = $("#disk-upper-threshold").val();
+					
+					$.ajax({ 
+			            type:"POST", 
+			            url:"/performance/saveTaskThreshold", 
+			            dataType:"json",      
+			            contentType:"application/json",               
+			            data:JSON.stringify(monitortemplate), 
+			            success:function(data){ 
+			            	alert(data)     
+			            } 
+			         });
+				})
+			})
+			"]]>"
+		</script>
+</body>
+</html>

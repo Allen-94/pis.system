@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="utf-8" />
+<title>用户组列表</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active"><a href="/security/userlist">用户管理</a></li>
+						<li class="active">修改用户信息</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<h3 class="header smaller lighter blue">修改用户信息</h3>
+							<form class="form-horizontal" role="form">
+							<div style="float: left; width: 2%">&nbsp;&nbsp;</div>
+								<div class="row" style="float: left; width: 48%;">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<small>修改用户属性</small>
+											</h4>
+										</div>
+										<!-- 隐藏属性 -->
+										<input id="userId" hidden="hidden" th:value="${user.userId}"/>
+										<input id="createTime" hidden="hidden" th:value="${user.createTime}" />
+										<div class="panel-body"  >
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">用户账号: </label>
+												<div class="col-sm-9">
+													<input type="text" id="account" th:value="${user.account}"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">密码重置: </label>
+												<div class="col-sm-9">
+													<input type="text" id="password" th:value="123456" readonly="readonly"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">用户姓名: </label>
+												<div class="col-sm-9">
+													<input type="text" id="realname" th:value="${user.realname}"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">手机号码: </label>
+												<div class="col-sm-9">
+													<input type="text" id="phone" th:value="${user.phone}"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">性别: </label>
+												<div class="col-sm-9">
+													<input type="text" id="gender" th:value="${user.gender}"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1">邮箱: </label>
+												<div class="col-sm-9">
+													<input type="text" id="email" th:value="${user.email}"
+														class="col-xs-10 col-sm-5" />
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div style="float: left; width: 4%">&nbsp;&nbsp;</div>
+								<div class="row" style="float: left; width: 48%;">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<small>所属用户组</small>
+											</h4>
+										</div>
+										<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-3 control-label no-padding-right"
+													for="form-field-1"> </label>
+												<div class="col-sm-9">
+													<select name="" style="width: 150px" id="usergroup">
+														<option value="0">用户组1</option>
+														<option value="1">用户组2</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="clearfix form-actions">
+										<div class="col-md-offset-3 col-md-9">
+											<button class="btn btn-info" type="button" id="update">
+												<i class="icon-ok bigger-110"></i> Submit
+											</button>
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="icon-undo bigger-110"></i> Reset
+											</button>
+										</div>
+										<span id="msg"></span>
+									</div>
+								</div>
+
+							</form>
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript">
+	"<![CDATA["
+	jQuery(function($){
+		$("#update").click(function(){
+			var param = {};
+			/* alert($("#usergroup").val()) */
+			param['groupId']=$("#usergroup").val();
+			param['userId'] = $("#userId").val();
+			param['account'] = $("#account").val();
+			param['password'] = $("#password").val();
+			param['createTime'] = $("#createTime").val();
+			param['gender'] = $("#gender").val();
+			param['phone'] = $("#phone").val();
+			param['email'] = $("#email").val();
+			param['realname'] = $("#realname").val();
+			if(param['account']==""||param['password']==""||param['realname']==""||param['phone']==""||param['gender']==""||param['email']==""){
+				$("#msg").html("用户属性不能为空").css("color","red")
+			}else if(param['groupId']==0){
+				$("#msg").html("用户组不能为空").css("color","red")
+			}else{
+				 $.ajax({
+					url:"/security/updateUserInfo",
+					datatype:"json",
+					data:JSON.stringify(param),
+					contentType:"application/json",
+					type:'POST',
+					success:function(data){
+						alert(data)
+						location="/security/userlist"
+					}
+				}); 
+			}
+		});
+		
+		 $.ajax({
+			type:'POST',
+			url:"/security/findGroupLists",
+			async : false,
+			datatype:"json",
+			contentType:"application/json",
+			success:function(data){
+				 var html="<option value=\"0\">-请选择-</option>";
+				for(var i=0;i<data.length;i++){
+					html+="<option value=\""+data[i].groupId+"\">"+data[i].groupName+"</option>";
+				}
+				$("#usergroup").html(html);
+			}
+		}); 
+		/*  $("#usergroup").val("superuser");  */ 
+		$.ajax({
+			type:'POST',
+			url:"/security/findGroupOfUser?userId="+$("#userId").val(),
+			datatype:"json",
+			success:function(data){
+				/* alert("groupId:"+data.groupId) */
+				if(data.groupId==undefined){
+					$("#usergroup").val(0);
+				}else{
+			 		$("#usergroup").val(data.groupId);
+				}
+			}
+		}); 
+	});
+	"]]>"
+	</script>
+</body>
+</html>

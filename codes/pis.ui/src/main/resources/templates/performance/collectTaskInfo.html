@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>性能采集任务管理</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/datepicker.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/bootstrap-timepicker.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/daterangepicker.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">性能采集任务信息</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<form action="" class="form-horizontal" role="form">
+										<div class="col-xs-12 col-sm-7">
+											<div class="row">
+												<div class="form-group">
+													<label class="col-sm-2 control-label no-padding-right" for="taskname"> 任务名称: </label>
+													<div class="col-sm-7">
+														<input hidden="hidden" type="text" id="taskid" th:value="${taskinfo.id}"/>
+														<input type="text" id="taskname" placeholder="任务名称" th:value="${taskinfo.taskName}" class="col-xs-12 col-sm-12" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h3 class="panel-title">基本属性</h3>
+													</div>
+													<div class="panel-body">
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right">起止日期</label>
+														<div class="col-xs-8 col-sm-8">
+																<div class="input-group">
+																	<span class="input-group-addon">
+																		<i class="icon-calendar bigger-110"></i>
+																	</span>
+																	<input class="form-control" type="text" th:value="${taskinfo.effectiveStartDate+'-'+taskinfo.effectiveEndDate}" name="date-range-picker" id="task-start-end-data" />
+																</div>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right">起止时间</label>
+														<div class="input-group bootstrap-timepicker col-xs-8 col-sm-4">
+															<input id="task-start-time" type="text" th:value="${taskinfo.collectStartTime}" class="form-control" />
+														</div>
+														<div class="input-group bootstrap-timepicker col-xs-8 col-sm-4">
+															<input id="task-end-time" type="text" th:value="${taskinfo.collectEndTime}"  class="form-control" />
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right">采集间隔</label>
+														<input type="text" class="col-sm-offset-3 form-control input-mini" id="task-delay" th:value="${taskinfo.collectDelay}" />
+													</div>
+													<div class="form-group">
+														<label class="col-sm-3 control-label no-padding-right">任务状态</label>
+														<label class="col-sm-9 ">
+															<input id="tastk-status" name="tastk-status" class="form-control ace ace-switch ace-switch-6" type="checkbox" th:if="${taskinfo.status} == 1" checked="checked" />
+															<input id="tastk-status" name="tastk-status" class="form-control ace ace-switch ace-switch-6" type="checkbox" th:if="${taskinfo.status} == 0"/>
+															<span class="lbl"></span>
+														</label>
+													</div>
+												</div>
+												</div>
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h3 class="panel-title">监控指标</h3>
+													</div>
+													<div class="panel-body">
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">选择模板</label>
+															<div class="col-sm-9" >
+															<!-- th:checked="${temp.id}==${taskinfo.templateId}" -->
+																<select class="width-60 form-control" id="task-template" data-placeholder="选择采用模板...">
+																	<option  th:each="temp:${templates}" th:value="${temp.id}" th:text="${temp.templateName}"></option>
+																</select>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right">对应指标</label>
+															<div class="col-sm-9 control-group" id="performanceIndex">
+																
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-5">
+											<div class="space-22"></div>
+											<div class="panel panel-default">
+													<div class="panel-heading">
+														<h3 class="panel-title">采集对象</h3>
+													</div>
+													<div class="panel-body pre-scrollable">
+														<!-- <div id="tree1" class="tree"></div> -->
+														<ul id="treeDemo" class="ztree"></ul>
+													</div>
+											</div>
+											<div class="clearfix form-actions">
+												<div class="col-md-offset-3 col-md-9">
+													<button id="save" class="btn btn-info" type="button">
+														<i class="icon-ok bigger-110"></i>
+														Submit
+													</button>
+		
+													&nbsp; &nbsp; &nbsp;
+													<button class="btn" type="reset">
+														<i class="icon-undo bigger-110"></i>
+														Reset
+													</button>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-2.0.3.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-timepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/moment.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/daterangepicker.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-colorpicker.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.knob.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.autosize.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.inputlimiter.1.3.1.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-tag.min.js}"></script>
+		<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				var deviceType = 0;	//当前模板对应的设备类型，过滤掉设备数的非指定类型的设备
+				var currentTempId = [[${taskinfo.templateId}]]
+				if(currentTempId!=0){
+					$("#task-template").val(currentTempId);
+				}
+				
+				$("#task-template").on("change",function(){
+					var value = $(this).val();
+					var items = [[${taskinfo.items}]]
+					var templates = [[${templates}]]
+					
+					var templateItems = null;
+					$.each(templates,function(i){
+						if(templates[i].id==value){
+							templateItems = templates[i].items;
+							deviceType = templates[i].deviceType
+						}
+					})
+					
+					
+					$("#performanceIndex").empty();
+					$.each(templateItems,function(i){
+						var itemId = templateItems[i].id;
+						var cb = $('<div class="checkbox"><label><input  id="'+itemId+'" type="checkbox"> '+templateItems[i].itemName+'</label></div>')
+						if(items!=null){
+							$.each(items,function(j){
+								if(items[j].id == itemId){
+									$(cb).find('input').attr("checked", true);
+								}
+							})
+						}
+						$("#performanceIndex").append(cb);
+					})
+				});
+				$("#task-template").change();
+				var treeObj = null;
+				function getSelectedTree(){
+					var ids = "";
+					var nodes = treeObj.getCheckedNodes(true);
+					$.each(nodes,function(index){
+						var value = nodes[index].value
+						if(value!=null&&value.resourceType == deviceType){
+							ids += nodes[index].id;
+							ids += ",";
+						}
+					})
+					ids = ids.substring(0,ids.length-1);
+					return ids;
+				}
+				
+				//获取任务需要采集的项的id,以逗号分割
+				getItems = function(){
+					var index = $("#performanceIndex").find("input:checked")
+					var ids = "";
+					$.each(index,function(i){
+						ids += $(index[i]).attr("id")+","
+					})
+					if(ids.length>0){
+						ids = ids.substring(0,ids.length-1)
+					}
+					return ids;
+				}
+				//提交表单
+				$("#save").click(function(){
+					var param = {};
+					param['id']=$("#taskid").val()
+					param['taskName']=$("#taskname").val()
+					var startenddate = $("#task-start-end-data").val();
+					var strs= new Array();
+					strs = startenddate.split('-')
+					param['effectiveStartDate']= $.trim(strs[0])
+					param['effectiveEndDate']=  $.trim(strs[1])
+					param['collectStartTime']=$("#task-start-time").val()
+					param['collectEndTime']=$("#task-end-time").val()
+					param['collectDelay']=$("#task-delay").val()
+					param['status']=$("#tastk-status").prop('checked')?1:0
+					param.templateId = $("#task-template").val()
+					param.items = getItems();		//涉及到的采集项。
+					param['devices']=getSelectedTree();
+					 $.ajax({ 
+			            type:"POST", 
+			            url:"/performance/saveCollectTaskInfo", 
+			            dataType:"json",      
+			            contentType:"application/json",               
+			            data:JSON.stringify(param), 
+			            success:function(data){ 
+			            	alert(data)     
+			            	location="/performance/collectTask"
+			            } 
+			         }); 
+				});
+				
+				
+				
+				$('#task-delay').ace_spinner({value:[[${taskinfo.collectDelay}]],min:1,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+				.on('change', function(){
+					//alert(this.value)
+				});
+				$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				$('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+					$(this).next().focus();
+				});
+
+				$('#task-start-time').timepicker({
+					minuteStep: 1,
+					showSeconds: true,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#task-end-time').timepicker({
+					minuteStep: 1,
+					showSeconds: true,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				
+				//创建树形组建
+				var setting = {
+						check: {
+							enable: true
+						},
+						data: {
+							simpleData: {
+								enable: true
+							}
+						}
+					};
+
+					var zNodes =[
+					];
+					
+					 $.get("/security/findAllResourcesByTaskId?taskId="+$("#taskid").val(),function(data){
+						$.each(data,function(index){
+							var node = {};
+							node.id=data[index].id;
+							node.pId=data[index].pid;
+							node.name=data[index].name;
+							node.value=data[index].value;
+							node.checked=data[index].checked;
+							node.open=data[index].open;
+							zNodes.push(node);
+						})
+						treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+					}) 
+					
+			})
+			
+			"]]>"
+		</script>
+		
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>播控分组管理</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<link rel="stylesheet" th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">播控分组管理</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="col-sm-8  no-padding">
+									<div class="panel panel-default" >
+									    <div class="panel-body">
+									                  <div class="table-responsive">
+									                  	<p class="pull-right">
+															<button class="btn btn-success" id="btn_newplayergroup" >新增分组</button>
+															<button class="btn btn-success">批量删除</button>
+														</p>
+														<table id="exploer" class="table table-striped table-bordered table-hover">
+															<thead>
+																<tr>
+																	<th class="center">
+																		<label>
+																			<input type="checkbox" class="ace" />
+																			<span class="lbl"></span>
+																		</label>
+																	</th>
+																	<th>播控分组名称</th>
+																	<th>播控分组说明</th>
+																	<th>创建者</th>
+																	<th>操作</th>
+																</tr>
+															</thead>
+														</table>
+												</div>
+									    </div>
+									</div>
+								</div>
+								<!-- 新建播控分组 -->
+								<div class="modal fade" id="newplayergroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+													&times;
+												</button>
+												<h4 class="modal-title" id="myModalLabel">
+													新建播控分组
+												</h4>
+											</div>
+											<div class="modal-body">
+												<form id="formplayergroup" class="form-horizontal" role="form">
+												  <input type="text" id="groupId" hidden="hidden"/>
+								  				<div id="div_groupName" class="form-group">
+													<label for="groupName" class="col-sm-2 control-label">分组名称</label>
+													<div class="col-xs-12 col-sm-7">
+														<span class="block input-icon input-icon-right">
+															<input type="text" id="groupName"  class="width-100" />
+															<i></i>
+														</span>
+													</div>
+													<div class="help-block col-xs-12 col-sm-reset inline">
+													</div>
+												</div>
+												  <div class="form-group">
+												    <label for="lastname" class="col-sm-2 control-label">分组说明</label>
+												    <div class="col-xs-12 col-sm-7">
+												      <input type="text" class="form-control width-100" id="description" placeholder="请输入分组说明" />
+												    </div>
+												  </div>
+												  <div class="form-group">
+												    <label for="lastname" class="col-sm-2 control-label">选择播控</label>
+												    <div class="col-sm-10">
+												      <div class="panel panel-default">
+													    <div class="panel-body">
+													       <div class="panel-heading">
+																<h3 class="panel-title">设备列表</h3>
+															</div>
+															<div class="panel-body pre-scrollable">
+																<ul id="players" class="ztree"></ul>
+															</div>
+													    </div>
+													</div>
+												    </div>
+												  </div>
+												</form>
+												<div id="div_alert"></div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+												</button>
+												<button id="sub_playergroup" type="button"  class="btn btn-primary">
+													提交
+												</button>
+											</div>
+										</div><!-- /.modal-content -->
+									</div><!-- /.modal -->
+								</div>
+								<div class="col-sm-4  no-padding">
+									<div class="panel panel-default">
+									    <div class="panel-body">
+									       <div class="panel-heading">
+												<h3 class="panel-title">包含的播控</h3>
+											</div>
+											<div class="panel-body pre-scrollable">
+												<!-- <div id="tree1" class="tree"></div> -->
+												<ul id="treeDemo" class="ztree"></ul>
+											</div>
+									    </div>
+									</div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+		<script th:src="@{/assets/js/jquery.gritter.min.js}"></script>
+		<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+		<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				var parentId = "root";
+				var oTable1 = $('#exploer').DataTable( {
+					searching:false,
+					stateSave:true,
+					bLengthChange:true,
+					ordering:false,
+					colReorder: true,
+					info:false,
+					paging:false,
+					autoWidth: true,
+					ajax: {
+						"url": "/playercontrol/findAll",
+						"dataSrc": ""
+					},
+					columns:[
+						{ 
+							"sClass":"center",
+							"data": "id",
+							"render":function(data, type, full, meta){
+									return '<label><input type="checkbox" class="ace" /><span class="lbl"></span></label>'
+								}
+						},
+						{
+							"data":"groupName"
+						},
+						{
+							"data":"description"
+						},
+						{
+							"data":"creater",
+							"render":function(data,type,val,meta){
+								return data.account+'/'+data.realname
+							}
+						},
+						{ 
+							"sClass":"center",
+							"data": "id" ,
+							"render":function(data, type, val, meta){
+								 var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">';
+									html+= '<button type="button" class="btn btn-xs btn-info" onclick="infoplayergroup('+data+')"  data-toggle="button">修改</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="delplayergroup('+data+')"  data-toggle="button">删除</button>'
+								+'</div>'
+								return html;
+							}
+						} 
+					]
+				});
+				
+				$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+				});
+				
+				//创建树形组建
+				var setting = {
+						check: {
+							enable: true
+						},
+						data: {
+							simpleData: {
+								enable: true
+							}
+						}
+					};
+
+					var zNodes =[
+						/* { id:1, pId:0, name:"随意勾选 1", open:true},
+						{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+						{ id:111, pId:11, name:"随意勾选 1-1-1"},
+						{ id:112, pId:11, name:"随意勾选 1-1-2"},
+						{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+						{ id:121, pId:12, name:"随意勾选 1-2-1"},
+						{ id:122, pId:12, name:"随意勾选 1-2-2"},
+						{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+						{ id:21, pId:2, name:"随意勾选 2-1"},
+						{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+						{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+						{ id:222, pId:22, name:"随意勾选 2-2-2"},
+						{ id:23, pId:2, name:"随意勾选 2-3"} */
+					];
+					var treeObj = null;
+					var players = null;
+					$.get("/security/findAllPlayers",function(data){
+						$.each(data,function(index){
+							var node = {};
+							node.id=data[index].id;
+							node.pId=data[index].pid;
+							node.name=data[index].name;
+							node.value=data[index].value;
+							node.checked=data[index].checked;
+							node.open=data[index].open;
+							zNodes.push(node);
+						})
+						treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+						players = $.fn.zTree.init($("#players"), setting, zNodes);
+					})
+					
+					//点开文件夹
+				$('#exploer tbody').on('click', 'tr', function () {
+			        var data = oTable1.row( this ).data();
+			        $.each(zNodes,function(i){
+				  		zNodes[i].checked=false;
+					})
+					$.each(data.players,function(index){
+						$.each(zNodes,function(i){
+							if(zNodes[i].id == data.players[index].id){
+								zNodes[i].checked=true;
+							}
+						})
+					})
+					players = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			    });
+					 
+				checkParam = function(groupName,playerids){
+					if(groupName != '' && playerids != ''){
+						return true;
+					}else{
+						return false;
+					}
+				}
+					$("#sub_playergroup").click(function(){
+						var groupId = $("#groupId").val();
+						var groupName= $("#groupName").val();
+						var description = $("#description").val();
+						var nodes = players.getCheckedNodes(true);
+						var playerids = '';
+						$.each(nodes,function(i){
+							if(nodes[i].value.resourceType == 6){
+								playerids += nodes[i].value.id
+								playerids += ',';
+							}
+						})
+						playerids = playerids.slice(0,-1)
+						if(checkParam(groupName,playerids)){
+							$.ajax({
+								url:'/playercontrol/addPlayerGroup',
+								data:{"id":groupId,"groupName":groupName,"description":description,"playerids":playerids},
+								success:function(data){
+								var success ='<div class="alert alert-success">'
+											+'<a href="#" class="close" data-dismiss="alert">&times;</a>'
+											+'<strong>成功！</strong>提交播控分组成功。'
+											+'</div>'
+								var warning='<div class="alert alert-warning">'
+											+'<a href="#" class="close" data-dismiss="alert">&times;</a>'	
+											+'<strong>失败！</strong>提交播控分组失败。'	
+											+'</div>'
+									if(data.flag){
+										$(".modal-body #div_alert").empty().append(success);
+									}else{
+										$(".modal-body #div_alert").empty().append(warning);
+									}
+									oTable1.ajax.reload();		
+								}
+							});
+						}else{
+							var warning='<div class="alert alert-warning">'
+								+'<a href="#" class="close" data-dismiss="alert">&times;</a>'	
+								+'<strong>不可提交！</strong>分组名称和播控不可为空。'	
+								+'</div>'
+								$(".modal-body #div_alert").empty().append(warning);
+						}
+					})
+					initModel = function(){
+						$(".modal-body .alert").remove();
+						$("#groupId").val('');
+						 $("#groupName").val('');
+						 $("#description").val('');
+						 $.each(zNodes,function(i){
+						  		zNodes[i].checked=false;
+						 })
+						 players = $.fn.zTree.init($("#players"), setting, zNodes);
+						 $("#div_groupName").removeClass("has-error");
+						 $("#div_groupName").removeClass("has-success");
+						 $("#div_groupName .help-block").text("")
+						 $("#div_groupName div span i").removeClass()
+						 $('#sub_playergroup').attr("disabled",false); 
+					}
+					
+					$("#groupName").on("blur",function(){
+						var groupId = $("#groupId").val();
+						var groupName= $("#groupName").val();
+						if(groupName!=''){
+							$.get("/playercontrol/check",{"id":groupId,"groupName":groupName},function(data){
+								if(data){
+									$("#div_groupName").removeClass("has-error");
+									$("#div_groupName").addClass("has-success");
+									$("#div_groupName .help-block").text("播控分组名称可用!")
+									$("#div_groupName div span i").removeClass().addClass("icon-ok-sign")
+									$("#sub_playergroup").removeAttr("disabled"); 
+								}else{
+									$("#div_groupName").removeClass("has-success");
+									$("#div_groupName").addClass("has-error");
+									$("#div_groupName .help-block").text("播控分组名称不可重复!")
+									$("#div_groupName div span i").removeClass().addClass("icon-remove-sign")
+									$('#sub_playergroup').attr("disabled","disabled"); 
+								}
+							})
+						}
+					})
+					//删除分组
+					delplayergroup = function(id){
+						 $.ajax({
+								url:'/playercontrol/delPlayerGroup/'+id,
+								success:function(data){
+									$.gritter.add({
+										// (string | mandatory) the heading of the notification
+										title: '删除分组',
+										// (string | mandatory) the text inside the notification
+										text: data.message,
+										class_name: 'gritter-info gritter-center'
+									});
+								}
+							});
+					 }
+					 
+					 infoplayergroup = function(id){
+						 initModel();
+						//根据播控组id获取包含的，重置播控设备树
+						  $.get("/playercontrol/findById/"+id,function(data){
+							$("#groupId").val(data.id);
+						  	$("#groupName").val(data.groupName);
+						  	$("#description").val(data.description);
+							$.each(zNodes,function(i){
+						  		zNodes[i].checked=false;
+							})
+							$.each(data.players,function(index){
+								$.each(zNodes,function(i){
+									if(zNodes[i].id == data.players[index].id){
+										zNodes[i].checked=true;
+									}
+								})
+							})
+							players = $.fn.zTree.init($("#players"), setting, zNodes);
+						})
+						
+						 $('#newplayergroup').modal({
+							 show:true
+						 })
+					 }
+					 
+					 $("#btn_newplayergroup").click(function(){
+						 initModel();
+						 $('#newplayergroup').modal({show:true})
+					 })
+			})
+			"]]>"
+		</script>
+</body>
+</html>

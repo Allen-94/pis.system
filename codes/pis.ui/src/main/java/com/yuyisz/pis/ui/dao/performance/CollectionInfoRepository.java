@@ -1,0 +1,28 @@
+package com.yuyisz.pis.ui.dao.performance;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.yuyisz.pis.ui.module.performance.CollectionInfo;
+import com.yuyisz.pis.ui.module.security.DevResources;
+@Repository
+public interface CollectionInfoRepository extends JpaRepository<CollectionInfo, Integer>,JpaSpecificationExecutor<CollectionInfo> {
+
+	@Query(value="select * from t_collection_info t where t.create_time in (select max(m.create_time) from t_collection_info m " + 
+			"group by m.dev_id " + 
+			"having m.dev_id in (?1))" ,nativeQuery=true)
+	List<CollectionInfo> findNewestCollectionInfo(List<Integer> devIds);
+
+	/*@Query(value="select * from t_monitor_info t where t.create_time in (select max(m.create_time) from t_monitor_info m " + 
+			"group by m.dev_id " + 
+			"having m.dev_id in (?1))" ,nativeQuery=true)
+	List<CollectionInfo> findCurrentMonitorInfos(List<Integer> devIds);
+*/
+	List<CollectionInfo> findByDevIdAndCreateTimeGreaterThanEqualOrderByCreateTimeDesc(int devId, Date endDate);
+
+}

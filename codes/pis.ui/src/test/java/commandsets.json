@@ -1,0 +1,29 @@
+[
+	{
+		"cmdsetId": 0,
+		"cmdsetName": "业务管理",
+		"cmdset_discription": "业务管理...",
+		"cmds": null
+	},	{
+		"cmdsetId": 0,
+		"cmdsetName": "设备管理",
+		"cmdset_discription": "设备管理...",
+		"cmds": null
+	},	{
+		"cmdsetId": 0,
+		"cmdsetName": "告警管理",
+		"cmdset_discription": "告警管理...",
+		"cmds": null
+	},	{
+		"cmdsetId": 0,
+		"cmdsetName": "性能管理",
+		"cmdset_discription": "性能管理...",
+		"cmds": null
+	},	{
+		"cmdsetId": 0,
+		"cmdsetName": "安全管理",
+		"cmdset_discription": "安全管理...",
+		"cmds": null
+	}
+	
+]

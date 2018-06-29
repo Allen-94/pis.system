@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>性能模板阈值设置</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="reserveInfo" th:text="'性能模板【 '+${template.templateName}+'】阈值设置'"></h4>
+			</div>
+				<div class="modal-body">
+					 <form role="form" class="form-horizontal"  th:each="item:${template.items}">
+						<div class="form-group">
+							<input id="itemId" th:value="${item.id}" hidden="hidden"/>
+							<label class="col-sm-2 control-label no-padding-right" th:text="${item.itemName}"></label>
+							<div class="col-sm-2">
+								<div class="checkbox">
+									<label>
+										<input name="form-field-checkbox" id="lowerAlarm" type="checkbox" checked="checked" class="ace" th:if="${item.lowerAlarm==true}" />
+										<input name="form-field-checkbox" id="lowerAlarm" type="checkbox" class="ace" th:if="${item.lowerAlarm==false}" />
+										<span class="lbl"> 下限报警</span>
+									</label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="input-group">
+						            <span class="input-group-addon">下限阈值</span>
+						            <input type="text" class="form-control input-mask-date" id="lowerThreshold" th:value="${item.lowerThreshold}" />
+						            <span class="input-group-addon">%</span>
+						        </div>
+							</div>
+							<div class="col-sm-2">
+								<label>
+									<input name="form-field-checkbox" id="upperAlarm"  type="checkbox"  checked="checked" class="ace" th:if="${item.upperAlarm==true}"/>
+									<input name="form-field-checkbox" id="upperAlarm"  type="checkbox" class="ace" th:if="${item.upperAlarm==false}"/>
+									<span class="lbl"> 上限报警</span>
+								</label>
+							</div>
+							<div class="col-sm-3">
+								<div class="input-group">
+						            <span class="input-group-addon">上限阈值</span>
+						            <input type="text" class="form-control input-mask-date" id="upperThreshold" th:value="${item.upperThreshold}" />
+						            <span class="input-group-addon">%</span>
+						        </div>
+							</div>
+						</div>
+					</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitContent()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+	<!--[if !IE]> -->
+	<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				$('.input-mask-date').mask('99');
+				
+				submitContent = function(){
+					var param = [];
+					var formgroups = $(".modal-body").find("form .form-group");
+					$.each(formgroups,function(i){
+						var item = {};
+						item.id = $(formgroups[i]).find("#itemId").val();
+						item.lowerAlarm = $(formgroups[i]).find("#lowerAlarm").is(":checked");
+						item.lowerThreshold = $(formgroups[i]).find("#lowerThreshold").val();
+						item.upperAlarm = $(formgroups[i]).find("#upperAlarm").is(":checked");
+						item.upperThreshold = $(formgroups[i]).find("#upperThreshold").val();
+						param.push(item)
+					})
+					
+					/* param.id=$("#templateId").val()
+					param.templateName=$("#templateName").val()
+					param.description=$("#description").val()
+					param.deviceType=$("#deviceType").val()
+					param.indexIds = "";
+					var indexs = $("#performanceIndex").find('input:checkbox:checked')
+					$.each(indexs,function(i){
+						param.indexIds+=$(indexs[i]).val()+','
+					})
+					alert(param.indexIds.substring(0,param.indexIds.length-1)) */
+					$.ajax({
+						url : '/performance/updateItem',
+						type:"post",
+						contentType:"application/json; charset=utf-8",
+						data : JSON.stringify(param),
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交性能采集模板阈值成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交性能采集模板阈值失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(".modal-body #div_alert").empty().append(success);
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+						}
+					})
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

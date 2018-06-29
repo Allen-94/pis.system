@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>新增播表</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/datepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-timepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/colorpicker.css}" />
+<style type="text/css">
+	.dropdown-menu{
+		 z-index: 10000;
+	}
+</style>
+</head>
+
+<body>
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="playerListLabel">新增预定义环境变量</h4>
+			</div>
+				<div class="modal-body">
+				<form id="form_format_file_upload" class="form-horizontal"  role="form">
+					<input type="text" id="SVid" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="SVname" class="col-sm-3 control-label">参数名</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="SVname"  placeholder="请输入参数名..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="SVvalue" class="col-sm-3 control-label">变量值</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="SVvalue"  placeholder="请输入参数变量值..." />
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitSyatemVariable()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-timepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/moment.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/daterangepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.inputlimiter.1.3.1.min.js}"></script>
+		<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				$(".modal-body #div_alert").empty()
+				
+				submitSyatemVariable = function(){
+					var param = {};
+					var SVid = $("#SVid").val();
+					var SVname = $("#SVname").val();
+					var SVvalue = $("#SVvalue").val();
+					console.log(param)
+					param.id=SVid;
+					param.variableName=SVname;
+					param.value=SVvalue;
+					$.ajax({
+						url : '/infosources/addSysVariable',
+						type:"POST",
+						contentType:"application/json",
+						data : JSON.stringify(param),
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>新增环境变量成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>新增环境变量失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(success);
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+							$('#systemVariable_table').DataTable().ajax.reload();
+							$('#myModal').modal("hide");
+						}
+					}) 
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

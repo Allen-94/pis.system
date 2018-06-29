@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>媒资库管理</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" th:href="@{/assets/css/dropzone.css}" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<link rel="stylesheet" th:href="@{/assets/css/jquery.gritter.css}" />
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">媒资库管理</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="col-sm-12 widget-container-span">
+										<div class="widget-box">
+											<div class="widget-header">
+												<h5 id="path" class="bigger lighter">媒体资源库:</h5>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-toolbox">
+													<div class="btn-toolbar">
+														<div class="btn-group">
+															<button class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-createfolder">
+																<i class="icon-cog bigger-110"></i>新建文件夹
+															</button>
+															<button class="btn btn-sm btn-purple" data-toggle="modal" data-target="#modal-upload">
+																<i class=" icon-cloud-upload bigger-110"></i>
+																上传文件
+															</button>
+															<button id="authorization_folder" class="btn btn-sm btn-pink"  data-toggle="modal" data-target="#modal-upload">
+																<i class=" icon-share-alt bigger-110"></i>
+																授权文件夹
+															</button>
+															<button id="submit_approval" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-approval">
+																<i class=" icon-beaker bigger-110"></i>
+																提交审批
+															</button>
+															<button id="del_selected" class="btn btn-sm btn-danger">
+																<i class=" icon-trash bigger-110"></i>
+																批量删除
+															</button>
+														</div>
+													</div>
+												</div>
+												<div class="widget-main">
+												<div class="table-responsive">
+													<table id="exploer" class="table table-striped row-border table-hover" style="white-space: nowrap;">
+														<thead>
+															<tr>
+																<th class="center">
+																	<label>
+																		<input type="checkbox" class="ace" />
+																		<span class="lbl"></span>
+																	</label>
+																</th>
+																<th>名称</th>
+																<th>尺寸</th>
+																<th>是否审批</th>
+																<th>是否引用</th>
+																<th>创建日期</th>
+																<th>授权管理人</th>
+																<th>创建人</th>
+																<th>操作</th>
+															</tr>
+														</thead>
+													</table>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- 模态框（Modal） -->
+									<div class="modal fade" id="modal-createfolder" tabindex="-1" role="dialog"  aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														&times;
+													</button>
+													<h4 class="modal-title" id="myModalLabel">
+														新建文件夹
+													</h4>
+												</div>
+												<div class="modal-body">
+													<form class="form-horizontal" role="form">
+												  <div class="form-group">
+												    <label for="folderName" class="col-sm-3 control-label">文件夹名称</label>
+												    <div class="col-sm-9">
+												      <input type="text" class="form-control" id="folderName" placeholder="请输入文件夹名字" />
+												    </div>
+												  </div>
+												</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+													</button>
+													<button type="button" id="sub" class="btn btn-primary" data-dismiss="modal">
+														提交
+													</button>
+												</div>
+											</div><!-- /.modal-content -->
+										</div><!-- /.modal -->
+									</div>
+									<!--上传文件 -->
+									<div class="modal fade" id="modal-upload" tabindex="-1" role="dialog"  aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														&times;
+													</button>
+													<h4 class="modal-title" id="myModalLabel">
+														上传文件
+													</h4>
+												</div>
+												<div class="modal-body">
+													<div id="dropzone">
+														<form action="/infosources/upload"  class="dropzone">
+															<div class="fallback">
+																<input name="file" type="file" multiple="multiple"  />
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+													</button>
+												</div>
+											</div><!-- /.modal-content -->
+										</div><!-- /.modal -->
+									</div>
+									<!--提交审批对话框 -->
+									<div class="modal fade" id="modal-approval" tabindex="-1" role="dialog"  aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+														&times;
+													</button>
+													<h4 class="modal-title">
+														提交审批
+													</h4>
+												</div>
+												<div class="modal-body">
+													<form action="" class="form-horizontal" role="form">
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-flow_name"> 审批单名称 </label>
+															<div class="col-sm-9">
+																<input type="text" id="form-field-flow_name" placeholder="审批单名称" class="col-xs-12 col-sm-12" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 审批资源 </label>
+															<div class="col-sm-9">
+																<ul class="list-unstyled spaced2">
+														<li>
+															<i class="icon-ok green"></i>
+															10 GB Disk Space
+														</li>
+
+														<li>
+															<i class="icon-ok green"></i>
+															200 GB Bandwidth
+														</li>
+
+														<li>
+															<i class="icon-ok green"></i>
+															100 Email Accounts
+														</li>
+
+														<li>
+															<i class="icon-ok green"></i>
+															10 MySQL Databases
+														</li>
+
+														<li>
+															<i class="icon-ok green"></i>
+															$10 Ad Credit
+														</li>
+
+														<li>
+															<i class="icon-remove red"></i>
+															Free Domain
+														</li>
+													</ul>
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 第一审批人 </label>
+															<div class="col-sm-4">
+																	<div class="input-group">  
+														          	<div class="input-group-addon fontsize12">用户组</div>  
+														              <select class="form-control"  id="group_1" name="brand">  
+														                    <option value="">---全部---</option>  
+														              </select>  
+														            </div> 
+																</div>
+																<div class="col-sm-4">
+																	<div class="input-group">  
+														              <div class="input-group-addon fontsize12">用户</div>  
+														              <select class="form-control"  id="approver_1" name="brand">  
+														              </select>  
+														            </div> 
+																</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 第二审批人 </label>
+															<div class="col-sm-4">
+																<div class="input-group">  
+													              <div class="input-group-addon fontsize12">用户组</div>  
+													              <select class="form-control"  id="group_2" name="brand">  
+													                    <option value="">---全部---</option>  
+													              </select>  
+													            </div> 
+															</div>
+															<div class="col-sm-4">
+																<div class="input-group">  
+													              <div class="input-group-addon fontsize12">用户</div>  
+													              <select class="form-control"  id="approver_2" name="brand">  
+													              </select>  
+													            </div> 
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 第三审批人 </label>
+															<div class="col-sm-4">
+																<div class="input-group">  
+													              <div class="input-group-addon fontsize12">用户组</div>  
+													              <select class="form-control"  id="group_3" name="brand">  
+													                    <option value="">---全部---</option>  
+													              </select>  
+													            </div> 
+															</div>
+															<div class="col-sm-4">
+																<div class="input-group">  
+													              <div class="input-group-addon fontsize12">用户</div>  
+													              <select class="form-control"  id="approver_3" name="brand">  
+													              </select>  
+													            </div> 
+															</div>
+														</div>
+														<div class="form-group">
+															<span>提示：审批用户不能重复</span>
+														</div>
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+													&nbsp;&nbsp;
+													<button type="button" class="btn btn-success" data-dismiss="modal" id="btn_submit_approval">提交</button>
+												</div>
+											</div><!-- /.modal-content -->
+										</div><!-- /.modal -->
+									</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src="@{/assets/js/dropzone.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.gritter.min.js}"></script>
+		<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+		<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+		<!--[if lte IE 8]><script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/excanvas.min.js}"></script><![endif]-->
+		<script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				var parentId = "MediaRoot";
+				uploadfile = function(filename,size){
+					$.ajax({
+						url:"/infosources/uploadfile?filename="+filename+"&parentId="+parentId+'&size='+size,
+						type:"POST",
+				        dataType: "json",
+				        success:function(data){
+				        	if(data.result){
+				        		reloadFolder(parentId)
+				        	}
+				        }
+					})
+				}				
+				try {
+				  $(".dropzone").dropzone({
+				    paramName: "file", // The name that will be used to transfer the file
+				    maxFilesize: 0.5, // MB
+					addRemoveLinks : true,
+					dictDefaultMessage :
+					'<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> Drop files</span> to upload \
+					<span class="smaller-80 grey">(or click)</span> <br /> \
+					<i class="upload-icon icon-cloud-upload blue icon-3x"></i>',
+					dictResponseError: 'Error while uploading file!',
+					//change the previewTemplate to use Bootstrap progress bars
+					previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
+				  	init:function(){
+				  		this.on('success',function(file){
+				  			console.log("File " + file.name + " uploaded");
+				  			uploadfile(file.name,file.size)
+				  		})
+				  	}
+				  });
+				} catch(e) {
+				  alert('Dropzone.js does not support older browsers!');
+				}
+				
+				var oTable1 = $('#exploer').DataTable( {
+					searching:false,
+					stateSave:true,
+					bLengthChange:true,
+					ordering:false,
+					colReorder: true,
+					info:false,
+					paging:false,
+					autoWidth: true,
+					ajax: {
+						"url": "/infosources/findall?parentId="+parentId,
+						"dataSrc": ""
+					},
+					columnDefs: [
+					       { "targets": [0,6,7,8],"orderable": false },
+					       //{ "targets": [1,2],"width": "10%" },
+					     ],
+					columns:[
+						{ 
+							"sClass":"center",
+							"data": "id",
+							"render":function(data, type, full, meta){
+									return '<label><input type="checkbox" class="ace" /><span class="lbl"></span></label>'
+								}
+						},
+						{
+							"data":"mediaName",
+							"render":function(data,type,val,meta){
+								var html="";
+								if(val.mediaType == 0){
+									html = '<span class="icon-folder-close bigger-110">'+data+'</span>'
+								}else if(val.mediaType == 1){
+									html = '<span class="icon-print bigger-110">'+data+'</span>'
+								}else{
+									html = '<span class="icon-remove bigger-110">----</span>'
+								}
+								return html;
+							}
+						},
+						{
+							"sClass":"center",
+							"data":"size",
+							"render":function(data,type,val,meta){
+								if(val.mediaType == 1){
+									return Math.ceil(data/1024)+"KB"
+								}else{
+									return "---"
+								}
+								
+							}
+						},
+						{
+							"data":"flow_id",
+							"render":function(data,type,val,meta){
+								if(data == null){
+									return "未审批"
+								}else if(data == 0){
+									return "审批中"
+								}else{
+									return "审批完成"
+								}
+							}
+						},
+						{"data":"referenced"},
+						{"data":"createDate"},
+						{
+							"data":"manager",
+							"render":function(data,type,val,meta){
+								if(data!=null){
+									return data.account+"/"+data.realname
+								}
+							}	
+						},
+						{
+							"data":"creater",
+							"render":function(data,type,val,meta){
+								if(data!=null){
+									return data.account+"/"+data.realname
+								}
+							}	
+						},
+						{ 
+							"sClass":"center",
+							"data": "id" ,
+							"render":function(data, type, val, meta){
+								 var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">';
+								 if(val.mediaType == 0){
+									 html+='<button type="button" class="btn btn-xs btn-info" onclick="historydata('+data+')" disabled="disabled" data-toggle="button">浏览</button>'
+								 }else{
+									 html+='<button type="button" class="btn btn-xs btn-info" onclick="historydata('+data+')" data-toggle="button">浏览</button>'
+								 }
+									html+='&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="realtimedata('+data+')"  data-toggle="button">修改</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="realtimedata('+data+')"  data-toggle="button">删除</button>'
+								+'</div>'
+								return html;
+							}
+						} 
+					]
+				});
+				
+				var filePath = function(path){
+					var html = '媒体资源库:';
+					$.each(path,function(index){
+						var data = path[index].split(':')
+						html+='<a onclick="reloadPaht(this,\''+data[1]+'\')">'+data[0]+'/</a>'
+					})
+					return html;
+				}
+				$("#path").html(filePath(["MediaRoot:MediaRoot"]));
+				//点开文件夹
+				$('#exploer tbody').on('dblclick', 'tr', function () {
+			        var data = oTable1.row( this ).data();
+			        if(data.mediaType == 0){ //只响应文件夹类型
+			        	parentId = data.id;
+			        	oTable1.ajax.url( "/infosources/findall?parentId="+parentId ).load()
+			        	//更新导航
+			        	var tt = data.describe.split(',')
+			        	//path.push('<a onclick="reloadFolder(\''+data.id+'\')">'+data.mediaName+'</a>')
+			        	$("#path").html(filePath(tt))
+			        }
+			    } );
+				
+				reloadFolder = function(parent){
+					parentId = parent;
+					oTable1.ajax.url( "/infosources/findall?parentId="+parentId ).load();
+				}
+				
+				reloadPaht = function(obj,parent){
+					reloadFolder(parent);
+					$(obj).nextAll().remove()
+				}
+				
+				$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+				});
+				
+				$("#sub").click(function(){
+					var folderName = $("#folderName").val();
+					$.ajax({
+						url:"/infosources/createFolder?folderName="+folderName+"&parentId="+parentId,
+						type:"POST",
+				        dataType: "json",
+						success:function(data){
+							if(data.result){
+								$.gritter.add({
+									// (string | mandatory) the heading of the notification
+									title: '创建文件夹',
+									// (string | mandatory) the text inside the notification
+									text: data.message,
+									class_name: 'gritter-info gritter-center'
+								});
+								reloadFolder(parentId)
+							}else{
+								$.gritter.add({
+									// (string | mandatory) the heading of the notification
+									title: '创建文件夹',
+									// (string | mandatory) the text inside the notification
+									text: data.message,
+									class_name: 'gritter-info gritter-center'
+								});
+							}
+							
+						},
+						error:function(){
+							$.gritter.add({
+								// (string | mandatory) the heading of the notification
+								title: '审批意见',
+								// (string | mandatory) the text inside the notification
+								text: "创建提交失败！",
+								class_name: 'gritter-info gritter-center'
+							});
+						}
+					});
+				})
+				
+				initGroupAndUsers = function(){
+					//获取全部的用户组和用户
+					$.ajax({
+						url:"/security/findGroupLists",
+						dataType:"JSON",
+						success:function(data){
+							$.each(data,function(index){
+								$("#group_1").append('<option value="'+data[index].groupId+'">'+data[index].groupName+'</option>');
+								$("#group_2").append('<option value="'+data[index].groupId+'">'+data[index].groupName+'</option>');
+								$("#group_3").append('<option value="'+data[index].groupId+'">'+data[index].groupName+'</option>');
+							})
+						}
+					})
+					
+					$.ajax({
+						url:"/security/findAllUsers",
+						dataType:"JSON",
+						success:function(data){
+							$.each(data,function(index){
+								$("#approver_1").append('<option value="'+data[index].userId+'">'+data[index].realname+'</option>');
+								$("#approver_2").append('<option value="'+data[index].userId+'">'+data[index].realname+'</option>');
+								$("#approver_3").append('<option value="'+data[index].userId+'">'+data[index].realname+'</option>');
+							})
+						}
+					})
+				}
+				
+				initGroupAndUsers();
+				
+				//切换用户组时的回调函数，根据用户组id设置用户
+				setGroupUsers=function(groupId){
+					
+				}
+				
+				
+				userchange = function(approver){
+					//用户选择动作，一个选中用户，要在其他两个选择框中删除
+					alert(approver)
+				}
+				
+				groupchange = function(group){
+					//用户组选择
+					switch(group){
+					case "group_1":
+						alert('aa')
+						break;
+					case "group_2":
+						alert('bb')
+						break;
+					case "group_3":
+						alert('cc')
+						break;
+					default:
+						break;
+					}
+				}
+				$("#approver_1").on('change',function(){
+					userchange("approver_1")
+				});
+				$("#approver_2").on('change',function(){
+					userchange("approver_2")
+				});
+				$("#approver_3").on('change',function(){
+					userchange("approver_3")
+				});
+				$("#group_1").on('change',function(){
+					userchange("group_1")
+				});
+				$("#group_2").on('change',function(){
+					userchange("group_2")
+				});
+				$("#group_3").on('change',function(){
+					userchange("group_3")
+				});
+			})
+			"]]>"
+		</script>
+</body>
+</html>

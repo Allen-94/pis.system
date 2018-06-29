@@ -1,0 +1,339 @@
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body>
+  <div th:fragment="sidebar" class="sidebar menu-min" id="sidebar">
+    <script type="text/javascript">
+    try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+  </script>
+  <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+      <button class="btn btn-success">
+        <i class="icon-signal"></i>
+      </button>
+      
+      <button class="btn btn-info">
+        <i class="icon-pencil"></i>
+      </button>
+      
+      <button class="btn btn-warning">
+        <i class="icon-group"></i>
+      </button>
+      
+      <button class="btn btn-danger">
+        <i class="icon-cogs"></i>
+      </button>
+    </div>
+    
+    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+      <span class="btn btn-success"></span>
+      
+      <span class="btn btn-info"></span>
+      
+      <span class="btn btn-warning"></span>
+      
+      <span class="btn btn-danger"></span>
+    </div>
+  </div><!-- #sidebar-shortcuts -->
+  
+  <ul class="nav nav-list">
+    <li class="active">
+      <a href="/">
+        <i class="icon-dashboard"></i>
+        <span class="menu-text"> 控制台 </span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 信息源管理  </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        	<li><a th:href="@{/infosource/mediaSourcesManage}"><i class="icon-double-angle-right"></i>媒资库管理</a></li>
+        	<li><a th:href="@{/infosource/vedioSet}"><i class="icon-double-angle-right"></i>直播视频流设置</a></li>
+        	<li><a th:href="@{/infosource/atsSet}"><i class="icon-double-angle-right"></i>列车信号信息源设置</a></li>
+       	 	<li><a th:href="@{/infosource/otherSet}"><i class="icon-double-angle-right"></i>其他信息源设置</a></li>
+       	 	<li><a th:href="@{/infosource/systemVariable}"><i class="icon-double-angle-right"></i>预定义系统变量</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 播控编排  </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      
+      <ul class="submenu">
+      	<shiro:hasPermission name="播放控制器-分组管理">
+        	<li><a th:href="@{/player/groupmanage}"><i class="icon-double-angle-right"></i>播控分组管理</a></li>
+        </shiro:hasPermission>
+        	<li><a th:href="@{/player/contentpackage}"><i class="icon-double-angle-right"></i>内容包管理</a></li>
+        	<li><a th:href="@{/player/format}"><i class="icon-double-angle-right"></i>版式管理</a></li>
+        	<li><a th:href="@{/player/playlist}"><i class="icon-double-angle-right"></i>播表管理</a></li>
+        	<li><a th:href="@{/player/sendplaylist}"><i class="icon-double-angle-right"></i>下发播表</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 预案管理  </span>
+        
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      
+      <ul class="submenu">
+        <li><a th:href="@{/reserveplan/reserveinfo}"><i class="icon-double-angle-right"></i>制定预定义信息</a></li>
+        <li><a th:href="@{/reserveplan/reserveplan}"><i class="icon-double-angle-right"></i>制定紧急预案</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 播放内容监控  </span>
+        
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      
+      <ul class="submenu">
+        <li><a th:href="@{/security/userlist}"><i class="icon-double-angle-right"></i>直播内容预览</a></li>
+        <li><a th:href="@{/security/grouplist}"><i class="icon-double-angle-right"></i>站点播放监控</a></li>
+        <li><a th:href="@{/playmonitor/reserveplanrun}"><i class="icon-double-angle-right"></i>启动预案</a></li>
+        <li><a th:href="@{/security/grouplist}"><i class="icon-double-angle-right"></i>插播内容</a></li>
+      </ul>
+    </li>
+    <li class="alarm">
+	      <a href="#" class="dropdown-toggle">
+	        <i class="icon-desktop"></i>
+	        <span class="menu-text"> 告警性能监视  </span>
+	        
+	        <b class="arrow icon-angle-down"></b>
+	      </a>
+	      
+	      <ul class="submenu">
+	    	<shiro:hasPermission name="实时告警管理"> 
+	        	<li class="alarm"><a th:href="@{/alarm/realtimeAlarmList}"><i class="icon-double-angle-right"></i>实时告警</a></li>
+	    	</shiro:hasPermission>
+	         <shiro:hasPermission name="历史告警管理"> 
+	       		 <li class="alarm"><a th:href="@{/alarm/historyAlarmList}"><i class="icon-double-angle-right"></i>历史告警</a></li>
+	       	</shiro:hasPermission>
+	       	 <shiro:hasPermission name="告警转发设置"> 
+	        <li class="alarm"><a th:href="@{/alarm/alarmFoward}"><i class="icon-double-angle-right"></i>告警转发</a></li>
+	      	</shiro:hasPermission>
+	      	<shiro:hasPermission name="性能数据管理">
+	        	<li class="performance"><a th:href="@{/performance/performancedata}"><i class="icon-double-angle-right"></i>性能数据</a></li>
+	     	</shiro:hasPermission>
+	       	<shiro:hasPermission name="性能采集任务管理">
+	        	<li class="performance"><a th:href="@{/performance/collectTask}"><i class="icon-double-angle-right"></i>性能任务</a></li>
+	     	</shiro:hasPermission>
+	       	<shiro:hasPermission name="监控模板管理">
+	        	<li class="performance"><a th:href="@{/performance/collectiontemplate}"><i class="icon-double-angle-right"></i>性能模板</a></li>
+	     	</shiro:hasPermission>
+	      </ul>
+	    </li>
+     <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 各子系统管理  </span>
+        
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      
+      <ul class="submenu">
+        <li>
+        	<a href="#" class="dropdown-toggle">
+		        <i class="icon-list"></i>
+		        <span class="menu-text"> 中心子系统  </span>
+		        
+		        <b class="arrow icon-angle-down"></b>
+		     </a>
+		      <ul class="submenu">
+			        <li><a th:href="@{/subsystem/serviceStatusList}"><i ></i>查看与管理各服务</a></li>
+			        <li>
+			        	<a href="#" class="dropdown-toggle">
+			        	<i class="icon-list"></i>
+					        <span class="menu-text"> 更换和拓展系统</span>
+					        
+					        <b class="arrow icon-angle-down"></b>
+					     </a>
+					     <ul class="submenu">
+					     	<li><a th:href="@{/subsystem/vmChange}"><i ></i>更换虚拟机</a></li>
+					     	<li><a th:href="@{/subsystem/serverChange}"><i ></i>更换服务器</a></li>
+					     	<li><a th:href="@{/subsystem/addMppDb}"><i ></i>增加MPP DB数据节点</a></li>
+					     	<li><a th:href="@{/subsystem/addHdfs}"><i ></i>增加HDFS数据节点</a></li>
+					     </ul>
+			        </li>
+			        <li>
+			        	<a href="#" class="dropdown-toggle">
+			        		<i class="icon-list"></i>
+					        <span class="menu-text"> 平台与中间件管理工具</span>
+					        
+					        <b class="arrow icon-angle-down"></b>
+					     </a>
+					     <ul class="submenu">
+					     	<li><a th:href="@{#}"><i ></i>网络网管</a></li>
+					     	<li><a th:href="@{/subsystem/serverWeb}"><i ></i>服务器</a></li>
+					     	<li><a th:href="@{#}"><i ></i>虚拟机</a></li>
+					     	<li><a th:href="@{/subsystem/rabbitMqWeb}"><i ></i>RabbitMQ</a></li>
+					     	<li><a th:href="@{/subsystem/hdfsWeb}"><i ></i>HDFS</a></li>
+					     </ul>
+			        </li>
+      		</ul>
+		     
+        </li>
+        <li>
+        	<a href="#" class="dropdown-toggle">
+		        <i class="icon-list"></i>
+		        <span class="menu-text"> 车站子系统  </span>
+		        
+		        <b class="arrow icon-angle-down"></b>
+		     </a>
+		     <ul class="submenu">
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 查看与管理设备  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				     <ul class="submenu">
+				        <li><a th:href="@{/subsystem/examinePlayerlist}">车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/examineStationServerlist}">车站服务器</a></li>
+				      </ul>
+		        </li>
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 重新初始化设备  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				     <ul class="submenu">
+				        <li><a th:href="@{/subsystem/reinitializeplaycontrollerlist}"><i ></i>车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/reinitializestationserverlist}"><i ></i>车站服务器</a></li>
+				      </ul>
+		        </li>
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 升级设备软件  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				      <ul class="submenu">
+				        <li><a th:href="@{/subsystem/upgradeplaycontroller}"><i ></i>车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/upgradestationserver}"><i ></i>车站服务器</a></li>
+				      </ul>
+		        </li>
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 更换设备  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				      <ul class="submenu">
+				        <li><a th:href="@{/subsystem/replacestationplaycontroller}"><i ></i>车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/replacestationserver}"><i ></i>车站服务器</a></li>
+				      </ul>
+		        </li>
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 其他操作  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				     <ul class="submenu">
+				        <li><a th:href="@{/subsystem/addstationplaycontroller}"><i ></i>增加车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/deletestationplaycontroller}"><i ></i>删除车站播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/addstationserver}"><i ></i>增加车站服务器</a></li>
+				        <li><a th:href="@{/subsystem/deletestationserver}"><i ></i>删除车站服务器</a></li>
+				        <li><a th:href="@{/subsystem/addstation}"><i ></i>增加车站</a></li>
+				        <li><a th:href="@{/subsystem/deletestation}"><i ></i>删除车站</a></li>
+				      </ul>
+		        </li>
+		      </ul>
+        </li>
+        <li>
+        	<a href="#" class="dropdown-toggle">
+		        <i class="icon-list"></i>
+		        <span class="menu-text"> 车载子系统  </span>
+		        
+		        <b class="arrow icon-angle-down"></b>
+		     </a>
+		      <ul class="submenu">
+		       	<li><a th:href="@{/subsystem/managevehiclemountedplaycontroller}"><i ></i>查看与管理车载播放控制器</a></li>
+		        <li><a th:href="@{/subsystem/reinitializevehiclemountedplaycontroller}"><i ></i>重新初始化车载播放控制器</a></li>
+		        <li><a th:href="@{/subsystem/upgradevehiclemountedplaycontroller}"><i ></i>升级车载播放控制器软件</a></li>
+		        <li><a th:href="@{/subsystem/replacevehiclemountedplaycontroller}"><i ></i>更换车载播放控制器</a></li>
+		      
+		        <li>
+		        	<a href="#" class="dropdown-toggle">
+				        <i class="icon-list"></i>
+				        <span class="menu-text"> 车载子系统其他操作  </span>
+				        
+				        <b class="arrow icon-angle-down"></b>
+				     </a>
+				     <ul class="submenu">
+				        <li><a th:href="@{/subsystem/addvehiclemountedplaycontroller}"><i ></i>增加车载播放控制器</a></li>
+				        <li><a th:href="@{/subsystem/deletevehiclemountedplaycontroller}"><i ></i>删除车载播放控制器</a></li>
+				        
+				      </ul>
+		        </li>
+		      </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="security">
+	      <a href="#" class="dropdown-toggle">
+	        <i class="icon-desktop"></i>
+	        <span class="menu-text"> 安全管理  </span>
+	        <b class="arrow icon-angle-down"></b>
+	      </a>
+	      
+	      <ul class="submenu">
+	       	<shiro:hasPermission name="角色管理">
+	        <li class="security"><a th:href="@{/security/rolelist}"><i class="icon-double-angle-right"></i>角色管理</a></li>
+	       </shiro:hasPermission>
+	       	<shiro:hasPermission name="用户组管理">
+	        <li class="security"><a th:href="@{/security/grouplist}"><i class="icon-double-angle-right"></i>用户组管理</a></li>
+	        </shiro:hasPermission>
+	       	<shiro:hasPermission name="用户管理">
+	        <li class="security"><a th:href="@{/security/userlist}"><i class="icon-double-angle-right"></i>用户管理</a></li>
+	        </shiro:hasPermission>
+	       	<shiro:hasPermission name="操作日志管理">
+	        <li class="security"><a th:href="@{/security/operationLog}"><i class="icon-double-angle-right"></i>操作日志管理</a></li>
+	      </shiro:hasPermission>
+	        <li class="security"><a th:href="@{/security/operationsMode}"><i class="icon-double-angle-right"></i>运维模式配置</a></li>
+	      </ul>
+	    </li>
+    <li>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-desktop"></i>
+        <span class="menu-text"> 我的任务  </span>
+        
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      
+      <ul class="submenu">
+        <li><a th:href="@{/approveflow/myflow}"><i class="icon-double-angle-right"></i>我的任务</a></li>
+        <li><a th:href="@{/approveflow/todoflow}"><i class="icon-double-angle-right"></i>待办任务</a></li>
+      </ul>
+    </li>
+  </ul><!-- /.nav-list -->
+  
+  <div class="sidebar-collapse" id="sidebar-collapse">
+    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+  </div>
+  
+  <script type="text/javascript">
+  try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+</script>
+<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+	
+</script>
+</div>
+</body>
+</html>

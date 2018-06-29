@@ -1,0 +1,40 @@
+[
+	{
+		"cmdId": 0,
+		"cmdName": "实时性能统计管理",
+		"cmd_description": "实时性能统计管理...",
+		"cmdSet": null,
+		"roles": null
+	}, {
+		"cmdId": 0,
+		"cmdName": "例行性能统计管理",
+		"cmd_description": "例行性能统计管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "设备统计报告",
+		"cmd_description": "设备统计报告...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "性能数据管理",
+		"cmd_description": "性能数据管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "性能采集任务管理",
+		"cmd_description": "性能采集任务管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "监控模板管理",
+		"cmd_description": "监控模板管理...",
+		"cmdSet": null,
+		"roles": null
+	}
+	
+]

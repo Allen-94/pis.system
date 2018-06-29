@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>新增内容包内容</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">新增内容</h4>
+			</div>
+				<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<input type="text" id="contentId" hidden="hidden"/>
+					<input type="text" id="contentType" hidden="hidden" th:value="${contentType}"/>
+					<div class="form-group">
+                         <label for="packageContentName" class="col-sm-3 control-label">内容名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="packageContentName" name="packageContentName" 
+                                    placeholder="请输入内容名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="mainContent" class="col-sm-3 control-label">主用内容</label>
+                         <div class="col-sm-9">
+                                <select class="form-control" id="mainContent" name="mainContent">
+                                </select>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="backupContent" class="col-sm-3 control-label">备用内容</label>
+                         <div class="col-sm-9">
+                                <select class="form-control" id="backupContent" name="backupContent">
+                                </select>
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitContent()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/bootstrap-editable.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/ace-editable.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				//初始化系统变量的下拉列表
+				
+				$.ajax({
+					url:"/infosources/findAllSystemVariable",
+					success:function(data){
+						$("#mainContent").empty();
+						$("#backupContent").empty();
+						$.each(data,function(i){
+							$("#mainContent").append("<option value='"+data[i].id+"'>"+data[i].variableName+"</option>")
+							$("#backupContent").append("<option value='"+data[i].id+"'>"+data[i].variableName+"</option>")
+						})
+					}
+				})
+				
+				submitContent = function(){
+					var param = {};
+					var packageId = $("#packageId").val();
+					var mainContent=$("#mainContent").val();
+					var backupContent = $("#backupContent").val();
+					var packageContentName = $("#packageContentName").val();
+					param.id = $("#contentId").val();
+					param.contentId=packageId;
+					param.contentName=packageContentName;
+					param.mainId=mainContent;
+					param.backupId=backupContent;
+					
+					$.ajax({
+						url : '/playercontrol/addPackageContent',
+						data : param,
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交内容包成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交内容包失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(success);
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+							/* oTable2.ajax.reload();
+							$('#myModal').modal("hide"); */
+						}
+					})
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

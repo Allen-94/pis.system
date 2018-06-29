@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>新增播表</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/datepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-timepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/colorpicker.css}" />
+<style type="text/css">
+	.dropdown-menu{
+		 z-index: 10000;
+	}
+</style>
+</head>
+
+<body>
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="playerRoleLabel">新增播表规则</h4>
+			</div>
+				<div class="modal-body">
+				<form id="form_format_file_upload" class="form-horizontal"  role="form">
+					<input type="text" id="playerRole_ListId" hidden="hidden"/>
+					<input type="text" id="palyerRoleId" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="playerRoleName" class="col-sm-3 control-label">规则名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="playerRoleName"  placeholder="请输入规则名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="playerGroup" class="col-sm-3 control-label">播控分组</label>
+                         <div class="col-sm-9">
+                             <!-- <select class="form-control" id="playerGroup">
+								<option value="2">&nbsp;</option>
+								<option value="1">Alabama</option>
+							</select> -->
+							<div class="panel panel-default">
+							    <div class="panel-body">
+							       <div class="panel-heading">
+										<h3 class="panel-title">设备列表</h3>
+									</div>
+									<div class="panel-body pre-scrollable">
+										<ul id="players" class="ztree"></ul>
+									</div>
+							    </div>
+							</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="isDefault" class="col-sm-3 control-label">播放日期</label>
+                         <div class="col-sm-9">
+                         	<div class="control-group">
+									<div class="checkbox">
+										<label>
+											<input id="monday" type="checkbox" class="ace" />
+											<span class="lbl"> 周一</span>
+										</label>
+										<label>
+											<input id="tuesday" type="checkbox" class="ace" />
+											<span class="lbl"> 周二</span>
+										</label>
+										<label>
+											<input id="wednesday" type="checkbox" class="ace" />
+											<span class="lbl"> 周三</span>
+										</label>
+										<label>
+											<input id="thursday" type="checkbox" class="ace" />
+											<span class="lbl"> 周四</span>
+										</label>
+										<label>
+											<input id="friday" type="checkbox" class="ace" />
+											<span class="lbl"> 周五</span>
+										</label>
+										<label>
+											<input id="saturday" type="checkbox" class="ace" />
+											<span class="lbl"> 周六</span>
+										</label>
+										<label>
+											<input id="sunday" type="checkbox" class="ace" />
+											<span class="lbl"> 周日</span>
+										</label>
+									</div>
+								</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">开始时间</label>
+                         <div class="col-sm-9">
+                             <div class="input-group bootstrap-timepicker">
+								<input id="startTime" type="text" class="form-control" />
+								<span class="input-group-addon">
+									<i class="icon-time bigger-110"></i>
+								</span>
+							</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">结束时间</label>
+                         <div class="col-sm-9">
+                             <div class="input-group bootstrap-timepicker">
+								<input id="endTime" type="text" class="form-control" />
+								<span class="input-group-addon">
+									<i class="icon-time bigger-110"></i>
+								</span>
+							</div>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">内容包</label>
+                         <div class="col-sm-9">
+                             <select class="form-control" id="contentPackage">
+								<option value="2">&nbsp;</option>
+								<option value="1">Alabama</option>
+							</select>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">版式</label>
+                         <div class="col-sm-9">
+                             <select class="form-control" id="playerForamt">
+								<option value="2">&nbsp;</option>
+								<option value="1">Alabama</option>
+							</select>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">切换版式</label>
+                         <div class="col-sm-9">
+                             <select class="form-control" id="switchPlayerFormat">
+								<option value="2">&nbsp;</option>
+								<option value="1">Alabama</option>
+							</select>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">切换时间间隔</label>
+                         <div class="col-sm-9">
+                             <select class="form-control" id="switchTime">
+								<option value="30">30分钟</option>
+								<option value="60">1小时</option>
+								<option value="120">2小时</option>
+								<option value="180">3小时</option>
+								<option value="240">4小时</option>
+							</select>
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitPlayerRole()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-timepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/moment.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/daterangepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.inputlimiter.1.3.1.min.js}"></script>
+		<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				$('#startTime,#endTime').timepicker({
+					minuteStep: 1,
+					showSeconds: true,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				//初始化选择框 ，
+				initSelected = function(){
+					//播控分组
+					$.ajax({
+						url : '/playercontrol/findAll',
+						type:"POST",
+						contentType:"application/json",
+						success:function(data){
+							$('#playerGroup').empty()
+							$.each(data,function(i){
+								$('#playerGroup').append('<option value="'+data[i].id+'">'+data[i].groupName+'</option>');
+							})
+						}
+					})
+					//内容包
+					$.ajax({
+						url : '/playercontrol/findAllContentPackages',
+						type:"POST",
+						contentType:"application/json",
+						success:function(data){
+							$('#contentPackage').empty()
+							$.each(data,function(i){
+								$('#contentPackage').append('<option value="'+data[i].id+'">'+data[i].contentName+'</option>');
+							})
+						}
+					})
+					//版式和切换版式
+					$.ajax({
+						url : '/playercontrol/findAllFormat',
+						type:"POST",
+						contentType:"application/json",
+						success:function(data){
+							$('#playerForamt').empty();
+							$('#switchPlayerFormat').empty()
+							$.each(data,function(i){
+								$('#playerForamt').append('<option value="'+data[i].id+'">'+data[i].playFormatName+'</option>');
+								$('#switchPlayerFormat').append('<option value="'+data[i].id+'">'+data[i].playFormatName+'</option>');
+							})
+						}
+					})
+				}
+				
+				initSelected();
+				
+				submitPlayerRole = function(){
+					var param = {};
+					var playerRoleId = $("#palyerRoleId").val();
+					var playerRoleName = $("#playerRoleName").val();
+					var playerListId = $("#playerRole_ListId").val();
+					var playerGroupId = $("#playerGroup").val();
+					var contentPackageId = $("#contentPackage").val();
+					var playerForamtId = $("#playerForamt").val();
+					var switchPlayerFormatId = $("#switchPlayerFormat").val();
+					var switchTime = $("#switchTime").val();
+					var startTime = $("#startTime").val();
+					var endTime = $("#endTime").val();
+					var monday = $("#monday").is(":checked");
+					var tuesday = $("#tuesday").is(":checked");
+					var wednesday = $("#wednesday").is(":checked");
+					var thursday = $("#thursday").is(":checked");
+					var friday = $("#friday").is(":checked");
+					var saturday = $("#saturday").is(":checked");
+					var sunday = $("#sunday").is(":checked");
+					
+					param.playerRoleId=playerRoleId;
+					param.playerRoleName=playerRoleName;
+					param.playerListId=playerListId;
+					param.playerIds = getPlayerIds();
+					param.contentPackageId = contentPackageId;
+					param.playerForamtId = playerForamtId;
+					param.switchPlayerFormatId=switchPlayerFormatId;
+					param.playerListName=playerListName;
+					param.switchTime=switchTime;
+					param.startTime = startTime;
+					param.endTime = endTime;
+					param.monday = monday;
+					param.tuesday=tuesday;
+					param.wednesday=wednesday;
+					param.thursday=thursday;
+					param.friday = friday;
+					param.saturday = saturday;
+					param.sunday = sunday;
+					 $.ajax({
+						url : '/playercontrol/addPlayerRole',
+						type:"POST",
+						contentType:"application/json",
+						data : JSON.stringify(param),
+						success:function(data){
+							var message = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>'+data.message+'</strong>'
+								+ '</div>'
+							$(".modal-body #div_alert").empty().append(message);
+							$('#playrolelist_table').DataTable().ajax.reload();
+							$('#playerRoleInfo').modal("hide");
+						}
+					}) 
+				}
+				
+				//创建树形组建
+				var setting = {
+						check: {
+							enable: true
+						},
+						data: {
+							simpleData: {
+								enable: true
+							}
+						}
+					};
+					var zNodes =[];
+					var treeObj = null;
+					var players = null;
+					 $.get("/security/findAllPlayers",function(data){
+						$.each(data,function(index){
+							var node = {};
+							node.id=data[index].id;
+							node.pId=data[index].pid;
+							node.name=data[index].name;
+							node.value=data[index].value;
+							node.checked=data[index].checked;
+							node.open=data[index].open;
+							zNodes.push(node);
+						})
+						//treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+						players = $.fn.zTree.init($("#players"), setting, zNodes);
+					})
+					//获取选中的播控
+					getPlayerIds = function(){
+						var nodes = players.getCheckedNodes(true);
+						var playerids = [];
+						$.each(nodes,function(i){
+							if(nodes[i].value.resourceType == 6){
+								playerids.push(nodes[i].value.id)
+							}
+						})
+						return playerids;
+					}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

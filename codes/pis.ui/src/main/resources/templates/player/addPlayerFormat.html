@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>内容包管理</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">新增版式</h4>
+			</div>
+				<div class="modal-body">
+				<form id="form_format_file_upload" class="form-horizontal"  role="form">
+					<input type="text" id="playerFormatId" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="playerFormatName" class="col-sm-3 control-label">版式名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="playerFormatName" name="playerFormatName" 
+                                    placeholder="请输入版式名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">版式描述</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="请输入版式描述..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="user_id" class="col-sm-3 control-label">版式文件</label>
+                         <div class="col-sm-9">
+                         	<input type="file" class="form-control" name="file" id="file" />
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitContent()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.inputlimiter.1.3.1.min.js}"></script>
+		<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				$('#file').ace_file_input({
+					no_file:'No File ...',
+					btn_choose:'Choose',
+					btn_change:'Change',
+					droppable:false,
+					onchange:null,
+					thumbnail:true //| true | large
+					//whitelist:'gif|png|jpg|jpeg'
+					//blacklist:'exe|php'
+					//onchange:''
+					//
+				});
+				
+				submitContent = function(){
+					var formData = new FormData();
+					var name = $("#file").val();
+					formData.append("file",$("#file")[0].files[0]);
+					formData.append("name",name);
+					//formData.append("uploadpath","BusinessData\\formats")
+					$.ajax({
+				        //url: '/playercontrol/upload',  //server script to process data
+				        url: '/playercontrol/upload',
+				        type: 'POST',
+				        //Ajax事件
+				        // Form数据
+				        data: formData,
+				        //Options to tell JQuery not to process data or worry about content-type
+				        cache: false,
+				        contentType: false,
+				        processData: false,
+				        contentType : false,
+				        beforeSend:function(){
+				        	console.log("正在进行，请稍候");
+				        },
+				        success : function(responseStr) { 
+					        if(responseStr.flag===true){
+					        	console.log("成功"+responseStr);
+					        	var param = {};
+								var playerFormatId = $("#playerFormatId").val();
+								var playerFormatName = $("#playerFormatName").val();
+								var description = $("#description").val();
+								var fileId = responseStr.fileId;
+								param.playerFormatId=playerFormatId;
+								param.playerFormatName=playerFormatName;
+								param.description=description;
+								param.fileId=fileId;
+								$.ajax({
+									url : '/playercontrol/addPlayerFormat',
+									data : param,
+									success:function(data){
+										var success = '<div class="alert alert-success">'
+											+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+											+ '<strong>成功！</strong>提交内容包成功。'
+											+ '</div>'
+										var warning = '<div class="alert alert-warning">'
+												+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+												+ '<strong>失败！</strong>提交内容包失败。'
+												+ '</div>'
+										if (data.flag) {
+											$(
+													".modal-body #div_alert")
+													.empty()
+													.append(success);
+										} else {
+											$(
+													".modal-body #div_alert")
+													.empty()
+													.append(warning);
+										}
+										oTable1.ajax.reload();
+										$('#myModal').modal("hide");
+									}
+								}) 
+					        }else{
+					        	console.log(responseStr.message);
+					        }
+				        }, 
+				        error : function(responseStr) { 
+				        	console.log("error");
+				        } 
+				    });
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

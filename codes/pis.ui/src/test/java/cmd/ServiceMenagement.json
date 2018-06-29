@@ -1,0 +1,34 @@
+[
+	{
+		"cmdId": 0,
+		"cmdName": "播放监控",
+		"cmd_description": "播放监控",
+		"cmdSet": null,
+		"roles": null
+	}, {
+		"cmdId": 0,
+		"cmdName": "播放控制器-分组管理",
+		"cmd_description": "播放控制器-分组管理",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "播放控制器-版式管理",
+		"cmd_description": "关闭显示屏",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "pcCmd4",
+		"cmd_description": "播放控制器-播放表管理",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "pcCmd5",
+		"cmd_description": "播放控制去-绑定管理",
+		"cmdSet": null,
+		"roles": null
+	}
+	
+]

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="utf-8" />
+<title>HDFS</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet"
+	th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active"><a href="#">各子系统管理</a></li>
+						<li class="active"><a href="#">平台与中间件管理工具</a></li>
+						<li class="active">HDFS</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<h3 class="header smaller lighter blue">HDFS</h3>
+							<form class="form-horizontal" role="form">
+								<div class="row">
+									<div style="float: left; width: 4%">&nbsp;&nbsp;</div>
+									<div class="row" style="width: 10%; float: left">
+										<div class="panel panel-default" style="width: 95%">
+											<div class="panel-heading">
+												<h4 class="panel-title">
+													<small>HDFS列表</small>
+												</h4>
+											</div>
+											<div class="panel-body">
+												<div class="form-group"
+													style="padding-left: 24px; padding-bottom: 22px; cursor: pointer;"
+													id="allServer"></div>
+											</div>
+										</div>
+
+									</div>
+									<div style="float: left; width: 3%">&nbsp;&nbsp;</div>
+									<div class="row" style="width: 83%; float: left">
+										<div class="panel panel-default" style="height: 666px;">
+											<div class="panel-heading">
+												<h4 class="panel-title">
+													<small>HDFS WEB管理页面---><a id="newTag"
+														style="cursor: pointer;" target="_blank"></a></small>
+												</h4>
+											</div>
+											<iframe id="cont" style="width: 100%; height: 100%"
+												frameborder="0"></iframe>
+										</div>
+									</div>
+								</div>
+							</form>
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src='@{/assets/js/zTree/jquery.ztree.core.js}'></script>
+	<script th:src='@{/assets/js/jquery-ui-1.10.3.custom.min.js}'></script>
+	<script th:src='@{/assets/js/fuelux/data/fuelux.tree-sampledata.js}'></script>
+	<script th:src='@{/assets/js/fuelux/fuelux.tree.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.ui.touch-punch.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.slimscroll.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+	<script th:src='@{/assets/js/chosen.jquery.min.js}'></script>
+
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<script type="text/javascript"
+		th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript">
+		"<![CDATA["
+		jQuery(function($) {
+			$.ajax({
+				type : "get",
+				url : '/subsystem/getListByClusterName',
+				dataType : "json",
+				data : {
+					"clusterName" : "hadoop"
+				},
+				success : function(data) {
+					var str = "";
+					var cname = data.data;
+					var initName = cname[0];
+					toWeb(initName.vmName, initName.vmIp);
+					$(cname).each(
+							function() {
+								if ("Master" == this.nodeType
+										|| "Slave" == this.nodeType) {
+									str = str + "<a onclick=\"toWeb('"
+											+ this.vmName + "','" + this.vmIp
+											+ "');\">" + this.vmName
+											+ "</a><br />";
+								}
+
+							});
+					$("#allServer").html(str);
+				}
+			});
+		});
+
+		function toWeb(name, ip) {
+			ip = "http://" + ip + ":50070";
+			$("#cont", parent.document.body).attr("src", ip);
+			$("#newTag", parent.document.body).attr("href", ip);
+			$("#newTag").html("新窗口中打开(" + name + ")");
+		}
+		"]]>"
+	</script>
+</body>
+</html>

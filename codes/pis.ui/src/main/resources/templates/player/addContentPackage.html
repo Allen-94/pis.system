@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>内容包管理</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">新增内容包</h4>
+			</div>
+				<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<input type="text" id="contentPackageId" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="contentPackageName" class="col-sm-3 control-label">内容包名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="contentPackageName" name="contentPackageName" 
+                                    placeholder="请输入内容包名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">内容包描述</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="请输入内容包描述..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="user_id" class="col-sm-3 control-label">内容变量</label>
+                         <div class="col-sm-9">
+                             <button type="button" class="btn btn-success" id="createNewContent">新增变量</button>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="user_id" class="col-sm-3 control-label"></label>
+                         <div class="col-sm-9">
+                            <div id="contentValues" class="accordion-style1 panel-group">
+							</div>
+                         </div>
+                     </div>
+				</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitContent()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/bootstrap-editable.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/ace-editable.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				//editables on first profile page
+				$.fn.editable.defaults.mode = 'inline';
+				$.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
+			  	$.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit" onclick="checkContentName(this)"><i class="icon-ok icon-white"></i></button>'+
+			                                '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';    
+				
+				//editables 
+			    $('.editable').editable({
+					type: 'text',
+					name: 'username'
+			    });
+			   guid = function guid() {
+			        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			            var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			            return v.toString(16);
+			        });
+			    }
+			   initContentText = function initContentText(content){
+				   $("#contentValues").empty();
+				   content = JSON.parse(content)
+				   $.each(content,function(i){
+					   var id = guid()
+						var html = '<div class="panel panel-default" id="panel_'+id+'">'
+							+'<div class="panel-heading">'
+							+'<h4 class="panel-title">'
+							+'<a class="accordion-toggle collapsed	" data-toggle="collapse" data-parent="#accordion" id="a_'+id+'" href="#'+id+'"> '
+							+'	<i class="icon-angle-down bigger-110" data-icon-hide="icon-angle-down" data-icon-show="icon-angle-right"></i>'
+							+'<span id="title_'+id+'">&nbsp;新增内容</span>'
+							+'	<i class="icon-trash bigger-110 pull-right red"  data-icon-show="icon-angle-left" onclick="delContentValue(\''+id+'\')"></i>'
+							+'</a>'
+							+'</h4>'
+							+'</div>'
+							+'<div class="panel-collapse collapse in" id="'+id+'">'
+							+'<div class="panel-body">'
+							+'<div name="contents" class="profile-user-info profile-user-info-striped">'
+							+'	<div class="profile-info-row">'
+							+'		<div class="profile-info-name">内容名</div>'
+							+'		<div class="profile-info-value">'
+							+'			<span class="editable" id="contentName">'+content[i].contentName+'</span>'
+							+'		</div>'
+							+'	</div>'
+							+'	<div class="profile-info-row">'
+							+'		<div class="profile-info-name">主用内容</div>'
+							+'		<div class="profile-info-value">'
+							+'			<span class="editable" id="contentMain">'+content[i].content.main+'</span>'
+							+'		</div>'
+							+'	</div>'
+							+'	<div class="profile-info-row">'
+							+'		<div class="profile-info-name">备用内容</div>'
+							+'		<div class="profile-info-value" >'
+							+'			<span class="editable" id="contentBackup">'+content[i].content.backup+'</span>'
+							+'		</div>'
+							+'	</div>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							+'</div>';
+						$("#contentValues").append(html)
+				   })
+				   $('.editable').editable({
+						type: 'text'
+				    });
+				  
+			   }
+				//创建新的内容变量
+				$("#createNewContent").click(function(){
+					//关闭打开的内容
+					$(".panel-collapse").filter('.in').removeClass('in').addClass('collapse')
+					
+					var id = guid()
+					var html = '<div class="panel panel-default" id="panel_'+id+'">'
+						+'<div class="panel-heading">'
+						+'<h4 class="panel-title">'
+						+'<a class="accordion-toggle collapsed	" data-toggle="collapse" data-parent="#accordion" id="a_'+id+'" href="#'+id+'"> '
+						+'	<i class="icon-angle-down bigger-110" data-icon-hide="icon-angle-down" data-icon-show="icon-angle-right"></i>'
+						+'<span id="title_'+id+'">&nbsp;新增内容</span>'
+						+'	<i class="icon-trash bigger-110 pull-right red"  data-icon-show="icon-angle-left" onclick="delContentValue(\''+id+'\')"></i>'
+						+'</a>'
+						+'</h4>'
+						+'</div>'
+						+'<div class="panel-collapse collapse in" id="'+id+'">'
+						+'<div class="panel-body">'
+						+'<div name="contents" class="profile-user-info profile-user-info-striped">'
+						+'	<div class="profile-info-row">'
+						+'		<div class="profile-info-name">内容名</div>'
+						+'		<div class="profile-info-value">'
+						+'			<span class="editable" id="contentName">...</span>'
+						+'		</div>'
+						+'	</div>'
+						+'	<div class="profile-info-row">'
+						+'		<div class="profile-info-name">主用内容</div>'
+						+'		<div class="profile-info-value">'
+						+'			<span class="editable" id="contentMain">...</span>'
+						+'		</div>'
+						+'	</div>'
+						+'	<div class="profile-info-row">'
+						+'		<div class="profile-info-name">备用内容</div>'
+						+'		<div class="profile-info-value" >'
+						+'			<span class="editable" id="contentBackup">...</span>'
+						+'		</div>'
+						+'	</div>'
+						+'</div>'
+						+'</div>'
+						+'</div>'
+						+'</div>';
+					$("#contentValues").append(html)
+					$('.editable').editable({
+						type: 'text'
+				    });
+				})
+				
+				//重置内容名
+				checkContentName=function(obj){
+					/* $(this).parent()[0].attr() */
+					var labName = $(obj).parents('.profile-info-row').find('.profile-info-name').text();
+					if(labName == '内容名'){
+						var contentName = $(obj).parents('.profile-info-value').find('.input-medium').val()
+						var id = $(obj).parents('.panel-collapse').attr('id');
+						$(obj).parents('#panel_'+id).find('#title_'+id).text(contentName)
+					}
+				}
+				//删除内容
+				delContentValue = function(id){
+					//alert($(obj).attr('class'))
+					$("#panel_"+id).remove()
+				}
+				
+				submitContent = function(){
+					var param = {};
+					var contentPackageId = $("#contentPackageId").val();
+					var contentPackageName = $("#contentPackageName").val();
+					var description = $("#description").val();
+					var contents = $("div[name='contents']")
+					param.id=contentPackageId;
+					param.contentPackageName=contentPackageName;
+					param.description=description;
+					var contentsJSON = [];
+					$.each(contents,function(i){
+						var contentName = $(contents[i]).find('#contentName').text();
+						var contentMain = $(contents[i]).find('#contentMain').text();
+						var contentBackup = $(contents[i]).find('#contentBackup').text();
+						var node = {};
+						node.contentName=contentName;
+						node.content={}
+						node.content.main=contentMain;
+						node.content.backup=contentBackup;
+						contentsJSON.push(node)
+					})
+					param.contents=JSON.stringify(contentsJSON);
+					$.ajax({
+						url : '/playercontrol/addContentPackage',
+						data : param,
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交内容包成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交内容包失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(success);
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+							oTable1.ajax.reload();
+							$('#myModal').modal("hide");
+						}
+					})
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

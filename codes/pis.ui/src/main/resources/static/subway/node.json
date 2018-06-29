@@ -1,0 +1,22 @@
+/* {	'x':'',
+	'y':'s', 
+	'direction': 'dir', 
+	'marker': 'marker', 
+	'markerInfo': 'markerInfo', 
+	'link': 'link', 
+	'title': 'title', 
+	'label': 'label', 
+	'labelPos': 'labelPos'
+} */
+
+{
+"x":"",
+"y":"",
+"direction":"",
+"marker":"",
+"markerInfo":"",
+"link":"",
+"title":"",
+"label":"",
+"labelPos":""
+}

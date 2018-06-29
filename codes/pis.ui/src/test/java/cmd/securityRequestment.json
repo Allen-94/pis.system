@@ -1,0 +1,22 @@
+[
+		{
+		"cmdId": 0,
+		"cmdName": "登录校验",
+		"cmd_description": "登录校验...",
+		"cmdSet": null,
+		"roles": null
+	},{
+		"cmdId": 0,
+		"cmdName": "编辑用户信息",
+		"cmd_description": "编辑用户信息...",
+		"cmdSet": null,
+		"roles": null
+	},{
+		"cmdId": 0,
+		"cmdName": "查询用户组所属的角色",
+		"cmd_description": "查询用户组所属的角色...",
+		"cmdSet": null,
+		"roles": null
+	}
+	
+]

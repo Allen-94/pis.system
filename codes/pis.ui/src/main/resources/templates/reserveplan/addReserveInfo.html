@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>预定义信息</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<body>
+	<div class="modal-dialog" style="width:80%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="reserveInfo">新增预定义信息</h4>
+			</div>
+				<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<input type="text" id="infoId" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="infoName" class="col-sm-3 control-label">信息名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="infoName" name="infoName" 
+                                    placeholder="请输入预定义信息名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="infoContent" class="col-sm-3 control-label">显示内容</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="infoContent" name="infoContent"
+                                    placeholder="请输入预定义信息显示内容..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="user_id" class="col-sm-3 control-label">信息级别</label>
+                         <div class="col-sm-9">
+                             <select id="infoType">
+                             	<option value="1">线网级</option>
+                             	<option value="2">线路级</option>
+                             	<option value="3">车站级</option>
+                             	<option value="4">列车级</option>
+                             	<option value="5">其他</option>
+                             </select>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="user_id" class="col-sm-3 control-label"></label>
+                         <div class="col-sm-9">
+                            <div id="contentValues" class="accordion-style1 panel-group">
+							</div>
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitContent()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<!-- <script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/bootstrap-editable.min.js}"></script>
+		<script th:src="@{/assets/js/x-editable/ace-editable.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script> -->
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				init = function(){
+					$("#infoId").val("")
+					$("#infoName").val("")
+					$("#infoContent").val("")
+					$("#infoType").val(1)
+					
+					$("#infoId").val([[${info.id}]])
+					$("#infoName").val([[${info.infoName}]])
+					$("#infoContent").val([[${info.infoContent}]])
+					$("#infoType").val([[${info.infoType}]])
+				}
+				
+				init();
+				
+				submitContent = function(){
+					var param = {};
+					param.id=$("#infoId").val()
+					param.infoName=$("#infoName").val()
+					param.infoContent=$("#infoContent").val()
+					param.infoType=$("#infoType").val()
+					$.ajax({
+						url : '/reserveplan/addReserveInfo',
+						type:"post",
+						data : param,
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交预定义信息成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交预定义信息失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(".modal-body #div_alert").empty().append(success);
+								oTable1.ajax.reload();
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+						}
+					})
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

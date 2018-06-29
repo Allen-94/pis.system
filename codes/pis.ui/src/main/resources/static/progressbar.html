@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WebSocket Examples: Reverse</title>
+	<style type="text/css">
+		#connect-container {
+			float: left;
+			width: 400px
+		}
+
+		#connect-container div {
+			padding: 5px;
+		}
+
+		#console-container {
+			/* float: left; */
+			margin-left: 15px;
+			margin-top:50px;
+			width: 400px;
+		}
+
+		#console {
+			border: 1px solid #CCCCCC;
+			border-right-color: #999999;
+			border-bottom-color: #999999;
+			height: 170px;
+			overflow-y: scroll;
+			padding: 5px;
+			width: 100%;
+		}
+
+		#console p {
+			padding: 0;
+			margin: 0;
+		}
+	</style>
+	<script type="text/javascript">
+    	String.prototype.endWith=function(endStr){
+        var d=this.length-endStr.length;
+        return (d>=0&&this.lastIndexOf(endStr)==d)
+      	}
+		var ws = null;
+
+		function setConnected(connected) {
+			document.getElementById('connect').disabled = connected;
+			document.getElementById('disconnect').disabled = !connected;
+			document.getElementById('reverse').disabled = !connected;
+		}
+
+		function connect() {
+			var target = document.getElementById('target').value;
+			ws = new WebSocket(target);
+			ws.onopen = function () {
+				setConnected(true);
+				log('Info: WebSocket connection opened.');
+			};
+			ws.onmessage = function (event) {
+				log(event.data);
+			};
+			ws.onclose = function () {
+				setConnected(false);
+				log('Info: WebSocket connection closed.');
+			};
+		}
+
+		function disconnect() {
+			if (ws != null) {
+				ws.close();
+				ws = null;
+			}
+			setConnected(false);
+		}
+
+		function reverse() {
+			if (ws != null) {
+				$('#progressbar').css("width","0%");
+				$('#progressbar').delay(100);
+				var message = document.getElementById('message').value;
+				log('Sent: ' + message);
+				ws.send(message);
+			} else {
+				alert('WebSocket connection not established, please connect.');
+			}
+		}
+
+		function log(message) {
+			if(message.endWith('%')){
+				$('#progressbar').css("width",message);
+				$('#progressTxt').html(message+"% Complete");
+			}else{
+				$('progressTxt').html(message);
+			}
+			
+			var console = document.getElementById('console');
+			var p = document.createElement('p');
+			p.style.wordWrap = 'break-word';
+			p.appendChild(document.createTextNode(message));
+			console.appendChild(p);
+			while (console.childNodes.length > 25) {
+				console.removeChild(console.firstChild);
+			}
+			console.scrollTop = console.scrollHeight;
+		}
+		
+		function updateTarget() {
+			document.getElementById('target').value = '/reverse';
+			if (window.location.protocol == 'http:') {
+				document.getElementById('target').value = 'ws://' + window.location.host + document.getElementById('target').value;
+			} else {
+				document.getElementById('target').value = 'wss://' + window.location.host + document.getElementById('target').value;
+			}
+		}
+	</script>
+</head>
+<body onload="updateTarget()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websockets rely on Javascript being enabled. Please enable
+	Javascript and reload this page!</h2></noscript>
+<div>
+	<div id="connect-container">
+		<div>
+			<input id="target" type="text" size="40" style="width: 350px" value="/reverse"/>
+		</div>
+		<div>
+			<button id="connect" onclick="connect();">Connect</button>
+			<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+		</div>
+		<div>
+			<textarea id="message" style="width: 350px">Here is a message!</textarea>
+		</div>
+		<div>
+			<!-- <button id="reverse" onclick="reverse();" disabled="disabled">Reverse message</button> -->
+			<button  id="reverse"  onclick="reverse();" type="button" class="btn btn-success btn-xs">开始</button>
+		</div>
+	</div>
+<div id="console-container">
+		<div id="console"></div>
+		<div class="progress">
+    <div id='progressbar' class="progress-bar progress-bar-success" role="progressbar"
+         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+         style="width: 0%;">
+    </div>
+    <span id='progressTxt'  class="sr-only">90% 完成（成功）</span>
+</div>
+</div>
+</div>
+  <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+      <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+</body>
+</html>

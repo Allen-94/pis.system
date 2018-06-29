@@ -1,0 +1,91 @@
+[{
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : -1,
+			"id3" : -1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 1,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : -1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 2,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 2,
+			"id3" : -1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 2,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 3,
+			"id3" : -1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 2,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : 1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 3,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : 2,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 3,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 2,
+			"id3" : 1,
+			"id4" : -1,
+			"id5" : -1,
+			"resourceType" : 3,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : 1,
+			"id4" : 1,
+			"id5" : -1,
+			"resourceType" : 4,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : 1,
+			"id4" : 1,
+			"id5" : 1,
+			"resourceType" : 5,
+			"userGroup" : null
+		}, {
+			"fieldId" : 0,
+			"id1" : 1,
+			"id2" : 1,
+			"id3" : 1,
+			"id4" : 1,
+			"id5" : 2,
+			"resourceType" : 5,
+			"userGroup" : null
+		}]

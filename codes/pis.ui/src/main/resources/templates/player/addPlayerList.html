@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>新增播表</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-editable.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/datepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/bootstrap-timepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/daterangepicker.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/colorpicker.css}" />
+<style type="text/css">
+	.dropdown-menu{
+		 z-index: 10000;
+	}
+</style>
+</head>
+
+<body>
+	<div class="modal-dialog" style="width:50%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="playerListLabel">新增播表计划</h4>
+			</div>
+				<div class="modal-body">
+				<form id="form_format_file_upload" class="form-horizontal"  role="form">
+					<input type="text" id="playerListId" hidden="hidden"/>
+					<div class="form-group">
+                         <label for="playerListName" class="col-sm-3 control-label">计划名称</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="playerListName"  placeholder="请输入版式名称..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="description" class="col-sm-3 control-label">计划描述</label>
+                         <div class="col-sm-9">
+                             <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="请输入版式描述..." />
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="isDefault" class="col-sm-3 control-label">是否缺省播表</label>
+                         <div class="col-sm-9">
+                         	<label>
+								<input name="isDefault" id="isDefault" class="ace ace-switch ace-switch-7" type="checkbox" />
+								<span class="lbl"></span>
+							</label>
+                         </div>
+                     </div>
+                     <div class="form-group">
+                         <label for="playerlist_start_end_date" class="col-sm-3 control-label">起始日期</label>
+                         <div class="col-sm-9">
+                         	 <div class="input-group">
+								<span class="input-group-addon">
+									<i class="icon-calendar bigger-110"></i>
+								</span>
+								<input class="form-control" type="text" name="date-range-picker" id="playerlist_start_end_date" />
+							</div> 
+                         </div>
+                     </div>
+				</form>
+				<div id="div_alert"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" onclick="submitPlayerList()" class="btn btn-primary">
+						提交</button>
+				</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal -->
+		<script th:src="@{/assets/js/jquery.ui.touch-punch.min.js}"></script>
+		<script th:src="@{/assets/js/bootbox.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.slimscroll.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.easy-pie-chart.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.hotkeys.min.js}"></script>
+		<script th:src="@{/assets/js/bootstrap-wysiwyg.min.js}"></script>
+		<script th:src="@{/assets/js/select2.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-datepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/bootstrap-timepicker.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/moment.min.js}"></script>
+		<script th:src="@{/assets/js/date-time/daterangepicker.min.js}"></script>
+		<script th:src="@{/assets/js/fuelux/fuelux.spinner.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.inputlimiter.1.3.1.min.js}"></script>
+		<script th:src="@{/assets/js/chosen.jquery.min.js}"></script>
+		<script th:src="@{/assets/js/jquery.maskedinput.min.js}"></script>
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				$('input[name=date-range-picker]').daterangepicker({format: 'YYYY-MM-DD'}).prev().on(ace.click_event, function(){
+					$(this).next().focus();
+				});
+				
+				$("#isDefault").click(function(){
+					var isChecked = $('#isDefault').attr('checked');
+					if(isChecked){
+						$('#isDefault').attr('checked',false);
+					}else{
+						$('#isDefault').attr('checked',true);
+					}
+				})
+				
+				submitPlayerList = function(){
+					var param = {};
+					var playerListId = $("#playerListId").val();
+					var playerListName = $("#playerListName").val();
+					var description = $("#description").val();
+					var isDefault = $("#isDefault").attr('checked')?true:false;
+					var date = $("#playerlist_start_end_date").val();
+					var startDate = date.split(" - ")[0]
+					var endDate = date.split(" - ")[1];
+					param.playerListId=playerListId;
+					param.playerListName=playerListName;
+					param.description=description;
+					param.default = isDefault;
+					param.startDate = startDate;
+					param.endDate = endDate;
+					 $.ajax({
+						url : '/playercontrol/addPlayerList',
+						type:"POST",
+						contentType:"application/json",
+						data : JSON.stringify(param),
+						success:function(data){
+							var success = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>成功！</strong>提交播表成功。'
+								+ '</div>'
+							var warning = '<div class="alert alert-warning">'
+									+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+									+ '<strong>失败！</strong>提交播表失败。'
+									+ '</div>'
+							if (data.flag) {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(success);
+							} else {
+								$(
+										".modal-body #div_alert")
+										.empty()
+										.append(warning);
+							}
+							$('#playlist_table').DataTable().ajax.reload();
+							$('#playerListInfo').modal("hide");
+						}
+					}) 
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

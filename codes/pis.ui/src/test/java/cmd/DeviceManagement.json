@@ -1,0 +1,27 @@
+[
+	{
+		"cmdId": 0,
+		"cmdName": "系统运行监测管理",
+		"cmd_description": "系统运行监测管理...",
+		"cmdSet": null,
+		"roles": null
+	}, {
+		"cmdId": 0,
+		"cmdName": "显示屏开关机管理",
+		"cmd_description": "显示屏开关机管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "播放控制器版本管理",
+		"cmd_description": "播放控制器版本管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "登陆远程播放控制器",
+		"cmd_description": "登陆远程播放控制器...",
+		"cmdSet": null,
+		"roles": null
+	}
+]

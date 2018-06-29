@@ -1,0 +1,180 @@
+{
+	"data-columns": "12",
+	"data-rows": "10",
+	"data-cellSize": "40",
+	"data-legendId": "legend",
+	"data-textClass": "text",
+	"data-gridNumbers": "true",
+	"data-grid": "true",
+	"data-lineWidth": "4",
+	"lines": [
+		{
+			"data-color": "#00ff00",
+			"data-label": "一号线",
+			"data-shiftCoords": "0,-1",
+			"nodes": [
+				{
+					"data-coords": "2,6"
+				},
+				{
+					"data-coords": "2,5.9",
+					"data-marker": "@interchange"
+					
+				},
+				{
+					"data-coords": "5,6",
+					"data-labelPos": "N",
+					"data-marker": "@station",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Selectable"
+							}
+				},
+				{
+					"data-coords": "6,6"
+				},
+				{
+					"data-coords": "7,5",
+					"data-labelPos": "E",
+					"data-marker": "station",
+					"data-dir": "E",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Droppable"
+							}
+				},
+				{
+					"data-coords": "7,3",
+					"data-labelPos": "W",
+					"data-marker": "@station",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Selectable"
+							}
+				},
+				{
+					"data-coords": "7,1",
+					"data-labelPos": "W",
+					"data-marker": "interchange",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Selectable"
+							}
+				}
+			]
+		},
+		{
+			"data-color": "#ff4db2",
+			"data-label": "二号线",
+			"nodes": [
+				{
+					"data-coords": "2,2",
+					"data-marker":"interchange",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Accordion"
+							}
+				},
+				{
+					"data-coords": "4,2",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Auto\ncomplete"
+							}
+				},
+				{
+					"data-coords": "5,3",
+					"data-dir":"E"
+				},
+				{
+					"data-coords": "5,7",
+					"data-marker":"@station",
+					"data-labelPos":"W",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Slider"
+							}
+				},
+				{
+					"data-coords": "6,4",
+					"data-labelPos": "W",
+					"data-markerInfo":"h5",
+					"data-marker": "interchange",
+					"data-dir": "S",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Date\npicker"
+							}
+				},
+				{
+					"data-coords": "7,4"
+				},
+				{
+					"data-coords": "7.15,8",
+					"data-labelPos": "E",
+					"data-marker": "@station",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Droppable"
+							}
+				},
+				{
+					"data-coords": "8,3",
+					"data-dir": "E"
+				},
+				{
+					"data-coords": "8,2"
+				},
+				{
+					"data-coords": "9,1",
+					"data-dir": "N"
+				},
+				{
+					"data-coords": "10,2",
+					"data-dir": "E",
+					"data-labelPos": "E",
+					"data-marker": "interchange",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Droppable"
+							}
+				},
+				{
+					"data-coords": "10,5"
+				},
+				{
+					"data-coords": "9,6",
+					"data-dir": "s",
+					"data-marker": "station",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Droppable"
+							}
+				},
+				{
+					"data-coords": "6,9"
+				},
+				{
+					"data-coords": "5,8",
+					"data-dir": "w"
+				},
+				{
+					"data-coords": "5,7"
+				},
+				{
+					"data-coords": "4,6",
+					"data-dir": "N"
+				},
+				{
+					"data-coords": "2,6",
+					"data-dir": "N",
+					"data-marker":"interchange",
+					"link":{
+							"href":"http://jqueryui.com/demos/selectable/",
+							"title":"Tabs"
+							}
+				}
+			]
+		}
+	]
+}

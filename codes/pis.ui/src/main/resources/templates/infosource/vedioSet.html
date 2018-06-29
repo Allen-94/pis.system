@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>直播视频流设置</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">直播视频流设置</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="col-sm-12">
+										<div class="tabbable">
+											<ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+												<li class="active">
+													<a data-toggle="tab" href="#home4">音视频切换矩阵配置</a>
+												</li>
+
+												<li>
+													<a data-toggle="tab" href="#profile4">编码器配置</a>
+												</li>
+
+												<li>
+													<a data-toggle="tab" href="#dropdown14">流媒体服务器</a>
+												</li>
+											</ul>
+
+											<div class="tab-content">
+												<div id="home4" class="tab-pane in active">
+													<div class="row">
+														<div class="col-sm-3">
+															<img alt="音视频切换矩阵配置" th:src="@{/images/切换矩阵.jpg}" />
+														</div>
+														<div class="col-sm-2">
+															<p><button class="btn btn-lg btn-success">打开管理界面</button></p>
+															<p><button class="btn btn-lg btn-success">设置调用参数</button></p>
+														</div>
+													</div>
+												</div>
+
+												<div id="profile4" class="tab-pane">
+													<div class="row">
+														<div class="col-sm-5">
+															<img alt="视频编码器" th:src="@{/images/视频编码器.jpg}" />
+														</div>
+														<div class="col-sm-2">
+															<p><button class="btn btn-lg btn-success">打开管理界面</button></p>
+															<p><button class="btn btn-lg btn-success">设置调用参数</button></p>
+														</div>
+													</div>
+												</div>
+
+												<div id="dropdown14" class="tab-pane">
+													<div class="row">
+														<div class="col-sm-5">
+															<img alt="流媒体服务器" th:src="@{/images/流媒体服务器.jpg}" />
+														</div>
+														<div class="col-sm-5">
+														<div class="panel panel-default">
+    														<div class="panel-body">
+															<form action="" role="form" class="form-horizontal">
+																  <div class="form-group">
+																	    <label for="firstname" class="col-sm-4 control-label">输入信号选择：</label>
+																	    <div class="col-sm-8">
+																	      <div class="radio">
+																				<label>
+																					<input name="form-field-radio" type="radio" class="ace" />
+																					<span class="lbl"> 编码器输出信号</span>
+																				</label>
+																			</div>
+																			<div class="radio">
+																				<label>
+																					<input name="form-field-radio" type="radio" class="ace" />
+																					<span class="lbl"> 本地媒资库内容</span>
+																				</label>
+																			</div>
+																	    </div>
+																  </div>
+																  <div class="form-group ">
+																  	<label for="firstname" class="col-sm-4 control-label"></label>
+																  	<div class="col-sm-8"><button class="btn btn-lg-4 btn-success">配置本地节目源</button></div>
+																  </div>
+																  <div class="form-group">
+																	    <label for="firstname" class="col-sm-4 control-label">输出信号选择：</label>
+																	    <div class="col-sm-8">
+																			<div class="checkbox">
+																				<label> <input name="form-field-checkbox"
+																					type="checkbox" class="ace" /> <span class="lbl">
+																						组播</span>
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label> <input name="form-field-checkbox"
+																					type="checkbox" class="ace" /> <span class="lbl">
+																						单播RTSP</span>
+																				</label>
+																			</div>
+																		</div>
+																  </div>
+																  <div class="form-group ">
+																  	<label for="firstname" class="col-sm-4 control-label"></label>
+																  	<div class="col-sm-8"><button class="btn btn-lg-4 btn-success">组播配置</button></div>
+																  </div>
+																  <div class="form-group ">
+																  	<label for="firstname" class="col-sm-4 control-label"></label>
+																  	<div class="col-sm-8"><button class="btn btn-lg-4 btn-success">其他配置</button></div>
+																  </div>
+																  <div class="clearfix form-actions">
+																	<div class="col-md-offset-1 col-md-9">
+																		<button class="btn btn-info" type="button">
+																			<i class="icon-ok bigger-50"></i>
+																			Submit
+																		</button>
+																		&nbsp; &nbsp;
+																		<button class="btn" type="reset">
+																			<i class="icon-undo bigger-50"></i>
+																			Reset
+																		</button>
+																	</div>
+																</div>
+															</form>
+															    </div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+</body>
+</html>

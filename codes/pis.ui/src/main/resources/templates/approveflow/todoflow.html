@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>待办任务</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">待办任务</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+											<div class="widget-box transparent">
+												<div class="widget-header widget-header-small">
+													<h4 class="blue smaller">
+														我的待办任务
+													</h4>
+
+													<div class="widget-toolbar action-buttons">
+														<a href="#" data-action="reload">
+															<i class="icon-refresh blue"></i>
+														</a>
+
+														&nbsp;
+														<a href="#" class="pink">
+															<i class="icon-trash"></i>
+														</a>
+													</div>
+												</div>
+
+												<div class="widget-body">
+													<div class="widget-main padding-8">
+														<div id="profile-feed-1" class="profile-feed">
+															<!-- <div class="profile-activity clearfix">
+																<div>
+																	<i class="pull-left thumbicon icon-edit btn-pink no-hover"></i>
+																	<a class="user" href="#"> Alex Doe </a>
+																	published a new blog post.
+																	<a href="#">Read now</a>
+
+																	<div class="time">
+																		<i class="icon-time bigger-110"></i>
+																		11 hours ago
+																	</div>
+																</div>
+
+																<div class="tools action-buttons">
+																	<a href="#" class="blue">
+																		<i class="icon-pencil bigger-125"></i>
+																	</a>
+
+																	<a href="#" class="red">
+																		<i class="icon-remove bigger-125"></i>
+																	</a>
+																</div>
+															</div> -->
+														</div>
+													</div>
+												</div>
+											</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/jquery.slimscroll.min.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				$('#profile-feed-1').slimScroll({
+					height: '450px',
+					alwaysVisible : true
+					});
+				function dataFormat(time){
+				       var data = new Date(time); 
+				        var year = data.getFullYear();  //获取年
+				        var month = data.getMonth() + 1;    //获取月
+				        var day = data.getDate(); //获取日
+				        var hours = data.getHours();
+				        var minutes = data.getMinutes();
+				        time = year + "年" + month + "月" + day + "日" + " " + hours + ":" + minutes;
+				        return time;
+				}
+				//ajax获取待办任务
+				$.ajax({
+					url:"/approveflow/findmyapprove",
+					success:function(data){
+						$.each(data,function(index){
+							var activity = 
+							'<div class="profile-activity clearfix">'
+							+ '<div>'
+							+ '<i class="pull-left thumbicon icon-edit btn-pink no-hover"></i>'
+							/* + '<a class="user" href="#"> '+data[index].submitter['account']+'/'+ data[index].submitter['realname'] + '</a>'
+							+ ' :'+data[index].flowName
+							+'<a href="/approveflow/findflow/'+data[index].id+'">Read now</a>' */
+							+'<div class="row">'
+							+'<div class="col-xs-2">'
+							+'<span>提交人：'+data[index].submitter['account']+'/'+ data[index].submitter['realname']+'</span>'	
+							+'</div>'
+
+							+'<div class="col-xs-3">'
+							+'<span>任务名称：'+data[index].flowName+'</span>'	
+							+'</div>'
+							+'<div class="col-xs-3">'
+							+'<div class="time">'
+							+'<i class="icon-time bigger-110"></i>提交时间：'
+							+ dataFormat(data[index].createDate)
+							+'</div>'	
+							+'</div>'
+							+'<div class="col-xs-1">';
+							if(data[index].approveState == 0){
+								activity +='<span class="label label-lg label-pink arrowed-right">处理中</span>'
+							}else{
+								activity += '<span class="label label-xlg label-primary arrowed arrowed-right">处理完成</span>'
+							}
+							activity = activity+'</div>'
+							+'<div class="col-xs-2">'
+							+'<span><a href="/approveflow/flowinfo/'+data[index].id+'?type=2">审批</a></span>'	
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							+'</div>'
+							$("#profile-feed-1").append(activity)
+						})
+					}
+				})
+			})
+			"]]>"
+		</script>
+</body>
+</html>

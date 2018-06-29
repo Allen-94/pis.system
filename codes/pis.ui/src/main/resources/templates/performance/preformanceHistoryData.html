@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>性能历史数据</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+ 		<style type="text/css">
+			.demo-container {
+				box-sizing: border-box;
+				width: 850px;
+				height: 450px;
+				padding: 20px 15px 15px 15px;
+				margin: 15px auto 30px auto;
+				border: 1px solid #ddd;
+				background: #fff;
+				background: linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+				background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+				box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+				-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+				-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+			}
+			
+			.demo-placeholder {
+				width: 100%;
+				height: 100%;
+				font-size: 14px;
+				line-height: 1.2em;
+			}
+			
+			#tooltip{
+			z-index: 999999
+			}
+
+		</style>
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">性能历史数据</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<ul id="myTab" class="nav nav-tabs">
+									<li class="active">
+										<a href="#plot_layout" data-toggle="tab"> 统计图</a>
+									</li>
+									<li><a href="#table_layout" data-toggle="tab">表格</a></li>
+								</ul>
+								<div id="myTabContent" class="tab-content">
+									<div class="tab-pane fade in active" id="plot_layout">
+										<div>
+											<div class="row center">
+												<h2>性能历史数据</h2>
+											</div>
+											<div class="row">
+												<div class="col-md-2 col-md-offset-2" >
+										    		<select class="width-80" id="target">
+																<option value="0">指标选择</option>
+																<option value="1">CPU使用率</option>
+																<option value="2">内存使用率</option>
+																<option value="3">硬盘使用率</option>
+													</select>
+									    		</div>
+												<div class="col-md-2" >
+										    		<select  class="width-80" id="dateType">
+																<option value="0">一天</option>
+																<option value="1">一周</option>
+																<option value="2">一个月</option>
+																<option value="3">三个月</option>
+													</select>
+									    		</div>
+											</div>
+											<div class="demo-container">
+													<div id="placeholder" class="demo-placeholder"></div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="table_layout">
+										<table id="collection-info-table" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th>设备</th>
+														<th>CPU占有率</th>
+														<th>内存占有率</th>
+														<th>硬盘占有率</th>
+														<th>功耗</th>
+														<th>网络流量</th>
+														<th>日期</th>
+													</tr>
+												</thead>
+											</table>
+									</div>
+								</div>
+										
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-2.0.3.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+		<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+		<!--[if lte IE 8]><script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/excanvas.min.js}"></script><![endif]-->
+		<script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+		<script language="javascript" type="text/javascript" th:src="@{/assets/js/flot/jquery.flot.time.js}"></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				//初始化，加载数据，创建图形
+				var datas = [];
+				var cpuRatios = [], memRatios = [], diskRatios = [];
+				init = function(){
+					$.ajax({
+						url: "/performance/findHistoryMonitorInfoById?devId="+[[${devId}]]+"&dateType=3",
+						type: "GET",
+						dataType: "json",
+						success: function(data){
+							initTable(data);
+							$.each(data,function(index){
+								item = data[index]
+								var cpuRatio = [new Date(item.createTime).getTime(),item.cpuRatio];
+								cpuRatios.push(cpuRatio);
+								var memRatio = [new Date(item.createTime).getTime(),item.memRatio];
+								memRatios.push(memRatio);
+								var diskRatio = [new Date(item.createTime).getTime(),item.diskRatio];
+								diskRatios.push(diskRatio);
+							})
+							datas.push({data:cpuRatios,label:"CPU使用率"});
+							datas.push({data:memRatios,label:"内存使用率"});
+							datas.push({data:diskRatios,label:"硬盘使用率"});
+							
+							$("#target").change();
+							$("#dateType").change();
+						}
+					});
+				}
+				
+				//字符串转日期格式，strDate要转为日期格式的字符串 
+				getDate =function (strDate) { 
+				  var st = strDate; 
+				  var a = st.split(" "); 
+				  var b = a[0].split("-"); 
+				  var c = a[1].split(":"); 
+				  var date = new Date(b[0], b[1], b[2], c[0], c[1], c[2]);
+				  return date; 
+				}
+				
+				var d = []
+				var options = {
+					    series: {
+					        lines: {
+					            show: true,
+					            lineWidth: 1.2,
+					            fill: true
+					        }
+					    },
+					    xaxis: {
+					        mode: "time",
+					       // tickSize: [1, "hour"],
+					        tickFormatter: function (v, axis) {
+					            var date = new Date(v);
+					            /* if (date.getHours() % 2 == 0) {
+					                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+					                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+					                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+					                return hours + ":" + minutes + ":" + seconds;
+					            } else {
+					                return "";
+					            } */
+				                return date.toLocaleTimeString();//转为当地时间格式 
+					        },
+					        axisLabel: "Time",
+					        axisLabelUseCanvas: true,
+					        axisLabelFontSizePixels: 12,
+					        axisLabelFontFamily: 'Verdana, Arial',
+					        axisLabelPadding: 10
+					    },
+					    yaxis: {
+					        min: 0,
+					        max: 100,        
+					        tickSize: 5,
+					        tickFormatter: function (v, axis) {
+					            if (v % 10 == 0) {
+					                return v + "%";
+					            } else {
+					                return "";
+					            } 
+					        	//return v + "%";
+					        },
+					        axisLabel: "性能数据",
+					        axisLabelUseCanvas: true,
+					        axisLabelFontSizePixels: 12,
+					        axisLabelFontFamily: 'Verdana, Arial',
+					        axisLabelPadding: 6
+					    },
+					    legend: {        
+					        labelBoxBorderColor: "#fff"
+					    },
+					    grid: {                
+					        backgroundColor: "#000000",
+					        tickColor: "#008040"
+					    }
+					}; 
+				//选择指标
+				$("#target").on('change',function(){
+					var target = $(this).val();
+					switch(target){
+						case '0':
+							d = datas;
+							break;
+						case "1":
+							d = [{data:cpuRatios,label:"CPU使用率"}];
+							break;
+						case "2":
+							d = [{data:memRatios,label:"内存使用率"}];
+							break;
+						case "3":
+							d = [{data:diskRatios,label:"硬盘使用率"}];
+							break;
+						default:
+							d = datas;
+								
+					}
+					$.plot("#placeholder", d, options);
+				});
+				
+				//选择时间跨度
+				$("#dateType").on("change",function(){
+					var dateType = $(this).val();
+					var myDate = new Date();//获取系统当前时间
+					var year = myDate.getYear(); //获取当前年份(2位)
+					var fullyear = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+					var month =  myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+					var date = myDate.getDate(); //获取当前日(1-31)
+					var day = myDate.getDay(); //获取当前星期X(0-6,0代表星期天)
+					
+					
+					switch(dateType){
+						case '0':
+							options.xaxis.minTickSize = [0, "hour"];
+							options.xaxis.timeformat = "%H:%M:%S";
+							options.xaxis.min = new Date(fullyear,month,date).getTime();
+							options.xaxis.max = new Date(fullyear,month,date+1).getTime();
+							break;
+						case "1":
+							options.xaxis.minTickSize = [1, "day"];
+							options.xaxis.timeformat = "%a";
+							options.xaxis.min = new Date(fullyear,month,date-7).getTime();
+							options.xaxis.max = new Date(fullyear,month,date+1).getTime();
+							options.xaxis.tickFormatter=null;
+							break;
+						case "2":
+							options.xaxis.minTickSize = [1, "day"];
+							options.xaxis.timeformat = "%d";
+							options.xaxis.min = new Date(fullyear,month-1,date).getTime();
+							options.xaxis.max = new Date(fullyear,month,date).getTime();
+							options.xaxis.tickFormatter=null;
+							break;
+						case "3":
+							options.xaxis.minTickSize = [1, "month"];
+							options.xaxis.timeformat = "%m";
+							options.xaxis.min = new Date(fullyear,month-3,date).getTime();
+							options.xaxis.max = new Date(fullyear,month,date+1).getTime();
+							options.xaxis.tickFormatter=null;
+							break;
+						default:
+							options.xaxis.minTickSize = [0, "hour"];
+							options.xaxis.timeformat = "%H:%M:%S";
+							options.xaxis.min = new Date(fullyear,month,date).getTime();
+							options.xaxis.max = new Date(fullyear,month,date+1).getTime();
+							
+					}
+					$.plot("#placeholder", d, options);
+				})
+				
+				//初始化表格，只初始化一次
+				initTable = function(dataSet){
+					var oTable1 = $('#collection-info-table').DataTable( {
+						searching:true,
+						stateSave:true,
+						bLengthChange:true,
+						ordering: false,
+						autoWidth: false,
+						data:dataSet,
+						columns:[
+							{"data":"dev.resourceName"},
+							{"data":"cpuRatio"},
+							{"data":"memRatio"},
+							{"data":"diskRatio"},
+							{"data":"powerDiss"},
+							{"data":"netTraffic"},
+							{ 
+								"sClass":"center",
+								"data": "createTime" 
+							} 
+						],
+						"oLanguage" : { // 国际化配置
+				            "sProcessing" : "正在获取数据，请稍后...",
+				            "sLengthMenu" : "显示 _MENU_ 条",
+				            "sZeroRecords" : "没有找到数据",
+				            "sInfo" : "从 _START_ 到  _END_ 条记录 总记录数为 _TOTAL_ 条",
+				            "sInfoEmpty" : "记录数为0",
+				            "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
+				            "sInfoPostFix" : "",
+				            "sSearch" : "查询",
+				            "sUrl" : "",
+				            "oPaginate" : {
+				                "sFirst" : "第一页",
+				                "sPrevious" : "上一页",
+				                "sNext" : "下一页",
+				                "sLast" : "最后一页"
+				            }
+				        }
+					});
+				}
+				
+		        // 节点提示  
+		        
+				$("<div id='tooltip'></div>").css({
+					position: "absolute",
+					display: "none",
+					border: "1px solid #fdd",
+					padding: "2px",
+					"background-color": "#fee",
+					opacity: 0.80
+				}).appendTo("body");
+		  
+		        var previousPoint = null;  
+		        // 绑定提示事件  
+		        $("#placeholder").bind("plothover", function (event, pos, item) {  
+		        	if (item) {
+						/* var x = item.datapoint[0].toFixed(2),
+							y = item.datapoint[1].toFixed(2); */
+						 var x = new Date(item.datapoint[0]).toLocaleString();
+		                 var y = item.datapoint[1].toFixed(0);  
+		                 var tip = "ratio:"+y+", date:"+x; 
+						$("#tooltip").html(item.series.label + tip)
+							.css({top: item.pageY+5, left: item.pageX+5})
+							.fadeIn(10);
+					} else {
+						$("#tooltip").hide();
+					}
+		        });  
+				
+				//end plot
+				
+				//初始化
+				init();
+			})
+			"]]>"
+		</script>
+</body>
+</html>
+

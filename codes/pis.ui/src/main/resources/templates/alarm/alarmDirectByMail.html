@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>控制台</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link th:href="@{/assets/css/sidebar.css}" rel="stylesheet" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">群组配置(邮件方式)</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+									<div class="col-xs-12 col-sm-7 widget-container-span">
+									<div class="row">
+									<div class="form-group">
+										<label class="col-sm-2 control-label no-padding-right" for="group-name"> 群组名称 :</label>
+										<div class="col-sm-9">
+											<input type="text" id="group-name" placeholder="群组名称" class="col-xs-10 col-sm-8" />
+										</div>
+									</div>
+									</div>
+									<div class="row widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header">
+												<h5 class="smaller">发送告警范围</h5>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main">
+													<div class="row ">
+														<label class="control-label col-xs-12 col-sm-2">级别：</label>
+														<div class="controls col-xs-12 col-sm-10">
+														<div class="col-xs-2">
+															<label>
+																<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
+																<span class="lbl">全部</span>
+															</label>
+														</div>
+														<div class="col-xs-2">
+															<label>
+																<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
+																<span class="lbl">紧急</span>
+															</label>
+														</div>
+														<div class="col-xs-2">
+															<label>
+																<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
+																<span class="lbl">重要</span>
+															</label>
+														</div>
+														<div class="col-xs-2">
+															<label>
+																<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
+																<span class="lbl">一般</span>
+															</label>
+														</div>
+														<div class="col-xs-2">
+															<label>
+																<input name="switch-field-1" class="ace ace-switch ace-switch-5" type="checkbox" />
+																<span class="lbl">提示</span>
+															</label>
+														</div>
+														</div>
+													</div>
+													<div class="row ">
+														<label class="control-label col-xs-12 col-sm-2">告警源类型：</label>
+														<div class="controls col-xs-12 col-sm-10">
+														<div class="col-xs-10">
+															<label>
+																全部
+															</label>
+															<button type="button" class="btn btn-link">更改</button>
+														</div>
+														</div>
+													</div>
+													<div class="row ">
+														<label class="control-label col-xs-12 col-sm-2">告警源：</label>
+														<div class="controls col-xs-12 col-sm-10">
+														<div class="col-xs-10">
+															<label>
+																全部
+															</label>
+															<button type="button" class="btn btn-link">更改</button>
+														</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header">
+												<h5 class="smaller">发送邮箱设置</h5>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main">
+													<form class="form-horizontal" role="form">
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1">SMTP服务器域名／IP 地址</label>
+					
+															<div class="col-sm-8">
+																<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 发送使用的邮箱地址  </label>
+					
+															<div class="col-sm-8">
+																<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 
+																<input name="form-field-checkbox" class="ace" type="checkbox" />
+																<span class="lbl">SMTP服务器要求安全连接端口</span>
+															</label>
+															<div class="col-sm-8">
+																<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 
+																<input name="form-field-checkbox" class="ace" type="checkbox" />
+																<span class="lbl"> SMTP服务器要求身份认证</span>
+															</label>
+															<div class="col-sm-8">
+																<!-- <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" /> -->
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 验证用户名：  </label>
+					
+															<div class="col-sm-8">
+																<input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-8" />
+															</div>
+														</div>
+														<div class="form-group">
+															<label class="col-sm-4 control-label no-padding-right" for="form-field-1"> 验证密码：  </label>
+					
+															<div class="col-sm-8">
+																<input type="password" class="col-xs-10 col-sm-8" placeholder="Password" />
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div class="col-xs-12 col-sm-5 widget-container-span">
+										<div class="space-16"></div>
+										<div class="row">
+											<div class="widget-box light-border">
+												<div class="widget-header">
+													<h5 class="smaller">邮件接收人范围</h5>
+												</div>
+	
+												<div class="widget-body">
+													<div class="widget-main  padding-8">
+														<div class="slim-scroll" data-height="350">
+															<div class="content">
+																<div id="tree1" class="tree"></div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="space-6"></div>
+										<div class="row center">
+											<button class="btn btn-success">测试</button>
+											<button class="btn btn-success">确定</button>
+											<button class="btn btn-success">取消</button>
+										</div>
+									</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src='@{/assets/js/fuelux/data/fuelux.tree-sampledata.js}'></script>
+		<script th:src='@{/assets/js/fuelux/fuelux.tree.min.js}'></script>
+		<script th:src='@{/assets/js/jquery-ui-1.10.3.custom.min.js}'></script>
+		<script th:src='@{/assets/js/jquery.ui.touch-punch.min.js}'></script>
+		<script th:src='@{/assets/js/jquery.slimscroll.min.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($){
+
+		$('#tree1').ace_tree({
+			dataSource: treeDataSource ,
+			multiSelect:true,
+			loadingHTML:'<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
+			'open-icon' : 'icon-minus',
+			'close-icon' : 'icon-plus',
+			'selectable' : true,
+			'selected-icon' : 'icon-ok',
+			'unselected-icon' : 'icon-remove'
+		});
+		// scrollables
+		$('.slim-scroll').each(function () {
+			var $this = $(this);
+			$this.slimScroll({
+				height: $this.data('height') || 100,
+				railVisible:true
+			});
+		});
+		
+		$('#tree2').ace_tree({
+			dataSource: treeDataSource2 ,
+			loadingHTML:'<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
+			'open-icon' : 'icon-folder-open',
+			'close-icon' : 'icon-folder-close',
+			'selectable' : false,
+			'selected-icon' : null,
+			'unselected-icon' : null
+		});
+
+
+
+		/**
+		$('#tree1').on('loaded', function (evt, data) {
+		});
+
+		$('#tree1').on('opened', function (evt, data) {
+		});
+
+		$('#tree1').on('closed', function (evt, data) {
+		});
+
+		$('#tree1').on('selected', function (evt, data) {
+		});
+		*/
+});
+		</script>
+	
+</body>
+</html>

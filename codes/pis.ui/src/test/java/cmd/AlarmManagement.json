@@ -1,0 +1,22 @@
+[
+	{
+		"cmdId": 0,
+		"cmdName": "实时告警管理",
+		"cmd_description": "实时告警管理...",
+		"cmdSet": null,
+		"roles": null
+	}, {
+		"cmdId": 0,
+		"cmdName": "历史告警管理",
+		"cmd_description": "历史告警管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "告警转发设置",
+		"cmd_description": "告警转发设置...",
+		"cmdSet": null,
+		"roles": null
+	}
+	
+]

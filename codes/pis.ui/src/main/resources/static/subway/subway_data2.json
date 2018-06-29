@@ -1,0 +1,76 @@
+#地铁站结构数据，用来生成图形及站点链接，向下分级成个站点的数据结构，表示站点的布局
+
+{
+	"data-columns": 12,
+	"data-rows": 10,
+	"data-cellSize": 40,
+	"data-legendId": "legend",
+	"data-textClass": "text",
+	"data-gridNumbers": true,
+	"data-grid": true,
+	"data-lineWidth": 8,
+	"lines": [
+		"line":
+		{
+			"data-color": "#ff4db2",
+			"data-label": "环中线",
+			"stations": [
+				{
+					"data-coords": "2,2",
+					"data-labelPos": "W",
+					"data-shiftCoords": "",
+					"data-marker": "interchange",
+					"data-dir": "",
+					"data-markerInfo": ""
+				},
+				{
+					"data-coords": "",
+					"data-labelPos": "",
+					"data-shiftCoords": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": ""
+				},
+				{
+					"data-coords": "",
+					"data-labelPos": "",
+					"data-shiftCoords": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": ""
+				}
+			]
+		},
+		"line":
+		{
+			"data-color": "",
+			"data-label": "",
+			"stations": [
+				{
+					"data-coords": "",
+					"data-labelPos": "",
+					"data-shiftCoords": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": ""
+				},
+				{
+					"data-coords": "",
+					"data-labelPos": "",
+					"data-shiftCoords": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": ""
+				},
+				{
+					"data-coords": "",
+					"data-labelPos": "",
+					"data-shiftCoords": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": ""
+				}
+			]
+		}
+	]
+}

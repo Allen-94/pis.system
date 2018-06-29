@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="utf-8" />
+<title>用户列表</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<!-- <link rel="stylesheet"
+	th:href="@{/assets/css/buttons.dataTables.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/assets/css/jquery.dataTables.min.css}" /> -->
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">角色管理</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<div class="row">
+								<div class="col-xs-12">
+									<h3 class="header smaller lighter blue">角色列表</h3>
+									<div class="panel panel-default">
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-md-1">角色名称</div>
+												<div class="col-md-2">
+
+													<input type="text" id="nameFilter" />
+												</div>
+												<div class="col-md-1">角色描述</div>
+												<div class="col-md-2">
+
+													<input type="text" id="descriptionFilter" />
+												</div>
+												<div class="col-md-6">
+													<div class="btn-group">
+														<button type="button" class="btn btn-sm btn-success"
+															id="conditionSearch">搜索</button>
+														<button class="btn btn-sm  btn-success" id="export">导出</button>
+														<!-- <button class="btn btn-sm  btn-success" id="">添加角色</button> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="table-header">用户数据</div> -->
+									<div
+										class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+										<button type="button" class="btn btn-success" onclick="add()"
+											data-toggle="button">添加角色</button>
+										<button type="button" class="btn btn-success"
+											onclick="delete_in_batches()" data-toggle="button">批量删除</button>
+									</div>
+									<div class="table-header">角色列表</div>
+									<div class="table-responsive">
+										<table id="sample-table-2"
+											class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th class="center"><label> <input
+															type="checkbox" class="ace" /> <span class="lbl"></span>
+													</label></th>
+													<th>角色名称</th>
+													<th>角色描述</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+							</div>
+
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<!-- <script th:src='@{/assets/js/jquery.dataTables.min.js}'></script>
+	<script th:src='@{/assets/js/buttons.html5.min.js}'></script>
+	<script th:src='@{/assets/js/dataTables.buttons.min.js}'></script>
+	<script th:src='@{/assets/js/jszip.min.js}'></script> -->
+
+	<!-- tablexport -->
+	<script
+		th:src='@{/assets/js/tableExport/libs/FileSaver/FileSaver.min.js}'></script>
+	<script
+		th:src='@{/assets/js/tableExport/libs/js-xlsx/xlsx.core.min.js}'></script>
+	<script th:src='@{/assets/js/tableExport/tableExport.min.js}'></script>
+
+	<script language="javascript" type="text/javascript"
+		th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+	<!-- <script th:src="@{/main/userList.js}"></script> -->
+	<!-- inline scripts related to this page -->
+
+	<script type="text/javascript">
+		"<![CDATA["
+		jQuery(function($) {
+
+			var oTable1 = $('#sample-table-2')
+					.DataTable(
+							{
+								searching : false,
+								stateSave : true,
+								ordering : false,
+								bLengthChange : false,
+								ajax : {
+									"url" : "/security/findAllRoles",
+									"dataSrc" : ""
+								},
+								columns : [
+										{
+											"sClass" : "center",
+											"data" : "roleId",
+											"render" : function(data, type,
+													full, meta) {
+												return '<label><input type="checkbox" class="ace" value='+data+' /><span class="lbl"></span></label>'
+											}
+										},
+										{
+											"data" : "roleName"
+										},
+										{
+											"data" : "role_description"
+										},
+										{
+											"sClass" : "center",
+											"data" : "roleId",
+											"render" : function(data, type,
+													row, meta) {
+												var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" >'
+														+ '<button type="button" class="btn btn-xs btn-info" onclick="view('
+														+ data
+														+ ')" data-toggle="button">详细</button>'
+														+ '&nbsp;'
+														+ '<button type="button" class="btn btn-xs btn-info" onclick="edit('
+														+ data
+														+ ')" data-toggle="button" >修改</button>'
+														+ '&nbsp;'
+														+ '<button type="button" class="btn btn-xs btn-info" onclick="del('
+														+ data
+														+ ')"  data-toggle="button">删除</button>'
+														+ '</div>'
+												return html;
+											}
+										} ]
+							});
+
+			$('table th input:checkbox').on(
+					'click',
+					function() {
+						/* alert(1); */
+						var that = this;
+						$(this).closest('table').find(
+								'tr > td:first-child input:checkbox').each(
+								function() {
+									this.checked = that.checked;
+									$(this).closest('tr').toggleClass(
+											'selected');
+								});
+
+					});
+
+			$("#conditionSearch").click(function() {
+				var param = {};
+				param['nameFilter'] = $("#nameFilter").val();
+				param['descriptionFilter'] = $("#descriptionFilter").val();
+
+				oTable1.settings()[0].ajax.data = param;
+				oTable1.ajax.url("/security/roleConditionSearch").load();
+			});
+
+			$("#export").click(function() {
+				$('#sample-table-2').tableExport({
+					type : 'excel'
+				});
+			});
+
+		})
+
+		function delete_in_batches() {
+			var id = "";
+			var checked = $("table").find('tr > td input:checkbox:checked')
+					.each(function() {
+						id += $(this).attr("value") + ',';
+					})
+			/* alert(id); */
+			if (id.length > 0) {
+				id = id.substring(0, id.length - 1)
+				$.ajax({
+					type : 'POST',
+					url : "/security/deleteRolesInBatches?id=" + id,
+					success : function(data) {
+						alert(data)
+						location = "/security/rolelist"
+					}
+				});
+			}
+		}
+
+		function del(param) {
+			/* alert(param); */
+			$.ajax({
+				url : '/security/roleDeleted',
+				data : {
+					roleId : param
+				},
+				success : function(data) {
+					alert(data);
+					var oTable1 = $('#sample-table-2').DataTable();
+					oTable1.ajax.reload();
+				}
+			});
+		}
+
+		function edit(param) {
+			window.location.href = "/security/roleEdited?roleId=" + param;
+		}
+
+		function add() {
+			window.location.href = "/security/roleAdded";
+		}
+
+		function view(param) {
+			window.location.href = "/security/roleView?roleId=" + param;
+
+		}
+
+		"]]>"
+	</script>
+</body>
+</html>

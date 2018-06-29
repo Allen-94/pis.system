@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="utf-8" />
+<title>查看管理车站播放控制器</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">车站子系统</li>
+						<li class="active">查看与管理设备</li>
+						<li class="active">车站播放控制器查看与管理</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<div class="panel panel-default">
+								<div class="panel-body">
+
+									<div class="row" style="float: left;">
+										<select id="line">
+											<option value="0">----请选择线路----</option>
+										</select> <select id="station">
+											<option value="0">----请选择车站----</option>
+										</select> &nbsp;&nbsp;&nbsp;&nbsp;
+
+									</div>
+
+									<div class="btn-group" style="float: left;">
+										<button type="button"  class="btn btn-sm btn-success" 
+											 id="conditionSearch">查询设备</button>
+										<button class="btn btn-sm  btn-success" id="export">导出</button>
+										<!-- <button class="btn btn-sm  btn-success" id="">添加角色</button> -->
+									</div>
+								</div>
+							</div>
+							<div class="table-header">播放控制器列表</div>
+							<div class="table-responsive">
+								<table id="sample-table-2"
+									class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>名称</th>
+											<th>型号</th>
+											<th>ID</th>
+											<th>IP</th>
+											<th>状态</th>
+											<th>访问账号</th>
+											<th>访问口令</th>
+											<th>自生是否定时开关</th>
+											<th>自身开关时间</th>
+											<th>是否控制屏开关</th>
+											<th>控制屏开关时间</th>
+											<th>版本号</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script language="javascript" type="text/javascript"
+		th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<script language="javascript" type="text/javascript"
+		th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+		
+		<!-- tablexport -->
+	<script th:src='@{/assets/js/tableExport/libs/FileSaver/FileSaver.min.js}'></script>	
+	<script th:src='@{/assets/js/tableExport/libs/js-xlsx/xlsx.core.min.js}'></script>	
+	<script th:src='@{/assets/js/tableExport/tableExport.min.js}'></script>	
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript">
+		"<![CDATA["
+			jQuery(function(){
+				var linetype= 2 ;
+				var stationtype = 3;
+				var playcontrollertype = 6;
+				 $.ajax({
+					type:'GET',
+					url:"/security/findResourceByType?type="+linetype,
+					success:function(data){
+						$("#line option").remove();
+						$("#line").append("<option value=0>--请选择线路--</option>");
+						if(data!=null){
+							for(var i = 0;i<data.length;i++){
+								var id = data[i].id;
+								var resourceName = data[i].resourceName;
+								$("#line").append("<option value="+id+">"+resourceName+"</option>");
+							}
+						}
+					}
+				}); 
+				 
+				 $("[data-toggle='tooltip']").tooltip();
+				
+				$("#line").change(function(){
+					var lineId = $("#line option:selected").val();
+					var params = {};
+					params['type'] = stationtype;
+					params['lineId'] = lineId;
+					$.ajax({
+						type:"POST",
+						url:"/security/findResourceBylinkageType",
+						data:JSON.stringify(params),
+						contentType : "application/json",
+						datatype:"json",
+						success:function(data){
+							$("#station option").remove();
+							$("#station").append("<option value=0>--请选择车站--</option>");
+							if(data!=null){
+								for(var i = 0 ;i<data.length;i++){
+									var stationId = data[i].id;
+									var resourceName = data[i].resourceName;
+									$("#station").append("<option value="+stationId+">"+resourceName+"</option>");
+								}
+							}
+							
+							
+						}
+					});
+				});
+				
+				$( document ).tooltip();
+				//生成表数据
+				var tables = $('#sample-table-2')
+					.DataTable(
+							{
+								searching : false,
+								ordering : false,
+								stateSave : true,
+								ajax:{
+									"url":"/subsystem/AllPcList?type="+playcontrollertype,
+									"dataSrc":""
+								},
+								bLengthChange : false,
+								columns : [
+										{
+											"data" : "pc_name"
+										},
+										{
+											"data" : "pc_model"
+										},
+										{
+											"data" : "pc_id"
+										},
+										{
+											"data" : "pc_IP"
+										},
+										{
+											"data" : "pc_status"
+										},
+										{
+											"data" : "pc_account"
+										},
+										{
+											"data" : "pc_password"
+										},
+										{
+											"data" : "isTimeSwitch"
+										},
+										{
+											"data" : "switchTime"
+										},
+										{
+											"data" : "isControllScreenSwitch"
+										},
+										{
+											"data" : "screenSwitchTime"
+										},
+										{
+											"data" : "version"
+										},
+										{
+											"sClass" : "center",
+											"data" : "id",
+											"render" : function(data, type,
+													row, meta) {
+												return '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons" > <img alt="重启" src="/images/restart.png" style="width: 20px" onclick="restart('
+														+ data
+														+ ')"  title="重启" >&nbsp;<img alt="远程访问" src="/images/whack-ms-access.png" style="width: 22px" onclick="remoteAccess('
+														+ data
+														+ ')"  title="远程访问" >&nbsp;<img alt="远程访问" src="/images/user.png" style="width: 30px" onclick="modify('
+														+ data
+														+ ')"  title="修改用户名和口令" >&nbsp;<img alt="设定播放控制器自动开关时间" src="/images/playcontroller.png" style="width: 30px" onclick="setPcAutoSwitchTime('
+														+ data
+														+ ')"  title="设定播放控制器自动开关时间" >&nbsp;<img alt="设定显示屏自动开关时间" src="/images/screen.png" style="width: 30px" onclick="setScreenAutoSwitchTime('
+														+ data
+														+ ')"  title="设定显示屏自动开关时间" > </div>'
+											}
+										} ]
+							});
+				
+				restart = function(param){
+					$.ajax({
+						datatype:"JSON",
+						url:"/subsystem/restart?id="+param,
+						success:function(data){
+							alert(data)
+						}
+							
+					});
+				}
+				remoteAccess = function(param){
+					$.ajax({
+						datatype:"JSON",
+						url:"/subsystem/remoteAccess?id="+param,
+						success:function(data){
+							alert(data)
+						}
+					});
+				}
+				
+				
+				modify = function(param){
+					location = "/subsystem/modify?id="+param;
+				}
+				
+				setPcAutoSwitchTime = function(param){
+					location = "/subsystem/pcautoswitchtime?pc_id="+param;
+				}
+				
+				setScreenAutoSwitchTime = function(param){
+					location = "/subsystem/screenautoswitchtime?pc_id="+param;
+				}
+				
+				//查询播放控制器
+				$("#conditionSearch").click(function(){
+					var lineId = $("#line option:selected").val();
+					var stationId = $("#station option:selected").val();
+					if(lineId==0){
+						alert("请选择线路")
+					}else if(stationId==0){
+						alert("请选择站点")
+					}else{
+						//获取站点下的设备
+						var params = {};
+						params['type'] = playcontrollertype;
+						params['stationId'] = stationId;
+						
+						tables.settings()[0].ajax.data = params;
+						tables.ajax.url("/subsystem/findPCList").load();
+					}
+				});
+				
+				$("#export").click(function(){
+					$('#sample-table-2').tableExport({type:'excel'});
+				});
+				
+				
+				
+			});
+		"]]>"
+	</script>
+</body>
+</html>

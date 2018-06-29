@@ -1,0 +1,82 @@
+{
+	"data-columns": "12",
+	"data-rows": "10",
+	"data-cellSize": "40",
+	"data-legendId": "legend",
+	"data-textClass": "text",
+	"data-gridNumbers": "true",
+	"data-grid": "false",
+	"data-lineWidth": "8",
+	"lines": [
+		{
+			"data-color": "#00ff00",
+			"data-label": "一号线",
+			"data-shiftCoords": "0,-1",
+			"nodes": [
+				{
+					"data-coords": "2,6",
+					"data-labelPos": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "2,5.9",
+					"data-labelPos": "",
+					"data-marker": "@interchange",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "5,6",
+					"data-labelPos": "N",
+					"data-marker": "@station",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "6,6",
+					"data-labelPos": "",
+					"data-marker": "",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "7,3",
+					"data-labelPos": "W",
+					"data-marker": "@station",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "7,5",
+					"data-labelPos": "E",
+					"data-marker": "station",
+					"data-dir": "E",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				},
+				{
+					"data-coords": "7,1",
+					"data-labelPos": "W",
+					"data-marker": "interchange",
+					"data-dir": "",
+					"data-markerInfo": "",
+					"link": "",
+					"title": ""
+				}
+			]
+		}
+	]
+}

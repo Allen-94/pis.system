@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>播放列表管理</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">播放列表管理</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="panel panel-default" >
+									    <div class="panel-body">
+									    	<div class="table-responsive">
+								                  	<p class="pull-right">
+														<button class="btn btn-success" id="btn_newplayerlist" data-toggle="modal" data-target="#playerListInfo">新增计划</button>
+														<button class="btn btn-success">删除计划</button>
+													</p>
+													<table id="playlist_table" class="table table-striped table-bordered table-hover">
+														<thead>
+															<tr>
+																<th class="center">
+																	<label>
+																		<input type="checkbox" class="ace" />
+																		<span class="lbl"></span>
+																	</label>
+																</th>
+																<th>计划名称</th>
+																<th>计划说明</th>
+																<th>是否缺省播表</th>
+																<th>开始日期</th>
+																<th>结束日期</th>
+																<th>批准状态</th>
+																<th>是否下发</th>
+																<th>创建者</th>
+																<th>操作</th>
+															</tr>
+														</thead>
+													</table>
+											</div>
+									    </div>
+									 </div>
+								</div>
+								<div class="row">
+									<div class="panel panel-default" >
+									    <div class="panel-body">
+									    	<div class="table-responsive">
+													<table id="playrolelist_table" class="table table-striped table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>规则</th>
+																<th>播控</th>
+																<th>周一</th>
+																<th>周二</th>
+																<th>周三</th>
+																<th>周四</th>
+																<th>周五</th>
+																<th>周六</th>
+																<th>周日</th>
+																<th>开始时间</th>
+																<th>结束时间</th>
+																<th>内容包名称</th>
+																<th>版式名称</th>
+																<th>定时切换版式名称</th>
+																<th>切换间隔</th>
+																<th>操作</th>
+															</tr>
+														</thead>
+													</table>
+											</div>
+									    </div>
+									 </div>
+								</div>	
+								<!-- 新增播表 -->
+								<div class="modal fade" id="playerListInfo"  tabindex="-1" role="dialog" aria-labelledby="playerListLabel" aria-hidden="true">
+								</div>
+								<!-- 新增规则 -->
+								<div class="modal fade" id="playerRoleInfo"  tabindex="-1" role="dialog" aria-labelledby="playerRoleLabel" aria-hidden="true">
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src="@{/assets/js/jquery.gritter.min.js}"></script>
+		<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+		<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				$('#playerListInfo').modal({
+					show:false,
+					remote:"addPlayerList"
+				})
+				
+				$('#playerRoleInfo').modal({
+						show:false,
+						remote:"addPlayerRole"
+				})
+				
+				
+				
+				var oTable1 = $('#playlist_table').DataTable( {
+					searching:false,
+					stateSave:true,
+					aLengthMenu:[5,10],
+					bLengthChange:true,
+					ordering:false,
+					colReorder: true,
+					info:true,
+					paging:true,
+					autoWidth: true,
+					ajax: {
+						"url": "/playercontrol/findAllPlayerList",
+						"dataSrc": ""
+					},
+					columns:[
+						{ 
+							"sClass":"center",
+							"data": "id",
+							"render":function(data, type, full, meta){
+									return '<label><input type="checkbox" class="ace" /><span class="lbl"></span></label>'
+								}
+						},
+						{
+							"data":"playListName"
+						},
+						{
+							"data":"description"
+						},
+						{
+							"data":"default"
+						},
+						{
+							"data":"startDate"
+						},
+						{
+							"data":"endDate"
+						},
+						{
+							"data":"approved"
+						},
+						{
+							"data":"sended"
+						},
+						{
+							"data":"creater",
+							"render":function(data,type,val,meta){
+								return data.account+'/'+data.realname
+							}
+						},
+						{ 
+							"sClass":"center",
+							"data": "id" ,
+							"width":"20%",
+							"render":function(data, type, val, meta){
+								 var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">';
+									html+= '<button type="button" class="btn btn-xs btn-info" onclick="editplayerlist('+meta.row+')"  data-toggle="button">修改</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="editplayerrole('+data+')"  data-toggle="button">新增规则</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="delplayerlist('+data+')"  data-toggle="button">删除</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="delplayerlist('+data+')"  data-toggle="button">提交审批</button>'
+								+'</div>'
+								return html;
+							}
+						} 
+					]
+				});
+				var oTable2 = $('#playrolelist_table').DataTable( {
+					searching:false,
+					stateSave:true,
+					bLengthChange:true,
+					ordering:false,
+					colReorder: true,
+					info:false,
+					paging:false,
+					autoWidth: true,
+					ajax:{
+						url:"/playercontrol/findRoleByPlayerListId/0",
+						"dataSrc": ""
+					},
+					columns:[
+						{
+							"width":"5%",
+							"data":"playRoleName"
+						},
+						{
+							"sClass":"center",
+							"data":"players",
+							"render":function(data, type, val, meta){
+								return '<button class="btn btn-sm btn-primary" onclick="showPlayers('+meta.row+')">查看播控</button>';
+							}
+						},
+						{
+							"data":"monday"
+						},
+						{
+							"data":"tuesday"
+						},
+						{
+							"data":"wednesday"
+						},
+						{
+							"data":"thursday"
+						},
+						{
+							"data":"friday"
+						},
+						{
+							"data":"saturday"
+						},
+						{
+							"data":"sunday"
+						},
+						{
+							"data":"startTime"
+						},
+						{
+							"data":"endTime"
+						},
+						{
+							"data":"contentPackage",
+							"render":function(data, type, val, meta){
+								if(data != null)
+									return data.contentName
+								return "----";
+							}
+						},
+						{
+							"data":"playerFormat",
+							"render":function(data, type, val, meta){
+								if(data != null)
+									return data.playFormatName
+								return "----";
+							}
+						},
+						{
+							"data":"switchPlayerFormat",
+							"render":function(data, type, val, meta){
+								if(data != null)
+									return data.playFormatName
+								return "----";
+							}
+						},
+						{
+							"data":"switchTime"
+						},
+						{ 
+							"sClass":"center",
+							"data": "id" ,
+							"width":"10%",
+							"render":function(data, type, val, meta){
+								 var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">';
+									html+= '<button type="button" class="btn btn-xs btn-info" onclick="changePlayerRole('+meta.row+')"  data-toggle="button">修改</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" onclick="delplayerrole('+data+')"  data-toggle="button">删除</button>'
+								+'</div>'
+								return html;
+							}
+						} 
+					]
+				});
+				/* $('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+				}); */
+				showPlayers = function(rowId){
+					var players = oTable2.row(rowId).data().players
+					var playerNames = '';
+					$.each(players,function(i){
+						playerNames += players[i].resourceName;
+						playerNames += "\n";
+					})
+					alert(playerNames)
+				}
+				
+				$('#playlist_table tbody').on('dblclick', 'tr', function () {
+					var playerListId = oTable1.row(this).data().id;
+				    var table = $('#playrolelist_table').DataTable();
+				    table.ajax.url( "/playercontrol/findRoleByPlayerListId/"+playerListId ).load()
+			    });
+				
+				$("#btn_newplayerlist").click(function(){
+					$('#playerListInfo').modal({
+						show:true,
+						remote:"addPlayerList"
+					})
+					$("#playerListId").val("");
+					$("#playerListName").val("");
+					$("#description").val("");
+					$("#isDefault").attr('checked',false);
+					$('input[name=date-range-picker]').daterangepicker({
+						format:'YYYY-MM-DD',
+						autoUpdateInput:false
+					}).val("")
+				})
+				//修改播表
+				editplayerlist = function(param){
+					$('#playerListInfo').modal({
+						show:true,
+						remote:"addPlayerList"
+					})
+					var data = oTable1.row(param).data()
+					$("#playerListId").val(data.id);
+					$("#playerListName").val(data.playListName);
+					$("#description").val(data.description);
+					$("#isDefault").attr('checked',data.default);
+					
+					$('input[name=date-range-picker]').daterangepicker({
+						format:'YYYY-MM-DD',
+						startDate:data.startDate,
+						endDate:data.endDate
+					}).val(data.startDate+" - "+data.endDate) 	
+				}
+				
+			
+				//编辑播表规则
+				editplayerrole = function(param){
+					$('#playerRoleInfo').modal({
+						show:true,
+						remote:"addPlayerRole"
+					})
+					$("#playerRole_ListId").val(param);
+					$("#palyerRoleId").val();
+					$("#playerRoleName").val();
+				}
+				//删除播表
+				delplayerlist = function(param){
+					$.ajax({
+						url : '/playercontrol/delPlayerList/'+param,
+						type:"POST",
+						data : param,
+						success:function(data){
+							var message = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>'+data.message+'</strong>'
+								+ '</div>'
+							$(".page-content").append(message);
+							$('#playlist_table').DataTable().ajax.reload();
+						}
+					}) 
+				}
+				
+				//修改播表规则
+				changePlayerRole = function(param){
+					$('#playerRoleInfo').modal({
+						show:true,
+						remote:"addPlayerRole"
+					})
+					var data = $('#playrolelist_table').DataTable().row(param).data();
+					var playerRoleId = $("#palyerRoleId").val(data.id);
+					var playerRoleName = $("#playerRoleName").val(data.playRoleName);
+					//var playerListId = $("#playerRole_ListId").val(data.playerList.id); //修改规则不需要播表id
+					if(data.playerGroup != null){
+						$("#playerGroup").find("option[value="+data.playerGroup.id+"]").attr("selected",true);
+					}
+					if(data.contentPackage != null){
+						$("#contentPackage").find("option[value="+data.contentPackage.id+"]").attr("selected",true);
+					}
+					if(data.switchPlayerFormat != null){
+						$("#switchPlayerFormat").find("option[value="+data.switchPlayerFormat.id+"]").attr("selected",true);
+					}
+					if(data.playerForamt != null){
+						$("#playerForamt").find("option[value="+data.playerForamt.id+"]").attr("selected",true);
+					}
+					
+					var switchTime = $("#switchTime").val(data.switchTime);
+					var startTime = $("#startTime").val(data.startTime);
+					var endTime = $("#endTime").val(data.endTime);
+					var monday = $("#monday").attr("checked",data.monday);
+					var tuesday = $("#tuesday").attr("checked",data.tuesday);
+					var wednesday = $("#wednesday").attr("checked",data.wednesday);
+					var thursday = $("#thursday").attr("checked",data.thursday);
+					var friday = $("#friday").attr("checked",data.friday);
+					var saturday = $("#saturday").attr("checked",data.saturday);
+					var sunday = $("#sunday").attr("checked",data.sunday);
+				}
+				//删除播表规则
+				delplayerrole = function(param){
+					$.ajax({
+						url : '/playercontrol/delPlayerRole/'+param,
+						type:"POST",
+						data : param,
+						success:function(data){
+							var message = '<div class="alert alert-success">'
+								+ '<a href="#" class="close" data-dismiss="alert">&times;</a>'
+								+ '<strong>'+data.message+'</strong>'
+								+ '</div>'
+							$(".page-content").append(message);
+							//$('#playrolelist_table').DataTable().ajax.reload();
+						}
+					}) 
+				}
+			})
+			"]]>"
+		</script>
+</body>
+</html>

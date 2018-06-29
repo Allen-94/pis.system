@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="utf-8" />
+<title>添加车站播放控制器</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/assets/css/zTreeStyle/zTreeStyle.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<link rel="stylesheet"
+	th:href="@{/assets/css/jquery-ui-1.10.3.custom.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/chosen.css}" />
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">车站子系统</li>
+						<li class="active">其他操作</li>
+						<li>添加车站播放控制器</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+
+				<div class="page-content">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- PAGE CONTENT BEGINS -->
+							<h3 class="header smaller lighter blue">添加车站播放控制器</h3>
+							<div class="row">
+								<div style="float: left; width: 2%">&nbsp;&nbsp;</div>
+								<div class="widget-box" style="width: 96%; float: left">
+									<div class="widget-header">
+										<h4>添加车站播放控制器</h4>
+
+										<span class="widget-toolbar"> <a href="#"
+											data-action="settings"> <i class="icon-cog"></i>
+										</a> <a href="#" data-action="reload"> <i class="icon-refresh"></i>
+										</a> <a href="#" data-action="collapse"> <i
+												class="icon-chevron-up"></i>
+										</a> <a href="#" data-action="close"> <i class="icon-remove"></i>
+										</a>
+										</span>
+									</div>
+
+									<div class="widget-body">
+										<div class="widget-main">
+											<form class="form-horizontal" role="form">
+												<div class="panel panel-default">
+													<div class="panel-body">
+
+														<div class="row" style="float: left;">
+															<select id="line">
+																<option value="0">----请选择线路----</option>
+															</select> <select id="station">
+																<option value="0">----请选择车站----</option>
+															</select> &nbsp;&nbsp;&nbsp;&nbsp;
+
+														</div>
+
+														<div class="btn-group" style="float: left;">
+															<button type="button" class="btn btn-sm btn-success"
+																id="openmodal" data-toggle="modal"
+																data-target="#addpc">添加播放控制器</button>
+														</div>
+
+														<!-- 模态框（Modal） -->
+														<div id="addpc" class="modal" tabindex="-1">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close"
+																			data-dismiss="modal">&times;</button>
+																		<h4 class="blue bigger">请输入车站播控器参数</h4>
+																	</div>
+
+																	<div class="modal-body overflow-visible" >
+																		<div class="row">
+																			<div class="form-group" >
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器ID: </label>
+																				<div class="col-sm-9">
+																					<input type="text" id="pcID" class="col-xs-10 col-sm-5" />
+																					<span id = "checkid"></span>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器名称: </label>
+																				<div class="col-sm-9">
+																					<input type="text" id="pcname" class="col-xs-10 col-sm-5" />
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器状态: </label>
+																				<div class="col-sm-9">
+																					<select id="pcstatus">
+																						<option value="-1">---------请选择状态---------</option>
+																						<option value="0">未启用</option>
+																						<option value="1">失去联系</option>
+																						<option value="2">正常</option>
+																						<option value="3">故障</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器位置: </label>
+																				<div class="col-sm-9">
+																					<select id="pcplace">
+																						<option value="-1">---------请选择位置---------</option>
+																						<option value="0">车站上行</option>
+																						<option value="1">车站下行</option>
+																						<option value="2">车站展厅</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器厂家: </label>
+																				<div class="col-sm-9">
+																					<select id="pcproducer">
+																						<option value="-1">---------请选择厂家---------</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器型号: </label>
+																				<div class="col-sm-9">
+																					<select id="pcmodel">
+																						<option value="-1">---------请选择型号---------</option>
+																					</select>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器IP: </label>
+																				<div class="col-sm-9">
+																					<input type="text" id="pcIP" class="col-xs-10 col-sm-5" />
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器访问账号: </label>
+																				<div class="col-sm-9">
+																					<input type="text" id="pcaccount" class="col-xs-10 col-sm-5" />
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label class="col-sm-3 control-label no-padding-right"
+																					for="form-field-1">播放控制器访问口令: </label>
+																				<div class="col-sm-9">
+																					<input type="text" id="pcpassword" class="col-xs-10 col-sm-5" />
+																				</div>
+																			</div>
+																			
+																		</div>
+																	</div>
+
+																	<div class="modal-footer">
+																		<button class="btn btn-sm" data-dismiss="modal">
+																			<i class="icon-remove"></i> Cancel
+																		</button>
+
+																		<button class="btn btn-sm btn-primary" id="save" >
+																			<i class="icon-ok"></i> Save
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div style="float: left; width: 2%">&nbsp;&nbsp;</div>
+								<div class="widget-box" style="width: 96%; float: left">
+									<div class="widget-header">
+										<h4>查看资源树</h4>
+
+										<span class="widget-toolbar"> <a href="#"
+											data-action="settings"> <i class="icon-cog"></i>
+										</a> <a href="#" data-action="reload"> <i class="icon-refresh"></i>
+										</a> <a href="#" data-action="collapse"> <i
+												class="icon-chevron-up"></i>
+										</a> <a href="#" data-action="close"> <i class="icon-remove"></i>
+										</a>
+										</span>
+									</div>
+
+									<div class="widget-body">
+										<div class="widget-main ">
+											<div>
+												<ul id="treeDemo" class="ztree"></ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+							<!-- PAGE CONTENT ENDS -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src='@{/assets/js/zTree/jquery.ztree.core.js}'></script>
+	<script th:src='@{/assets/js/jquery-ui-1.10.3.custom.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.ui.touch-punch.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.slimscroll.min.js}'></script>
+	<script th:src='@{/assets/js/jquery.ztree.all.js}'></script>
+	<script th:src='@{/assets/js/chosen.jquery.min.js}'></script>
+
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<script language="javascript" type="text/javascript"
+		th:src="@{/assets/js/flot/jquery.flot.js}"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript">
+		"<![CDATA["
+		jQuery(function($) {
+			var zTreeObj;
+			// zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+			var setting = {
+				check : {
+					enable : false
+				},
+				data : {
+					simpleData : {
+						enable : true
+					}
+				}
+			};
+
+			// zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+			var zNodes = [];
+			$.get("/security/findAllResourcesByGroupId?", function(data) {
+				$.each(data, function(index) {
+					var node = {};
+					node.id = data[index].id;
+					node.pId = data[index].pid;
+					node.name = data[index].name;
+					node.value = data[index].value;
+					node.checked = data[index].checked;
+					node.open = data[index].open;
+					zNodes.push(node);
+				})
+				treeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			})
+
+			
+			$.ajax({
+				type : 'POST',
+				url : "/subsystem/findAllLine",
+				success : function(data) {
+					$("#line option").remove();
+					$("#line").append("<option value=0>--请选择线路--</option>");
+					if (data != null) {
+						for (var i = 0; i < data.length; i++) {
+							var line_id = data[i].line_id;
+							var line_name = data[i].line_name;
+							$("#line").append(
+									"<option value="+line_id+">" + line_name
+											+ "</option>");
+						}
+					} 
+				}
+			});
+			
+			$("#openmodal").click(function(){
+				$.ajax({
+					type:'POST',
+					url:"/subsystem/getProducerConfigImformation",
+					success:function(param){
+						//param[0]是全部厂家集合
+						//para[1]是全部型号集合
+						 /* var split = param[1][0].split(":");
+						alert(split[1]) */ 
+						//清空option
+						$("#pcproducer").html("<option value="+"-1"+">---------请选择厂家---------</option>");
+						$("#pcmodel").html("<option value="+"-1"+">---------请选择型号---------</option>");
+						 for(var i =0;i<param[0].length;i++){
+							var split = param[0][i].split(":");
+							 $("#pcproducer").append(
+									"<option value="+split[0]+">"
+									+ split[1]
+									+ "</option>"); 
+							
+						} 
+						for(var i =0;i<param[1].length;i++){
+							var split = param[1][i].split(":");
+							 $("#pcmodel").append(
+									"<option value="+split[0]+">"
+									+ split[1]
+									+ "</option>"); 
+							
+						}  
+					}
+					
+				});
+			});
+			
+			$("[data-toggle='tooltip']").tooltip();
+
+			$("#line")
+					.change(
+							function() {
+								var lineId = $("#line option:selected").val();
+								$
+										.ajax({
+											type : "POST",
+											url : "/subsystem/findStationByLineId?line_id="+lineId,
+											success : function(data) {
+												$("#station option").remove();
+												$("#station")
+														.append(
+																"<option value=0>--请选择车站--</option>");
+												if (data != null) {
+													for (var i = 0; i < data.length; i++) {
+														var station_id = data[i].station_id;
+														var station_name = data[i].station_name;
+														$("#station")
+																.append(
+																		"<option value="+station_id+">"
+																				+ station_name
+																				+ "</option>");
+													}
+												} 
+
+											}
+										});
+							});
+			var idisused = false;
+			$("#pcID").blur(function(){
+				var param = {};
+				param['line_id']=$("#line option:selected").val();
+				param['station_id']=$("#station option:selected").val();
+				param['pc_id']=$("#pcID").val();
+				if($("#pcID").val()==null||$("#pcID").val()==""){
+					$("#checkid").html("请输入ID").css("color","red");
+				}else{
+					$.ajax({
+						type:"POST",
+						url:"/subsystem/isPcIdUsed",
+						contentType:"application/json",
+						data:JSON.stringify(param),
+						success:function(data){
+							if(data==false){
+								$("#checkid").html("该ID值已存在").css("color","red");
+								idisused = true;
+							}else{
+								idisused = false;
+								$("#checkid").html("");
+							} 
+							
+						}
+					});
+				}
+			});
+			
+			
+			$("#save").click(function(){
+				var param = {};
+				param['line_id']=$("#line option:selected").val();
+				param['station_id']=$("#station option:selected").val();
+				param['pc_id']=$("#pcID").val();
+				param['pc_name']=$("#pcname").val();
+				param['pc_status']=$("#pcstatus option:selected").val();
+				param['pc_place']=$("#pcplace option:selected").val();
+				param['pc_producer']=$("#pcproducer option:selected").val();
+				param['pc_model']=$("#pcmodel option:selected").val();
+				param['pc_IP']=$("#pcIP").val();
+				param['pc_account']=$("#pcaccount").val();
+				param['pc_password']=$("#pcpassword").val();
+				 $.ajax({
+						type:'POST',
+						contentType:"application/json",
+						data:JSON.stringify(param),
+						url:"/subsystem/addstationpc",
+						success:function(data){
+							alert(data)
+						}
+					
+					}); 
+				
+			});
+
+		});
+		"]]>"
+	</script>
+</body>
+</html>

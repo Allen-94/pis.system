@@ -1,0 +1,49 @@
+[
+	{
+		"groupId": 0,
+		"groupName": "超级管理组",
+		"group_description": "超级管理组...",
+		"roles": null,
+		"users": null,
+		"createTime": "2017-12-05 14:38:59",
+		"updateTime": "2017-12-05 14:38:59",
+		"groupfield":null
+	},	{
+		"groupId": 0,
+		"groupName": "播控管理组",
+		"group_description": "播控管理组...",
+		"roles": null,
+		"users": null,
+		"createTime": "2017-12-05 14:38:59",
+		"updateTime": "2017-12-05 14:38:59",
+		"groupfield":null
+	},	{
+		"groupId": 0,
+		"groupName": "设备管理组",
+		"group_description": "设备管理组...",
+		"roles": null,
+		"users": null,
+		"createTime": "2017-12-05 14:38:59",
+		"updateTime": "2017-12-05 14:38:59",
+		"groupfield":null
+	},	{
+		"groupId": 0,
+		"groupName": "设备监控组",
+		"group_description": "设备监控组...",
+		"roles": null,
+		"users": null,
+		"createTime": "2017-12-05 14:38:59",
+		"updateTime": "2017-12-05 14:38:59",
+		"groupfield":null
+	},	{
+		"groupId": 0,
+		"groupName": "安全管理组",
+		"group_description": "安全组...",
+		"roles": null,
+		"users": null,
+		"createTime": "2017-12-05 14:38:59",
+		"updateTime": "2017-12-05 14:38:59",
+		"groupfield":null
+	}
+	
+]

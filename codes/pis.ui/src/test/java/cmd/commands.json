@@ -1,0 +1,34 @@
+[
+	{
+		"superCmdId": 0,
+		"superCmdName": "superCmd01",
+		"superCmd_description": "管理总播控",
+		"superCmdSet": null,
+		"roles": null
+	}, {
+		"superCmdId": 0,
+		"superCmdName": "superCmd02",
+		"superCmd_description": "打开总开关",
+		"superCmdSet": null,
+		"roles": null
+	},	{
+		"superCmdId": 0,
+		"superCmdName": "superCmd3",
+		"superCmd_description": "关闭总显示屏",
+		"superCmdSet": null,
+		"roles": null
+	},	{
+		"superCmdId": 0,
+		"superCmdName": "superCmd4",
+		"superCmd_description": "发送总信息",
+		"superCmdSet": null,
+		"roles": null
+	},	{
+		"superCmdId": 0,
+		"superCmdName": "superCmd5",
+		"superCmd_description": "保存节目总表",
+		"superCmdSet": null,
+		"roles": null
+	}
+	
+]

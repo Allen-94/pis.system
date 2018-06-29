@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>我的任务</title>
+		<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+		<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" th:href="@{/assets/css/jquery.gritter.css}" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+		<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div th:replace="base/navbar::navbar"></div>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div th:replace="base/sidebar::sidebar"></div>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">Home</a>
+							</li>
+							<!-- <li>
+								<a href="#"></a>
+							</li> -->
+							<li class="active">任务详情</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+											<div class="widget-box transparent">
+												<div class="widget-header widget-header-small">
+													<h4 class="blue smaller">
+														任务详情
+													</h4>
+
+													<div class="widget-toolbar action-buttons">
+														<a href="#" data-action="reload">
+															<i class="icon-refresh blue"></i>
+														</a>
+														&nbsp;
+														<a href="#" class="pink">
+															<i class="icon-trash"></i>
+														</a>
+													</div>
+												</div>
+
+												<div class="widget-body">
+													<div class="widget-main padding-8">
+														<div id="profile-feed-1" class="profile-feed">
+															<div class="row">
+																<div class="col-xs-12">
+																	<!-- PAGE CONTENT BEGINS -->
+									
+																	<form class="form-horizontal" role="form">
+																		<div class="form-group">
+																			<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 任务名称 :</label>
+																			<div class="col-sm-9">
+																				<input type="text" id="form-flow_name" th:value="${flow.flowName}" readonly="true" placeholder="任务名称" class="col-xs-10 col-sm-6" />
+																			</div>
+																		</div>
+									
+																		<div class="space-4"></div>
+									
+																		<div class="form-group">
+																			<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 任务描述: </label>
+																			<div class="col-sm-6">
+																				<textarea id="form-field-11" readonly="true" th:text="${flow.flowDescribe}" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 132px;"></textarea>
+																			</div>
+																		</div>
+																		<div class="space-4"></div>
+									
+																		<div class="form-group">
+																			<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 审批详情: </label>
+																			<div class="col-sm-9">
+																			<div class="col-xs-10 col-sm-6 widget-container-span">
+																				<div class="widget-box" style="opacity: 1;">
+																					<div class="widget-header widget-header-small">
+																						<h6>
+																							审批流程
+																						</h6>
+																						<div class="widget-toolbar">
+																							<a href="#" data-action="collapse">
+																								<i class="icon-chevron-up"></i>
+																							</a>
+																						</div>
+																					</div>
+										
+																					<div class="widget-body">
+																						<div class="widget-body-inner" style="display: none;">
+																							<div class="widget-main no-padding">
+																								<table class="table table-striped table-bordered table-hover">
+																									<thead class="thin-border-bottom">
+																										<tr>
+																											<th>
+																												<i class="icon-user"></i>
+																												审批人
+																											</th>
+																											<th class="hidden-480">审批结果</th>
+																											<th class="hidden-480">审批意见</th>
+																										</tr>
+																									</thead>
+											
+																									<tbody>
+																										<tr th:each="proc:${flow.flowProcessSet}">
+																											<td class="" th:text="${proc.processer.realname}"></td>
+																											<td th:switch="${proc.processResult}">
+																												<span th:case="0" class="label label-warning">未处理</span>
+																												<span th:case="1" class="label label-ok">通过</span>
+																												<span th:case="2" class="label label-warning">打回修改</span>
+																												<span th:case="3" class="label label-danger">终止</span>
+																											</td>
+																											<td>
+																												<span class="btn btn-sm btn-white" th:id="${'process_opinioner'+flow.id}" th:onclick="'javascript:showOpinioner(\''+${proc.processOpinionr}+'\');'">审批意见...</span>
+																											</td>
+																										</tr>
+																									</tbody>
+																								</table>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			</div>
+																		</div>
+																		<div class="space-4"></div>
+									
+																		<div class="form-group" th:if="${type==2}" >
+																			<label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 审批意见: </label>
+																			<div class="col-sm-6">
+																				<textarea id="process_opinioner" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 132px;"></textarea>
+																			</div>
+																		</div>
+																		<div class="clearfix form-actions" th:if="${type==2}">
+																			<div class="col-md-offset-3 col-md-9">
+																				<button class="btn btn-info" th:onclick="'javascript:process(1);'" type="button">
+																					<i class="icon-ok bigger-110"></i>
+																					通过
+																				</button>
+																				&nbsp; &nbsp; &nbsp;
+																				<button class="btn btn-warning"  th:onclick="'javascript:process(2);'" type="button">
+																					<i class="icon-reply bigger-110"></i>
+																					打回修改
+																				</button>
+																				&nbsp; &nbsp; &nbsp;
+																				<button class="btn btn-danger" th:onclick="'javascript:process(3);'" type="button">
+																					<i class="icon-ok bigger-110"></i>
+																					终止
+																				</button>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+		<!-- <![endif]-->
+		<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+		<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+		<!-- page specific plugin scripts -->
+		<script th:src="@{/assets/js/jquery.gritter.min.js}"></script>
+		<!-- ace scripts -->
+
+		<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+		<script th:src='@{/assets/js/ace.min.js}'></script>
+
+		<!-- inline scripts related to this page -->
+				<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				/* $('#profile-feed-1').slimScroll({
+					height: '250px',
+					alwaysVisible : true
+					}); */
+					showOpinioner = function (param){
+						if(param == null){
+							param = '';
+						}
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: '审批意见',
+						// (string | mandatory) the text inside the notification
+						text: param,
+						class_name: 'gritter-success'
+					});
+
+					return false;
+				} 
+					
+				process = function(result){
+					var param = {}
+					
+					param.flowProcessId = [[${process.id}]];
+					param.processResult=result;
+					param.processOpinionr=$("#process_opinioner").val();
+					
+					/* $.post("/approveflow/process",JSON.stringify(param),function(data){
+						
+					}) */
+					$.ajax({
+						url:'/approveflow/process',
+						type:'POST',
+						contentType: "application/json; charset=utf-8",
+				        data: JSON.stringify(param),
+				        dataType: "json",
+						success:function(data){
+							if(data.result){
+								$.gritter.add({
+									// (string | mandatory) the heading of the notification
+									title: '审批结果',
+									// (string | mandatory) the text inside the notification
+									text: "审批成功",
+									class_name: 'gritter-info gritter-center'
+								});
+							}else{
+								$.gritter.add({
+									// (string | mandatory) the heading of the notification
+									title: '审批结果',
+									// (string | mandatory) the text inside the notification
+									text: "审批失败",
+									class_name: 'gritter-info gritter-center'
+								});
+							}
+						}
+					})
+				}
+			})
+			
+			"]]>"
+		</script>
+</body>
+</html>

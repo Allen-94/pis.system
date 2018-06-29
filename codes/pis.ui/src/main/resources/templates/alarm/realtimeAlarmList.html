@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>实时告警</title>
+<meta name="keywords" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="description" content="PIS-100,深圳宇翊,乘客信息系统" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- basic styles -->
+
+<link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" />
+<link rel="stylesheet" th:href="@{/assets/css/font-awesome.min.css}" />
+
+<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+<!-- page specific plugin styles -->
+<!-- fonts -->
+
+<link rel="stylesheet"
+	th:href="@{http://fonts.googleapis.com/css?family=Open+Sans:400,300}" />
+
+<!-- ace styles -->
+
+<link rel="stylesheet" th:href="@{/assets/css/ace.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-rtl.min.css}" />
+<link rel="stylesheet" th:href="@{/assets/css/ace-skins.min.css}" />
+
+<!--[if lte IE 8]>
+		  <link rel="stylesheet" th:href="@{/assets/css/ace-ie.min.css}" />
+		<![endif]-->
+
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script th:src="@{/assets/js/ace-extra.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+		<script th:src="@{/assets/js/html5shiv.js}"></script>
+		<script th:src="@{/assets/js/respond.min.js}"></script>
+		<![endif]-->
+
+</head>
+
+<body>
+	<div th:replace="base/navbar::navbar"></div>
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+
+			<div th:replace="base/sidebar::sidebar"></div>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+
+					<ul class="breadcrumb">
+						<li><i class="icon-home home-icon"></i> <a href="#">Home</a>
+						</li>
+						<!-- <li>
+								<a href="#"></a>
+							</li> -->
+						<li class="active">实时告警</li>
+					</ul>
+					<!-- .breadcrumb -->
+
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+							<span class="input-icon"> <input type="text"
+								placeholder="Search ..." class="nav-search-input"
+								id="nav-search-input" autocomplete="off" /> <i
+								class="icon-search nav-search-icon"></i>
+							</span>
+						</form>
+					</div>
+					<!-- #nav-search -->
+				</div>
+				<div class="page-content">
+					<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="panel panel-default" >
+									<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" 
+												   href="#collapseOne">
+													过滤条件 ---更改条件
+												</a>
+											</h4>
+										</div>
+										<div id="collapseOne" class="panel-collapse collapse in">
+										<div class="panel-body">
+											<div class="row">
+												<div class="col-sm-3">
+													<label for="grade">级别:</label>
+													<select id="grade">
+													    <option value="-1">全部</option>
+													    <option value="0">紧急</option>
+													    <option value="1">重要</option>
+													    <option value="2">一般</option>
+													    <option value="3">提示</option>
+												    </select>
+												</div>
+												<div class="col-sm-3">
+												<label for="confirm">确认状态:</label>
+													<select id="confirm">
+													    <option value="0">全部</option>
+													    <option value="1">已确认</option>
+													    <option value="2">未确认</option>
+												    </select>
+												</div>
+												<div class="col-sm-3">
+												<label for="clean">清楚状态:</label>
+													<select id="clean">
+													    <option value="0">全部</option>
+													    <option value="1">已清除</option>
+													    <option value="2">未清除</option>
+												    </select>
+												</div>
+												<div class="col-sm-3">
+												<label for="timeType">告警时间:</label>
+													<select id="timeType">
+													    <option value="0">全部</option>
+													    <option value="1">最近一天</option>
+													    <option value="2">最近三天</option>
+													    <option value="3">最近一周</option>
+													    <option value="4">最近一月</option>
+												    </select>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-3">
+												<label for="alarmSourceType">告警源类型:</label>
+													<select id="alarmSourceType">
+													    <option value="0">全部</option>
+													    <option value="5">车站服务器</option>
+													    <option value="6">播控器</option>
+													    <option value="7">显示屏</option>
+												    </select>
+												</div>
+												<div class="col-sm-3">
+													<label for="sourceId">告警源:</label>
+													<select id="sourceId">
+													    <option value="0">全部</option>
+												    </select>
+												</div>
+												<div class="col-sm-1"><button  id="submit"  class="btn btn-success">提     交</button></div>
+											</div>
+									    </div>
+										</div>
+									 </div>
+								</div>
+								<div class="row">
+									<div class="btn-toolbar" role="toolbar">
+										<div class="btn-group">
+										    <button id="scoll_btn" value="0" type="button" class="btn btn-success">滚动未锁定</button>
+										 </div>
+										<div class="btn-group">
+										    <button  id="confirm_btn" type="button" class="btn btn-success">确认</button>
+										</div>
+										<div class="btn-group">
+										    <button  id="clean_btn" type="button" class="btn btn-success">清除</button>
+										</div>
+										<div class="btn-group">
+										    <button  id="no_confirm_btn" type="button" class="btn btn-success">取消确认</button>
+										</div>
+										<div class="btn-group">
+										    <button  id="download_btn" type="button" class="btn btn-success">导出</button>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="panel panel-default" >
+									    <div class="panel-body">
+									    	<div class="table-responsive">
+													<table id="realtime_alarm_table" class="table table-striped table-bordered table-hover">
+														<thead>
+															<tr>
+																<th class="center">
+																	<label>
+																		<input type="checkbox" class="ace" />
+																		<span class="lbl"></span>
+																	</label>
+																</th>
+																<th>级别</th>
+																<th>名称</th>
+																<th>告警源类型</th>
+																<th>告警源</th>
+																<th>具体定位</th>
+																<th>告警时间</th>
+																<th>确认状态</th>
+																<th>清除状态</th>
+																<th>确认人</th>
+																<th>清除人</th>
+																<th>操作</th>
+																<th>备注</th>
+															</tr>
+														</thead>
+													</table>
+											</div>
+									    </div>
+									 </div>
+								</div>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+				</div>
+				<!-- /.page-content -->
+			</div>
+			<!-- /.main-content -->
+			<div th:replace="base/settings-container::settings-container"></div>
+		</div>
+		<!-- /.main-container-inner -->
+
+		<a href="#" id="btn-scroll-up"
+			class="btn-scroll-up btn btn-sm btn-inverse"> <i
+			class="icon-double-angle-up icon-only bigger-110"></i>
+		</a>
+	</div>
+	<!-- /.main-container -->
+
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+	<script th:src='@{/assets/js/jquery-1.10.2.min.js}'></script>
+	
+	<!-- <![endif]-->
+	<script th:src='@{/assets/js/bootstrap.min.js}'></script>
+	<script th:src='@{/assets/js/typeahead-bs2.min.js}'></script>
+
+	<!-- page specific plugin scripts -->
+	<script th:src='@{/assets/js/jquery.dataTables.js}'></script>
+	<script th:src='@{/assets/js/jquery.dataTables.bootstrap.js}'></script>
+	<script th:src="@{/assets/js/bootstrap-tag.min.js}"></script>
+	<script th:src='@{/sockjs.min.js}'></script>
+	<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+	<!-- ace scripts -->
+
+	<script th:src='@{/assets/js/ace-elements.min.js}'></script>
+	<script th:src='@{/assets/js/ace.min.js}'></script>
+	<!-- inline scripts related to this page -->
+	<script type="text/javascript" th:inline="javascript">
+		"<![CDATA["
+			jQuery(function($) {
+				
+				$("#confirm").on("change",function(){
+					if($(this).val()=="1" && $("#clean").val() == "1"){
+						$("#clean").val("0");
+					}else if($(this).val()=="2" && $("#clean").val() == "2"){
+						$("#clean").val("0");
+					}
+				})
+				
+				$("#clean").on("change",function(){
+					if($(this).val()=="1" && $("#confirm").val() == "1"){
+						$("#confirm").val("0");
+					}else if($(this).val()=="2" && $("#confirm").val() == "2"){
+						$("#confirm").val("0");
+					}
+				})
+				
+				getAllResources=function(){
+					$.get("/security/findAllResource",function(data){
+						$("#sourceId").empty();
+						$("#sourceId").append('<option value="0">全部</option>')
+						$.each(data,function(i){
+							$("#sourceId").append('<option value="'+data[i].id+'">'+data[i].resourceName+'</option>')
+						})
+					})
+				}
+				
+				getResourcesByType=function(type){
+					$.get("/security/findResourceByType?type="+type,function(data){
+						$("#sourceId").empty();
+						$("#sourceId").append('<option value="0">全部</option>')
+						$.each(data,function(i){
+							$("#sourceId").append('<option value="'+data[i].id+'">'+data[i].resourceName+'</option>')
+						})
+					})
+				}
+				$("#alarmSourceType").on("change",function(){
+					var alarmSourceType = $(this).val();
+					if(alarmSourceType=="0"){
+						//全部类型，
+						getAllResources()
+					}else{
+						getResourcesByType(alarmSourceType)
+					}
+				})
+				//初始化
+				$("#alarmSourceType").change();
+					
+				//滚动锁定
+				$("#scoll_btn").click(function(){
+					var value = $(this).attr("value")
+					if(value=="0"){
+						$(this).html("滚动锁定")
+						$(this).attr("value","1")
+						socket.close();
+					}else if(value == "1"){
+						$(this).html("滚动未锁定")
+						$(this).attr("value","0")
+						connectRealTimeWebSocket();
+					}
+				})
+				
+				
+				$("#submit").click(function(){
+					var param = {};
+					param.grade = $("#grade").val();
+					param.timeType = $("#timeType").val();
+					param.sourceId = $("#sourceId").val();
+					param.confirm = $("#confirm").val();
+					param.clean = $("#clean").val();
+					$.ajax({
+						"url":"/alarm/findRealtimeAlarms",
+						type:"POST",
+						contentType:"application/json",
+						"data":JSON.stringify(param),
+						"success":function(data){
+							var table = $('#realtime_alarm_table').dataTable();
+						    var oSettings = table.fnSettings(); //这里获取表格的配置
+						    table.fnClearTable(this); //动态刷新关键部分语句，先清空数据
+						    for (var i = 0, l = data.length; i < l; i++) {
+						        table.oApi._fnAddData(oSettings, data[i]); //这里添加一行数据
+						    }
+						    oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+						    table.fnDraw();//绘制表格
+						}
+					})
+				})
+				
+				 var oTable1 = $('#realtime_alarm_table').dataTable( {
+					searching:true,
+					stateSave:true,
+					bLengthChange:true,
+					ordering:true,
+					order:[[6,"desc"]],
+					colReorder: true,
+					info:true,
+					paging:true,
+					autoWidth: true,
+					deferRender: true,
+					ajax: {
+						"url": "/alarm/findRealtimeAlarms",
+						"type":"POST",
+						"contentType":"application/json",
+						"dataSrc":"",
+						"data":function(){
+							var param = {};
+							param.grade = $("#grade").val();
+							param.timeType = $("#timeType").val();
+							param.sourceId = $("#sourceId").val();
+							param.confirm = $("#confirm").val();
+							param.clean = $("#clean").val();
+							return JSON.stringify(param);
+						}
+					}, 
+					columnDefs:[{
+					　　　　'targets' : [0,1,2,3,4,5,7,8,9,10,11,12],    //除第六，第七两列外，都默认不排序
+					　　　　'orderable' : false
+					　　}],
+					columns:[
+						{ 
+							"sClass":"center",
+							"data": "id",
+							"render":function(data, type, full, meta){
+									return '<label><input type="checkbox" class="ace" /><span class="lbl"></span></label>'
+								}
+						},
+						{
+							"data":"config",
+							"render":function(data, type, val, meta){
+								  if(data==null){
+									  data = val.config;
+								  }
+								  var basePath = '/images/' 
+								  var img,text;
+								  switch(data.grade){
+								  case 'URGENT':
+									  img = "urgent.png";
+									  text="紧急"
+									  break;
+								  case 'IMPORTANT':
+									  img = "important.png";
+									  text="重要"
+									  break;
+								  case 'GENERAL':
+									  img = "general.png";
+									  text="一般"
+									  break;
+								  case 'HINT':
+									  img = "hint.png";
+									  text="提示"
+									  break;
+								  default:
+									  img = "hint.png"
+									  text="提示"
+								  }
+								  return "<img alt='"+text+"' src='"+basePath+img+"' /><span>"+text+"</span>"
+							}
+						},
+						{
+							"data":"config",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.config;
+								  }
+								return data.alarmName;
+							}
+						},
+						{
+							"data":"source",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.source;
+								  }
+								switch(data.resourceType){
+								case 5:
+									return "车站服务器"
+								case 6:
+									return "播控"
+								}
+							}
+						},
+						{
+							"data":"source",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.source;
+								  }
+								return data.resourceName
+							}
+						},
+						{
+							"data":"content"
+						},
+						{
+							"data":"receiptTime"
+						},
+						{
+							"data":"confirmStatus",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.confirmStatus;
+								  }
+								return data?"已确认":"未确认";
+							}
+						},
+						{
+							"data":"cleanStatus",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.cleanStatus;
+								  }
+								return data?"已清除":"未清除";
+							}
+						},
+						{
+							"data":"confirmUser",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.confirmUser;
+								  }
+								if(data){
+									return data.account;
+								}else{
+									return "";
+								}
+							}
+						},
+						{
+							"data":"cleanUser",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.cleanUser;
+								  }
+								if(data){
+									return data.account;
+								}else{
+									return "";
+								}
+							}
+						},
+						{ 
+							"sClass":"center",
+							"data": "id" ,
+							"width":"15%",
+							"render":function(data, type, val, meta){
+								if(data==null){
+									  data = val.id;
+								  }
+								 var html = '<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">';
+									html+= '<button type="button" class="btn btn-xs btn-info"  data-rowindex="'+meta.row+' onclick="direct(\''+data+'\',this)"  data-toggle="button">跳转</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info" data-rowindex="'+meta.row+'" onclick="confirm(\''+data+'\',this)"  data-toggle="button">确认</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info"  data-rowindex="'+meta.row+'" onclick="clean(\''+data+'\',this)"  data-toggle="button">清除</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info"  data-rowindex="'+meta.row+'" onclick="cancelConfirm(\''+data+'\',this)"  data-toggle="button">取消确认</button>'
+									+'&nbsp;'
+									+'<button type="button" class="btn btn-xs btn-info"  data-rowindex="'+meta.row+'" onclick="remark(\''+data+'\',this)"  data-toggle="button">备注</button>'
+								+'</div>'
+								return html;
+							}
+						},
+						{
+							"data":"remark"
+						}, 
+					]
+				}); 
+				
+				var socket;  
+		        //后台链接实时告警的WebSocket服务端
+				connectRealTimeWebSocket = function(){
+					var url = "ws://localhost:8080/realtime_alarm"
+					if(typeof(WebSocket) == "undefined") {  
+			            console.log("您的浏览器不支持WebSocket");  
+			        }else{  
+			            console.log("您的浏览器支持WebSocket");  
+			            //实现化WebSocket对象，指定要连接的服务器地址与端口  
+			            socket = new WebSocket(url);  
+			            //打开事件  
+			            socket.onopen = function() {  
+			                console.log("Socket 已打开");  
+			                var param = {};
+			                param.grade=$("#grade").val();
+			                param.confirm=$("#confirm").val();
+			                param.clean=$("#clean").val();
+			                param.timeType=$("#timeType").val();
+			                param.sourceId=$("#sourceId").val();
+			                socket.send(JSON.stringify(param));  
+			            };  
+			            //获得消息事件  
+			            socket.onmessage = function(msg) { 
+			            	console.log("服务端返回消息："+msg.data); 
+			            	var value = JSON.parse(msg.data);
+			            	var t = $('#realtime_alarm_table').DataTable();
+			            	t.row.add(value).draw();
+			            };  
+			            //关闭事件  
+			            socket.onclose = function() {  
+			                console.log("Socket已关闭");  
+			            };  
+			            //发生了错误事件  
+			            socket.onerror = function(e) {  
+			                alert("Socket发生了错误"+e.data);  
+			            }  
+			        }
+				}
+				connectRealTimeWebSocket();
+				
+				//确认
+				confirm = function(parm,obj){
+					  var table = $('#realtime_alarm_table').DataTable();
+					  var row=table.row($(obj).parents('tr'));
+					  $.post("/alarm/confirmAlarm",
+							  {"alarmId":parm,"isConfirm":true},function(data){
+								 //更新修改的数据数据
+								 if(data){
+									 if(data[0].confirmStatus && data[0].cleanStatus){
+										 row.remove().draw();
+									 }else{
+										 row.data(data[0]).draw();
+									 }
+								 }
+							  })
+					}
+				//取消确认
+				cancelConfirm = function(parm,obj){
+					  var table = $('#realtime_alarm_table').DataTable();
+					  var row=table.row($(obj).parents('tr'));
+					  $.post("/alarm/confirmAlarm",
+							  {"alarmId":parm,"isConfirm":false},function(data){
+								//更新修改的数据数据
+								 if(data){
+									 if(data[0].confirmStatus && data[0].cleanStatus){
+										 row.remove().draw();
+									 }else{
+										 row.data(data[0]).draw();
+									 }
+								 }
+							  })
+					}
+				//清除
+				clean = function(parm,obj){
+					  var table = $('#realtime_alarm_table').DataTable();
+					  var row=table.row($(obj).parents('tr'));
+					  $.post("/alarm/cleanAlarm",
+							  {"alarmId":parm,"isClean":true},function(data){
+								//更新修改的数据数据
+								 if(data){
+									 if(data[0].confirmStatus && data[0].cleanStatus){
+										 row.remove().draw();
+									 }else{
+										 row.data(data[0]).draw();
+									 }
+								 }
+							  })
+					}
+				//跳转
+				direct =function(parm){
+					 alert("跳转")
+				}
+				//备注
+				remark = function(parm){
+					
+					var id=parm;
+					var rowData = $("#grid-table").jqGrid('getRowData',id);
+					var alarmId = rowData.alarmId;
+					var remark = rowData.remark;
+				 	$("#alarmId").val(alarmId);
+					$("#remarkfiled").val(remark);
+					$( "#dialog-form" ).dialog( "open" );
+				}
+
+	           window.onbeforeunload=function(){
+	        	   alert("Socket发生了错误"); 
+	        	   socket.close(); 
+	           } 
+			   
+			})
+			"]]>"
+		</script>
+</body>
+</html>

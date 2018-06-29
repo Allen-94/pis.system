@@ -1,0 +1,122 @@
+[
+	{
+		"userId": 0,
+		"account": "张三",
+		"password": "123456",
+		"realname": "张三",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "1232@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "lisi",
+		"password": "123456",
+		"realname": "李四",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "lisi@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "wangwu",
+		"password": "123456",
+		"realname": "王五",
+		"phone": "123456789",
+		"gender": "女",
+		"email": "wangwu@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "sunliu",
+		"password": "123456",
+		"realname": "孙六",
+		"phone": "123456789",
+		"gender": "女",
+		"email": "sunliu@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "赵天",
+		"password": "123456",
+		"realname": "赵天",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "zhaotian@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "田一",
+		"password": "123456",
+		"realname": "孙琪",
+		"phone": "123456789",
+		"gender": "女",
+		"email": "tian@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "田二",
+		"password": "123456",
+		"realname": "田二",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "tian@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "郭明",
+		"password": "123456",
+		"realname": "郭明",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "sunqi@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "小明",
+		"password": "123456",
+		"realname": "小明",
+		"phone": "123456789",
+		"gender": "男",
+		"email": "sunqi@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	},
+	{
+		"userId": 0,
+		"account": "小黄",
+		"password": "123456",
+		"realname": "小黄",
+		"phone": "123456789",
+		"gender": "女",
+		"email": "sunqi@qq.com",
+		"userGroup": null,
+		"createTime": "2017-12-05 14:16:19",
+		"updateTime": "2017-12-05 14:16:19"
+	}
+]

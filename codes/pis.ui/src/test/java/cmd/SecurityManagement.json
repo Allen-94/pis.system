@@ -1,0 +1,28 @@
+[
+	{
+		"cmdId": 0,
+		"cmdName": "角色管理",
+		"cmd_description": "角色管理...",
+		"cmdSet": null,
+		"roles": null
+	}, {
+		"cmdId": 0,
+		"cmdName": "用户组管理",
+		"cmd_description": "用户组管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "用户管理",
+		"cmd_description": "用户管理...",
+		"cmdSet": null,
+		"roles": null
+	},	{
+		"cmdId": 0,
+		"cmdName": "操作日志管理",
+		"cmd_description": "操作日志管理...",
+		"cmdSet": null,
+		"roles": null
+	}
+	
+]
