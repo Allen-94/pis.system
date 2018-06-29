@@ -192,3 +192,17 @@ function decoder()
     echo ${pwd}
     return 0
 }
+
+#系统管理api放置
+function systemApi()
+{
+    local path=$1
+    local hosts=$2
+    for i in ${hosts[@]}; do
+        scp ${path}/system-api.cpp ${i}:/usr/include/c++/4.4.4/
+        scp ${path}/runtimeLogs.sh  ${i}:/opt/
+        ssh ${i} "chmod +x /usr/include/c++/4.4.4/system-api.cpp"
+        ssh ${i} "chmod +x /opt/runtimeLogs.sh"
+    done
+    return 0
+}

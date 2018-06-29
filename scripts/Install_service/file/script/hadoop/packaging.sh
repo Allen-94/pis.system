@@ -64,6 +64,8 @@ ethernet_port=eth0:vip" >>${configFile}
     getHostList ${hostList} x ${all_ip}
 
     yes|cp -r ${RUN_PATH}/../../../bin/common.sh ${tempDir}/install_hadoop/bin
+    yes|cp -r ${FILE_DIR}/script/public_script/system-api.cpp ${tempDir}/install_hadoop/bin
+    yes|cp -r ${FILE_DIR}/script/public_script/runtimeLogs.sh ${tempDir}/install_hadoop/bin
     yes|cp -r ${FILE_DIR}/script/public_script/makeSshKey.sh ${tempDir}/install_hadoop/bin
     yes|cp -r ${FILE_DIR}/script/public_script/addUser.sh ${tempDir}/install_hadoop/bin
     yes|cp -r ${FILE_DIR}/script/public_script/installJdk.sh ${tempDir}/install_hadoop/bin

@@ -119,13 +119,18 @@ function typeFlag()
     ssh ${tempIp} "mkdir -p /opt/service"
     scp -r ${RUN_PATH}/status.sh ${RUN_PATH}/start.sh ${RUN_PATH}/stop.sh ${RUN_PATH}/restart.sh ${RUN_PATH}/onName.txt ${RUN_PATH}/on.sh ${tempIp}:/opt/service/
     
+    echo "export PGOPTIONS='-c gp_session_role=utility'" >> /opt/greenplum/greenplum-db/greenplum_path.sh
+    
     tempIp=$(getValue "data_host" |awk '{print $1}')
     tempIp=(${tempIp})
     for i in ${tempIp[@]}; do
+        ssh ${i} "echo \"export PGOPTIONS='-c gp_session_role=utility'\" >> /opt/greenplum/greenplum-db/greenplum_path.sh"
         ssh ${i} "echo 'Data' > /opt/typeFlag"
         ssh ${i} "mkdir -p /opt/service"
         scp -r ${RUN_PATH}/status.sh ${RUN_PATH}/start.sh ${RUN_PATH}/stop.sh ${RUN_PATH}/restart.sh ${RUN_PATH}/onName.txt ${RUN_PATH}/on.sh ${i}:/opt/service/
     done
+    
+    
     return 0
 }
 
